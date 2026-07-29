@@ -28,7 +28,6 @@ let package = Package(
     products: [
         .library(name: "HABFoundation", targets: ["HABFoundation"]),
         .library(name: "HABUIKit",      targets: ["HABUIKit"]),
-        .library(name: "HABSwiftUI",    targets: ["HABSwiftUI"])
     ],
     targets: [
         // MARK: - HABFoundation
@@ -47,14 +46,6 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
 
-        // MARK: - HABSwiftUI
-        // SwiftUI components. Depends on HABFoundation for tokens and theming.
-        .target(
-            name: "HABSwiftUI",
-            dependencies: ["HABFoundation"],
-            swiftSettings: swiftSettings
-        ),
-
         // MARK: - Tests
         .testTarget(
             name: "HABFoundationTests",
@@ -64,11 +55,6 @@ let package = Package(
         .testTarget(
             name: "HABUIKitTests",
             dependencies: ["HABUIKit"],
-            swiftSettings: swiftSettings
-        ),
-        .testTarget(
-            name: "HABSwiftUITests",
-            dependencies: ["HABSwiftUI"],
             swiftSettings: swiftSettings
         )
     ]

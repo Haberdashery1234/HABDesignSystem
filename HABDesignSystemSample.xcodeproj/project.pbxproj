@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0374D8A93009DC7E00658327 /* HABFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 0374D8A83009DC7E00658327 /* HABFoundation */; };
-		0374D8AB3009DC7E00658327 /* HABSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0374D8AA3009DC7E00658327 /* HABSwiftUI */; };
 		0374D8AD3009DC7E00658327 /* HABUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0374D8AC3009DC7E00658327 /* HABUIKit */; };
 		0374D8DE3009DE6100658327 /* HABBadgeDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8BA3009DE6100658327 /* HABBadgeDemoViewController.swift */; };
 		0374D8DF3009DE6100658327 /* HABEmptyStateDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C03009DE6100658327 /* HABEmptyStateDemoViewController.swift */; };
@@ -16,7 +15,6 @@
 		0374D8E13009DE6100658327 /* HABTextViewDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C73009DE6100658327 /* HABTextViewDemoViewController.swift */; };
 		0374D8E23009DE6100658327 /* FoundationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C43009DE6100658327 /* FoundationViewController.swift */; };
 		0374D8E33009DE6100658327 /* HABToggleDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8CB3009DE6100658327 /* HABToggleDemoViewController.swift */; };
-		0374D8E43009DE6100658327 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8DB3009DE6100658327 /* ViewController.swift */; };
 		0374D8E53009DE6100658327 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8BE3009DE6100658327 /* FeedbackViewController.swift */; };
 		0374D8E63009DE6100658327 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8D23009DE6100658327 /* AppDelegate.swift */; };
 		0374D8E73009DE6100658327 /* HABTagDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8BC3009DE6100658327 /* HABTagDemoViewController.swift */; };
@@ -43,9 +41,6 @@
 		0374D8FC3009DE6100658327 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0374D8D83009DE6100658327 /* Main.storyboard */; };
 		0374D8FE3009DE6100658327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0374D8D33009DE6100658327 /* Assets.xcassets */; };
 		0374D8FF3009DE6100658327 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0374D8D63009DE6100658327 /* LaunchScreen.storyboard */; };
-		03A049D4300FFA1A006C9C95 /* HABSwiftUICatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A049D0300FFA1A006C9C95 /* HABSwiftUICatalogView.swift */; };
-		03A049D930103D89006C9C95 /* HABSwiftUIThemeSwitcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A049D830103D89006C9C95 /* HABSwiftUIThemeSwitcherView.swift */; };
-		03A049DB3010457F006C9C95 /* ThemeSwitcherToolbarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A049DA3010457F006C9C95 /* ThemeSwitcherToolbarModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,11 +107,7 @@
 		0374D8D73009DE6100658327 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0374D8D93009DE6100658327 /* SampleNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleNavigationController.swift; sourceTree = "<group>"; };
 		0374D8DA3009DE6100658327 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		0374D8DB3009DE6100658327 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		03A049CB300FF06B006C9C95 /* SwiftlintRules.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = SwiftlintRules.yml; sourceTree = "<group>"; };
-		03A049D0300FFA1A006C9C95 /* HABSwiftUICatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABSwiftUICatalogView.swift; sourceTree = "<group>"; };
-		03A049D830103D89006C9C95 /* HABSwiftUIThemeSwitcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABSwiftUIThemeSwitcherView.swift; sourceTree = "<group>"; };
-		03A049DA3010457F006C9C95 /* ThemeSwitcherToolbarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSwitcherToolbarModifier.swift; sourceTree = "<group>"; };
 		03D541D82FF35CC600BB2C51 /* HABDesignSystemSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HABDesignSystemSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D541ED2FF35CC800BB2C51 /* HABDesignSystemSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HABDesignSystemSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D541F72FF35CC800BB2C51 /* HABDesignSystemSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HABDesignSystemSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,7 +118,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0374D8AB3009DC7E00658327 /* HABSwiftUI in Frameworks */,
 				0374D8AD3009DC7E00658327 /* HABUIKit in Frameworks */,
 				0374D8A93009DC7E00658327 /* HABFoundation in Frameworks */,
 			);
@@ -258,7 +248,6 @@
 				0374D8C93009DE6100658327 /* Inputs */,
 				0374D8CD3009DE6100658327 /* Selection */,
 				0374D8D03009DE6100658327 /* Shared */,
-				03A049D2300FFA1A006C9C95 /* SwiftUI */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -274,7 +263,6 @@
 				0374D8D83009DE6100658327 /* Main.storyboard */,
 				0374D8D93009DE6100658327 /* SampleNavigationController.swift */,
 				0374D8DA3009DE6100658327 /* SceneDelegate.swift */,
-				0374D8DB3009DE6100658327 /* ViewController.swift */,
 			);
 			path = HABDesignSystemSample;
 			sourceTree = "<group>";
@@ -285,16 +273,6 @@
 				0374D8DC3009DE6100658327 /* HABDesignSystemSample */,
 			);
 			path = Sample;
-			sourceTree = "<group>";
-		};
-		03A049D2300FFA1A006C9C95 /* SwiftUI */ = {
-			isa = PBXGroup;
-			children = (
-				03A049D0300FFA1A006C9C95 /* HABSwiftUICatalogView.swift */,
-				03A049D830103D89006C9C95 /* HABSwiftUIThemeSwitcherView.swift */,
-				03A049DA3010457F006C9C95 /* ThemeSwitcherToolbarModifier.swift */,
-			);
-			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 		03D541532FF359B300BB2C51 = {
@@ -337,7 +315,6 @@
 			name = HABDesignSystemSample;
 			packageProductDependencies = (
 				0374D8A83009DC7E00658327 /* HABFoundation */,
-				0374D8AA3009DC7E00658327 /* HABSwiftUI */,
 				0374D8AC3009DC7E00658327 /* HABUIKit */,
 			);
 			productName = HABUIKitSample;
@@ -392,7 +369,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2620;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					03D541D72FF35CC600BB2C51 = {
 						CreatedOnToolsVersion = 26.2;
@@ -491,15 +468,12 @@
 				0374D8E13009DE6100658327 /* HABTextViewDemoViewController.swift in Sources */,
 				0374D8E23009DE6100658327 /* FoundationViewController.swift in Sources */,
 				0374D8E33009DE6100658327 /* HABToggleDemoViewController.swift in Sources */,
-				0374D8E43009DE6100658327 /* ViewController.swift in Sources */,
 				0374D8E53009DE6100658327 /* FeedbackViewController.swift in Sources */,
 				0374D8E63009DE6100658327 /* AppDelegate.swift in Sources */,
 				0374D8E73009DE6100658327 /* HABTagDemoViewController.swift in Sources */,
-				03A049D930103D89006C9C95 /* HABSwiftUIThemeSwitcherView.swift in Sources */,
 				0374D8E83009DE6100658327 /* HABLabelDemoViewController.swift in Sources */,
 				0374D8E93009DE6100658327 /* HABLoadingViewDemoViewController.swift in Sources */,
 				0374D8EA3009DE6100658327 /* ContainersViewController.swift in Sources */,
-				03A049DB3010457F006C9C95 /* ThemeSwitcherToolbarModifier.swift in Sources */,
 				0374D8EB3009DE6100658327 /* InputsViewController.swift in Sources */,
 				0374D8EC3009DE6100658327 /* HABSegmentedControlDemoViewController.swift in Sources */,
 				0374D8ED3009DE6100658327 /* HABDividerDemoViewController.swift in Sources */,
@@ -512,7 +486,6 @@
 				0374D8F43009DE6100658327 /* SampleNavigationController.swift in Sources */,
 				0374D8F53009DE6100658327 /* SceneDelegate.swift in Sources */,
 				0374D8F63009DE6100658327 /* HABCardDemoViewController.swift in Sources */,
-				03A049D4300FFA1A006C9C95 /* HABSwiftUICatalogView.swift in Sources */,
 				0374D8F73009DE6100658327 /* HABAvatarDemoViewController.swift in Sources */,
 				0374D8F83009DE6100658327 /* HABButtonDemoViewController.swift in Sources */,
 				0374D8F93009DE6100658327 /* SelectionViewController.swift in Sources */,
@@ -605,6 +578,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9366E92J33;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -628,6 +602,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -670,6 +645,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9366E92J33;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -686,6 +662,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -907,10 +884,6 @@
 		0374D8A83009DC7E00658327 /* HABFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HABFoundation;
-		};
-		0374D8AA3009DC7E00658327 /* HABSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = HABSwiftUI;
 		};
 		0374D8AC3009DC7E00658327 /* HABUIKit */ = {
 			isa = XCSwiftPackageProductDependency;
