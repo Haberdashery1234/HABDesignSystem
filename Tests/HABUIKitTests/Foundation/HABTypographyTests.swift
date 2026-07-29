@@ -112,10 +112,18 @@ final class HABTypographyTests: XCTestCase {
     
     func testHeadlineStyleHasSemiboldWeight() {
         let tokens = HABTypographyTokens()
-        
+
         XCTAssertNotNil(tokens.headline.font)
         // Headline should use semibold weight
         XCTAssertEqual(tokens.headline.lineHeight, 22)
+    }
+
+    func testHeadlineIsBoldBodyIsNot() {
+        let t = HABTypographyTokens()
+        let headlineBold = t.headline.font.fontDescriptor.symbolicTraits.contains(.traitBold)
+        let bodyBold     = t.body.font.fontDescriptor.symbolicTraits.contains(.traitBold)
+        XCTAssertTrue(headlineBold, "Headline font should have bold trait")
+        XCTAssertFalse(bodyBold, "Body font should not have bold trait")
     }
     
     func testCaptionsHaveSmallLineHeights() {

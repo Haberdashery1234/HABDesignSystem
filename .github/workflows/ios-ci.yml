@@ -20,10 +20,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # HABFoundation: the framework's own unit tests (HABFoundationTests).
-        # HABUIKit: the UI framework's unit tests (HABUIKitTests).
-        # HABUIKitDemo: the sample app plus its unit + UI test targets.
-        scheme: [HABFoundation, HABUIKit, HABUIKitDemo]
+        # HABUIKit: the UI framework's unit tests (HABUIKitTests), which now
+        #           also cover all HABFoundation tokens and themes.
+        # HABUIKitSample: the sample app plus its unit + UI test targets.
+        scheme: [HABUIKit, HABUIKitSample]
     steps:
       - name: Checkout
         uses: actions/checkout@v4

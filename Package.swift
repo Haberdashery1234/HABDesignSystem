@@ -48,11 +48,6 @@ let package = Package(
 
         // MARK: - Tests
         .testTarget(
-            name: "HABFoundationTests",
-            dependencies: ["HABFoundation"],
-            swiftSettings: swiftSettings
-        ),
-        .testTarget(
             name: "HABUIKitTests",
             dependencies: ["HABUIKit"],
             swiftSettings: swiftSettings

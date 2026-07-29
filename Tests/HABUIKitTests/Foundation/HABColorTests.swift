@@ -305,4 +305,31 @@ final class HABColorsTests: XCTestCase {
         let dark = UITraitCollection(userInterfaceStyle: .dark)
         XCTAssertEqual(tokens.foregroundInverted.resolvedColor(with: dark), .black)
     }
+
+    // MARK: - Semantic Distinctness Tests
+
+    func testSemanticStateColorsAreDistinctInLightMode() {
+        let traits = UITraitCollection(userInterfaceStyle: .light)
+        let t = HABColorTokens()
+        let destructive = t.destructive.resolvedColor(with: traits)
+        let success     = t.success.resolvedColor(with: traits)
+        let warning     = t.warning.resolvedColor(with: traits)
+        let info        = t.info.resolvedColor(with: traits)
+
+        XCTAssertNotEqual(destructive, success)
+        XCTAssertNotEqual(destructive, warning)
+        XCTAssertNotEqual(destructive, info)
+        XCTAssertNotEqual(success, warning)
+        XCTAssertNotEqual(success, info)
+        XCTAssertNotEqual(warning, info)
+    }
+
+    func testSurfaceTintsDifferFromBaseSemanticColors() {
+        let traits = UITraitCollection(userInterfaceStyle: .light)
+        let t = HABColorTokens()
+        XCTAssertNotEqual(t.destructive.resolvedColor(with: traits), t.destructiveSurface.resolvedColor(with: traits))
+        XCTAssertNotEqual(t.success.resolvedColor(with: traits), t.successSurface.resolvedColor(with: traits))
+        XCTAssertNotEqual(t.warning.resolvedColor(with: traits), t.warningSurface.resolvedColor(with: traits))
+        XCTAssertNotEqual(t.info.resolvedColor(with: traits), t.infoSurface.resolvedColor(with: traits))
+    }
 }
