@@ -1,0 +1,95 @@
+name: iOS CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Build & Test (${{ matrix.scheme }})
+    # This project's IPHONEOS_DEPLOYMENT_TARGET is 26.5 (FoundationModels
+    # requires iOS 26+), so this needs an Xcode that ships an iOS 26+ SDK.
+    # macos-26 became generally available for GitHub-hosted runners on
+    # 2026-02-26 and defaults to Xcode 26.6 — an older image/Xcode (e.g.
+    # macos-15 / Xcode 16, iOS 18 SDK) can't build this project at all.
+    runs-on: macos-26
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        # HABFoundation: the framework's own unit tests (HABFoundationTests).
+        # HABUIKit: the UI framework's unit tests (HABUIKitTests).
+        # HABUIKitDemo: the sample app plus its unit + UI test targets.
+        scheme: [HABFoundation, HABUIKit, HABUIKitDemo]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          # Tracks whatever Xcode the runner image ships as default,
+          # rather than pinning a version (e.g. 16, or a specific 26.x
+          # patch) that will inevitably drift out of sync with what's
+          # actually installed on the image.
+          xcode-version: latest-stable
+
+      - name: Show Xcode & SDK versions
+        run: |
+          xcodebuild -version
+          xcodebuild -showsdks
+
+      - name: Pick an available iOS simulator
+        id: sim
+        # `simctl list devices available` lists every simulator on the
+        # runner across *every* installed iOS runtime, not just the one
+        # this Xcode is actually building against — grabbing the first
+        # "iPhone" line regardless of which runtime it belongs to is what
+        # produced a UDID xcodebuild rejected outright ("Unable to find a
+        # destination matching..."). Scoping the search to the runtime
+        # matching `xcrun --sdk iphonesimulator --show-sdk-version`
+        # guarantees whatever we pick is a destination this build can
+        # actually target, regardless of which scheme is being tested.
+        run: |
+          set -euo pipefail
+          SDK_VERSION=$(xcrun --sdk iphonesimulator --show-sdk-version)
+          echo "iphonesimulator SDK version: $SDK_VERSION"
+
+          DEVICE_LINE=$(xcrun simctl list devices available | awk -v ver="$SDK_VERSION" '
+            /^-- / { grab = ($0 ~ ("iOS " ver " --")); next }
+            grab && /iPhone/ { print; exit }
+          ')
+          UDID=$(echo "$DEVICE_LINE" | grep -oE '[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}' || true)
+          if [ -z "$UDID" ]; then
+            echo "::error::No iPhone simulator found for iOS $SDK_VERSION on this runner."
+            xcrun simctl list devices available
+            exit 1
+          fi
+          echo "Using simulator: $DEVICE_LINE"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
+      - name: Build and test — ${{ matrix.scheme }}
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project HABDesignSystem.xcodeproj \
+            -scheme "${{ matrix.scheme }}" \
+            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
+            -resultBundlePath "TestResults-${{ matrix.scheme }}.xcresult" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            | tee "xcodebuild-${{ matrix.scheme }}.log"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.scheme }}
+          path: |
+            TestResults-${{ matrix.scheme }}.xcresult
+            xcodebuild-${{ matrix.scheme }}.log
+          retention-days: 14
