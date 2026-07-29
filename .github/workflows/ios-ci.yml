@@ -75,7 +75,7 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild test \
-            -project HABDesignSystem.xcodeproj \
+            -project HABDesignSystemSample.xcodeproj \
             -scheme "${{ matrix.scheme }}" \
             -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             -resultBundlePath "TestResults-${{ matrix.scheme }}.xcresult" \
