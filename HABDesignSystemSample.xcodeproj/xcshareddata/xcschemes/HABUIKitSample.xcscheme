@@ -35,6 +35,17 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "03D541672FF359B400BB2C51"
+               BuildableName = "HABUIKitTests.xctest"
+               BlueprintName = "HABUIKitTests"
+               ReferencedContainer = "container:HABDesignSystemSample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "03D541EC2FF35CC800BB2C51"
                BuildableName = "HABDesignSystemSampleTests.xctest"
                BlueprintName = "HABDesignSystemSampleTests"
