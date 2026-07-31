@@ -883,10 +883,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		0374D8A83009DC7E00658327 /* HABFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 0374D8A73009DC7E00658327 /* XCLocalSwiftPackageReference "../HABDesignSystem" */;
 			productName = HABFoundation;
 		};
 		0374D8AC3009DC7E00658327 /* HABUIKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 0374D8A73009DC7E00658327 /* XCLocalSwiftPackageReference "../HABDesignSystem" */;
 			productName = HABUIKit;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -78,6 +78,13 @@ public final class HABLabel: UILabel {
 
     // MARK: - Init
 
+    /// Creates a new label with the specified typography style.
+    ///
+    /// - Parameter textStyle: The typography token that determines the label's font,
+    ///   line height, and letter spacing. Defaults to `.body`.
+    ///
+    /// The label automatically registers for theme and Dynamic Type changes, updating
+    /// its font and styled text when either changes.
     public init(textStyle: HABTypographyKey = .body) {
         self.textStyle = textStyle
         super.init(frame: .zero)

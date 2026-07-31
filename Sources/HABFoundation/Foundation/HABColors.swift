@@ -112,8 +112,37 @@ public struct HABColorTokens {
 
     // MARK: - Init
 
-    /// Creates a color token set. All parameters have adaptive defaults
-    /// so only the values you want to override need to be specified.
+    /// Creates a color token set with the specified values.
+    ///
+    /// All parameters have adaptive defaults that work with both light and dark modes,
+    /// so you only need to specify the values you want to customize.
+    ///
+    /// - Parameters:
+    ///   - primary: Primary brand color. Defaults to `.systemBlue`.
+    ///   - secondary: Secondary brand color. Defaults to `.systemIndigo`.
+    ///   - accent: Accent color. Defaults to `.systemOrange`.
+    ///   - background: Main app background. Defaults to `.systemBackground`.
+    ///   - backgroundSecondary: Secondary background. Defaults to `.secondarySystemBackground`.
+    ///   - surface: Surface background for cards. Defaults to `.secondarySystemBackground`.
+    ///   - surfaceElevated: Elevated surface background. Defaults to `.tertiarySystemBackground`.
+    ///   - foreground: Primary text and icon color. Defaults to `.label`.
+    ///   - foregroundSecondary: Secondary text color. Defaults to `.secondaryLabel`.
+    ///   - foregroundTertiary: Tertiary text color. Defaults to `.tertiaryLabel`.
+    ///   - foregroundDisabled: Disabled text color. Defaults to `.quaternaryLabel`.
+    ///   - foregroundInverted: Inverted foreground color. Defaults to white in light mode, black in dark mode.
+    ///   - onPrimary: Content color for primary surfaces. Defaults to `.white`.
+    ///   - onSecondary: Content color for secondary surfaces. Defaults to `.white`.
+    ///   - destructive: Destructive action color. Defaults to `.systemRed`.
+    ///   - destructiveSurface: Tinted destructive background. Defaults to red with 12% opacity.
+    ///   - success: Success state color. Defaults to `.systemGreen`.
+    ///   - successSurface: Tinted success background. Defaults to green with 12% opacity.
+    ///   - warning: Warning state color. Defaults to `.systemOrange`.
+    ///   - warningSurface: Tinted warning background. Defaults to orange with 12% opacity.
+    ///   - info: Informational state color. Defaults to `.systemBlue`.
+    ///   - infoSurface: Tinted info background. Defaults to blue with 12% opacity.
+    ///   - border: Standard border color. Defaults to `.separator`.
+    ///   - borderSubtle: Subtle border color. Defaults to white/black with 8% opacity.
+    ///   - overlay: Modal dimming overlay. Defaults to black with 40-60% opacity.
     public init(
         primary: UIColor              = .systemBlue,
         secondary: UIColor            = .systemIndigo,
