@@ -77,7 +77,6 @@ import HABFoundation
 /// ### Managing State
 /// - ``isLoading``
 public final class HABButton: UIButton {
-    
     /// The visual style of the button.
     ///
     /// Determines the button's color scheme, background treatment, and overall appearance.

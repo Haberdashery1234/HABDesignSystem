@@ -47,7 +47,8 @@ class CatalogViewController: UITableViewController {
             Item(title: "Segmented Control", subtitle: "HABSegmentedControl — items", destination: { HABSegmentedControlDemoViewController() })
         ]),
         Section(title: "Buttons", items: [
-            Item(title: "Button", subtitle: "HABButton — style, size, icon, state", destination: { HABButtonDemoViewController() })
+            Item(title: "Button", subtitle: "HABButton — style, size, icon, state", destination: { HABButtonDemoViewController() }),
+            Item(title: "Card Button", subtitle: "HABCardButton — tile with icon and subtitle", destination: { HABCardButtonDemoViewController() })
         ]),
         Section(title: "Containers", items: [
             Item(title: "Card", subtitle: "HABCard — elevated, outlined, flat", destination: { HABCardDemoViewController() }),

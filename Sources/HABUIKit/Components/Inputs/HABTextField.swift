@@ -90,7 +90,6 @@ import HABFoundation
 /// ### Managing Delegation
 /// - ``delegate``
 public final class HABTextField: UIView {
-    
     /// The visual style of the text field.
     ///
     /// Determines the field's background and border treatment.

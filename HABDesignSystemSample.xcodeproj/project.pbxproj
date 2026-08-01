@@ -9,38 +9,6 @@
 /* Begin PBXBuildFile section */
 		0374D8A93009DC7E00658327 /* HABFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 0374D8A83009DC7E00658327 /* HABFoundation */; };
 		0374D8AD3009DC7E00658327 /* HABUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0374D8AC3009DC7E00658327 /* HABUIKit */; };
-		0374D8DE3009DE6100658327 /* HABBadgeDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8BA3009DE6100658327 /* HABBadgeDemoViewController.swift */; };
-		0374D8DF3009DE6100658327 /* HABEmptyStateDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C03009DE6100658327 /* HABEmptyStateDemoViewController.swift */; };
-		0374D8E03009DE6100658327 /* ComponentDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8CE3009DE6100658327 /* ComponentDemoViewController.swift */; };
-		0374D8E13009DE6100658327 /* HABTextViewDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C73009DE6100658327 /* HABTextViewDemoViewController.swift */; };
-		0374D8E23009DE6100658327 /* FoundationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C43009DE6100658327 /* FoundationViewController.swift */; };
-		0374D8E33009DE6100658327 /* HABToggleDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8CB3009DE6100658327 /* HABToggleDemoViewController.swift */; };
-		0374D8E53009DE6100658327 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8BE3009DE6100658327 /* FeedbackViewController.swift */; };
-		0374D8E63009DE6100658327 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8D23009DE6100658327 /* AppDelegate.swift */; };
-		0374D8E73009DE6100658327 /* HABTagDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8BC3009DE6100658327 /* HABTagDemoViewController.swift */; };
-		0374D8E83009DE6100658327 /* HABLabelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8BB3009DE6100658327 /* HABLabelDemoViewController.swift */; };
-		0374D8E93009DE6100658327 /* HABLoadingViewDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C13009DE6100658327 /* HABLoadingViewDemoViewController.swift */; };
-		0374D8EA3009DE6100658327 /* ContainersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8B43009DE6100658327 /* ContainersViewController.swift */; };
-		0374D8EB3009DE6100658327 /* InputsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C83009DE6100658327 /* InputsViewController.swift */; };
-		0374D8EC3009DE6100658327 /* HABSegmentedControlDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8CA3009DE6100658327 /* HABSegmentedControlDemoViewController.swift */; };
-		0374D8ED3009DE6100658327 /* HABDividerDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8B63009DE6100658327 /* HABDividerDemoViewController.swift */; };
-		0374D8EE3009DE6100658327 /* HABTextFieldDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C63009DE6100658327 /* HABTextFieldDemoViewController.swift */; };
-		0374D8EF3009DE6100658327 /* HABBannerDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8BF3009DE6100658327 /* HABBannerDemoViewController.swift */; };
-		0374D8F03009DE6100658327 /* ButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8AE3009DE6100658327 /* ButtonsViewController.swift */; };
-		0374D8F13009DE6100658327 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8B13009DE6100658327 /* CatalogViewController.swift */; };
-		0374D8F23009DE6100658327 /* PlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8CF3009DE6100658327 /* PlaceholderViewController.swift */; };
-		0374D8F33009DE6100658327 /* DisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8B83009DE6100658327 /* DisplayViewController.swift */; };
-		0374D8F43009DE6100658327 /* SampleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8D93009DE6100658327 /* SampleNavigationController.swift */; };
-		0374D8F53009DE6100658327 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8DA3009DE6100658327 /* SceneDelegate.swift */; };
-		0374D8F63009DE6100658327 /* HABCardDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8B53009DE6100658327 /* HABCardDemoViewController.swift */; };
-		0374D8F73009DE6100658327 /* HABAvatarDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8B93009DE6100658327 /* HABAvatarDemoViewController.swift */; };
-		0374D8F83009DE6100658327 /* HABButtonDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8AF3009DE6100658327 /* HABButtonDemoViewController.swift */; };
-		0374D8F93009DE6100658327 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8CC3009DE6100658327 /* SelectionViewController.swift */; };
-		0374D8FA3009DE6100658327 /* HABToastDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8C23009DE6100658327 /* HABToastDemoViewController.swift */; };
-		0374D8FB3009DE6100658327 /* ThemeSwitcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0374D8B23009DE6100658327 /* ThemeSwitcherViewController.swift */; };
-		0374D8FC3009DE6100658327 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0374D8D83009DE6100658327 /* Main.storyboard */; };
-		0374D8FE3009DE6100658327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0374D8D33009DE6100658327 /* Assets.xcassets */; };
-		0374D8FF3009DE6100658327 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0374D8D63009DE6100658327 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,44 +42,32 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0374D8AE3009DE6100658327 /* ButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsViewController.swift; sourceTree = "<group>"; };
-		0374D8AF3009DE6100658327 /* HABButtonDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABButtonDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8B13009DE6100658327 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
-		0374D8B23009DE6100658327 /* ThemeSwitcherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSwitcherViewController.swift; sourceTree = "<group>"; };
-		0374D8B43009DE6100658327 /* ContainersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainersViewController.swift; sourceTree = "<group>"; };
-		0374D8B53009DE6100658327 /* HABCardDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABCardDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8B63009DE6100658327 /* HABDividerDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABDividerDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8B83009DE6100658327 /* DisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayViewController.swift; sourceTree = "<group>"; };
-		0374D8B93009DE6100658327 /* HABAvatarDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABAvatarDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8BA3009DE6100658327 /* HABBadgeDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABBadgeDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8BB3009DE6100658327 /* HABLabelDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABLabelDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8BC3009DE6100658327 /* HABTagDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABTagDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8BE3009DE6100658327 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
-		0374D8BF3009DE6100658327 /* HABBannerDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABBannerDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8C03009DE6100658327 /* HABEmptyStateDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABEmptyStateDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8C13009DE6100658327 /* HABLoadingViewDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABLoadingViewDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8C23009DE6100658327 /* HABToastDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABToastDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8C43009DE6100658327 /* FoundationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationViewController.swift; sourceTree = "<group>"; };
-		0374D8C63009DE6100658327 /* HABTextFieldDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABTextFieldDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8C73009DE6100658327 /* HABTextViewDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABTextViewDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8C83009DE6100658327 /* InputsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputsViewController.swift; sourceTree = "<group>"; };
-		0374D8CA3009DE6100658327 /* HABSegmentedControlDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABSegmentedControlDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8CB3009DE6100658327 /* HABToggleDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HABToggleDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8CC3009DE6100658327 /* SelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
-		0374D8CE3009DE6100658327 /* ComponentDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDemoViewController.swift; sourceTree = "<group>"; };
-		0374D8CF3009DE6100658327 /* PlaceholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderViewController.swift; sourceTree = "<group>"; };
-		0374D8D23009DE6100658327 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0374D8D33009DE6100658327 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0374D8D43009DE6100658327 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0374D8D53009DE6100658327 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		0374D8D73009DE6100658327 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0374D8D93009DE6100658327 /* SampleNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleNavigationController.swift; sourceTree = "<group>"; };
-		0374D8DA3009DE6100658327 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		03A049CB300FF06B006C9C95 /* SwiftlintRules.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = SwiftlintRules.yml; sourceTree = "<group>"; };
 		03D541D82FF35CC600BB2C51 /* HABDesignSystemSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HABDesignSystemSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D541ED2FF35CC800BB2C51 /* HABDesignSystemSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HABDesignSystemSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D541F72FF35CC800BB2C51 /* HABDesignSystemSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HABDesignSystemSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		039BE3F6301D7DB500A95A45 /* Exceptions for "Sample" folder in "HABDesignSystemSample" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				HABDesignSystemSample/Info.plist,
+			);
+			target = 03D541D72FF35CC600BB2C51 /* HABDesignSystemSample */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		039BE3D2301D7C4200A95A45 /* Sample */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				039BE3F6301D7DB500A95A45 /* Exceptions for "Sample" folder in "HABDesignSystemSample" target */,
+			);
+			path = Sample;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		03D541D52FF35CC600BB2C51 /* Frameworks */ = {
@@ -147,141 +103,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		0374D8B03009DE6100658327 /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8AE3009DE6100658327 /* ButtonsViewController.swift */,
-				0374D8AF3009DE6100658327 /* HABButtonDemoViewController.swift */,
-			);
-			path = Buttons;
-			sourceTree = "<group>";
-		};
-		0374D8B33009DE6100658327 /* Catalog */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8B13009DE6100658327 /* CatalogViewController.swift */,
-				0374D8B23009DE6100658327 /* ThemeSwitcherViewController.swift */,
-			);
-			path = Catalog;
-			sourceTree = "<group>";
-		};
-		0374D8B73009DE6100658327 /* Containers */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8B43009DE6100658327 /* ContainersViewController.swift */,
-				0374D8B53009DE6100658327 /* HABCardDemoViewController.swift */,
-				0374D8B63009DE6100658327 /* HABDividerDemoViewController.swift */,
-			);
-			path = Containers;
-			sourceTree = "<group>";
-		};
-		0374D8BD3009DE6100658327 /* Display */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8B83009DE6100658327 /* DisplayViewController.swift */,
-				0374D8B93009DE6100658327 /* HABAvatarDemoViewController.swift */,
-				0374D8BA3009DE6100658327 /* HABBadgeDemoViewController.swift */,
-				0374D8BB3009DE6100658327 /* HABLabelDemoViewController.swift */,
-				0374D8BC3009DE6100658327 /* HABTagDemoViewController.swift */,
-			);
-			path = Display;
-			sourceTree = "<group>";
-		};
-		0374D8C33009DE6100658327 /* Feedback */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8BE3009DE6100658327 /* FeedbackViewController.swift */,
-				0374D8BF3009DE6100658327 /* HABBannerDemoViewController.swift */,
-				0374D8C03009DE6100658327 /* HABEmptyStateDemoViewController.swift */,
-				0374D8C13009DE6100658327 /* HABLoadingViewDemoViewController.swift */,
-				0374D8C23009DE6100658327 /* HABToastDemoViewController.swift */,
-			);
-			path = Feedback;
-			sourceTree = "<group>";
-		};
-		0374D8C53009DE6100658327 /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8C43009DE6100658327 /* FoundationViewController.swift */,
-			);
-			path = Foundation;
-			sourceTree = "<group>";
-		};
-		0374D8C93009DE6100658327 /* Inputs */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8C63009DE6100658327 /* HABTextFieldDemoViewController.swift */,
-				0374D8C73009DE6100658327 /* HABTextViewDemoViewController.swift */,
-				0374D8C83009DE6100658327 /* InputsViewController.swift */,
-			);
-			path = Inputs;
-			sourceTree = "<group>";
-		};
-		0374D8CD3009DE6100658327 /* Selection */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8CA3009DE6100658327 /* HABSegmentedControlDemoViewController.swift */,
-				0374D8CB3009DE6100658327 /* HABToggleDemoViewController.swift */,
-				0374D8CC3009DE6100658327 /* SelectionViewController.swift */,
-			);
-			path = Selection;
-			sourceTree = "<group>";
-		};
-		0374D8D03009DE6100658327 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8CE3009DE6100658327 /* ComponentDemoViewController.swift */,
-				0374D8CF3009DE6100658327 /* PlaceholderViewController.swift */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
-		0374D8D13009DE6100658327 /* Scenes */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8B03009DE6100658327 /* Buttons */,
-				0374D8B33009DE6100658327 /* Catalog */,
-				0374D8B73009DE6100658327 /* Containers */,
-				0374D8BD3009DE6100658327 /* Display */,
-				0374D8C33009DE6100658327 /* Feedback */,
-				0374D8C53009DE6100658327 /* Foundation */,
-				0374D8C93009DE6100658327 /* Inputs */,
-				0374D8CD3009DE6100658327 /* Selection */,
-				0374D8D03009DE6100658327 /* Shared */,
-			);
-			path = Scenes;
-			sourceTree = "<group>";
-		};
-		0374D8DC3009DE6100658327 /* HABDesignSystemSample */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8D13009DE6100658327 /* Scenes */,
-				0374D8D23009DE6100658327 /* AppDelegate.swift */,
-				0374D8D33009DE6100658327 /* Assets.xcassets */,
-				0374D8D43009DE6100658327 /* Info.plist */,
-				0374D8D63009DE6100658327 /* LaunchScreen.storyboard */,
-				0374D8D83009DE6100658327 /* Main.storyboard */,
-				0374D8D93009DE6100658327 /* SampleNavigationController.swift */,
-				0374D8DA3009DE6100658327 /* SceneDelegate.swift */,
-			);
-			path = HABDesignSystemSample;
-			sourceTree = "<group>";
-		};
-		0374D8DD3009DE6100658327 /* Sample */ = {
-			isa = PBXGroup;
-			children = (
-				0374D8DC3009DE6100658327 /* HABDesignSystemSample */,
-			);
-			path = Sample;
-			sourceTree = "<group>";
-		};
 		03D541532FF359B300BB2C51 = {
 			isa = PBXGroup;
 			children = (
 				0341BE562FF8A7CA00EB1F77 /* Frameworks */,
 				03D5415E2FF359B300BB2C51 /* Products */,
-				0374D8DD3009DE6100658327 /* Sample */,
 				03A049CB300FF06B006C9C95 /* SwiftlintRules.yml */,
+				039BE3D2301D7C4200A95A45 /* Sample */,
 			);
 			sourceTree = "<group>";
 		};
@@ -311,6 +139,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				039BE3D2301D7C4200A95A45 /* Sample */,
 			);
 			name = HABDesignSystemSample;
 			packageProductDependencies = (
@@ -413,9 +244,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0374D8FC3009DE6100658327 /* Main.storyboard in Resources */,
-				0374D8FE3009DE6100658327 /* Assets.xcassets in Resources */,
-				0374D8FF3009DE6100658327 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,35 +290,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0374D8DE3009DE6100658327 /* HABBadgeDemoViewController.swift in Sources */,
-				0374D8DF3009DE6100658327 /* HABEmptyStateDemoViewController.swift in Sources */,
-				0374D8E03009DE6100658327 /* ComponentDemoViewController.swift in Sources */,
-				0374D8E13009DE6100658327 /* HABTextViewDemoViewController.swift in Sources */,
-				0374D8E23009DE6100658327 /* FoundationViewController.swift in Sources */,
-				0374D8E33009DE6100658327 /* HABToggleDemoViewController.swift in Sources */,
-				0374D8E53009DE6100658327 /* FeedbackViewController.swift in Sources */,
-				0374D8E63009DE6100658327 /* AppDelegate.swift in Sources */,
-				0374D8E73009DE6100658327 /* HABTagDemoViewController.swift in Sources */,
-				0374D8E83009DE6100658327 /* HABLabelDemoViewController.swift in Sources */,
-				0374D8E93009DE6100658327 /* HABLoadingViewDemoViewController.swift in Sources */,
-				0374D8EA3009DE6100658327 /* ContainersViewController.swift in Sources */,
-				0374D8EB3009DE6100658327 /* InputsViewController.swift in Sources */,
-				0374D8EC3009DE6100658327 /* HABSegmentedControlDemoViewController.swift in Sources */,
-				0374D8ED3009DE6100658327 /* HABDividerDemoViewController.swift in Sources */,
-				0374D8EE3009DE6100658327 /* HABTextFieldDemoViewController.swift in Sources */,
-				0374D8EF3009DE6100658327 /* HABBannerDemoViewController.swift in Sources */,
-				0374D8F03009DE6100658327 /* ButtonsViewController.swift in Sources */,
-				0374D8F13009DE6100658327 /* CatalogViewController.swift in Sources */,
-				0374D8F23009DE6100658327 /* PlaceholderViewController.swift in Sources */,
-				0374D8F33009DE6100658327 /* DisplayViewController.swift in Sources */,
-				0374D8F43009DE6100658327 /* SampleNavigationController.swift in Sources */,
-				0374D8F53009DE6100658327 /* SceneDelegate.swift in Sources */,
-				0374D8F63009DE6100658327 /* HABCardDemoViewController.swift in Sources */,
-				0374D8F73009DE6100658327 /* HABAvatarDemoViewController.swift in Sources */,
-				0374D8F83009DE6100658327 /* HABButtonDemoViewController.swift in Sources */,
-				0374D8F93009DE6100658327 /* SelectionViewController.swift in Sources */,
-				0374D8FA3009DE6100658327 /* HABToastDemoViewController.swift in Sources */,
-				0374D8FB3009DE6100658327 /* ThemeSwitcherViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,25 +321,6 @@
 			targetProxy = 03D541F82FF35CC800BB2C51 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		0374D8D63009DE6100658327 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0374D8D53009DE6100658327 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		0374D8D83009DE6100658327 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0374D8D73009DE6100658327 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		03D5416F2FF359B400BB2C51 /* Debug */ = {
