@@ -74,6 +74,10 @@ public final class HABCardButton: UIControl {
         didSet { updateContent() }
     }
     
+    public var isSquare: Bool {
+        didSet { updateContent() }
+    }
+    
     /// The primary label of the tile.
     public var title: String? {
         didSet { updateContent() }
@@ -114,6 +118,13 @@ public final class HABCardButton: UIControl {
         return sv
     }()
 
+    /// Flexible spacers above the icon and below the labels — visible only when isSquare
+    /// is true, where they expand equally to center the icon+label group vertically.
+    private let topSpacer = UIView()
+    private let bottomSpacer = UIView()
+
+    private var squareConstraint: NSLayoutConstraint?
+
     // MARK: - Init
 
     /// Creates a new card button.
@@ -128,13 +139,15 @@ public final class HABCardButton: UIControl {
         icon: UIImage? = nil,
         title: String? = nil,
         subtitle: String? = nil,
-        alignment: UIStackView.Alignment = .leading
+        alignment: UIStackView.Alignment = .leading,
+        isSquare: Bool = false
     ) {
         self.style = style
         self.icon = icon
         self.title = title
         self.subtitle = subtitle
         self.alignment = alignment
+        self.isSquare = isSquare
         super.init(frame: .zero)
         setup()
     }
@@ -153,12 +166,22 @@ public final class HABCardButton: UIControl {
         labelStack.addArrangedSubview(titleLabel)
         labelStack.addArrangedSubview(subtitleLabel)
 
+        for spacer in [topSpacer, bottomSpacer] {
+            spacer.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+            spacer.setContentCompressionResistancePriority(.fittingSizeLevel, for: .vertical)
+        }
+
+        contentStack.addArrangedSubview(topSpacer)
         contentStack.addArrangedSubview(iconImageView)
         contentStack.addArrangedSubview(labelStack)
+        contentStack.addArrangedSubview(bottomSpacer)
 
         addSubview(contentStack)
 
+        squareConstraint = widthAnchor.constraint(equalTo: heightAnchor)
+
         NSLayoutConstraint.activate([
+            bottomSpacer.heightAnchor.constraint(equalTo: topSpacer.heightAnchor),
             iconImageView.widthAnchor.constraint(equalToConstant: 28),
             iconImageView.heightAnchor.constraint(equalToConstant: 28),
 
@@ -188,6 +211,9 @@ public final class HABCardButton: UIControl {
     // MARK: - Content
 
     private func updateContent() {
+        squareConstraint?.isActive = isSquare
+        topSpacer.isHidden = !isSquare
+        bottomSpacer.isHidden = !isSquare
         labelStack.alignment = alignment
         contentStack.alignment = alignment
         iconImageView.image = icon?.withRenderingMode(.alwaysTemplate)

@@ -60,6 +60,11 @@ final class HABCardButtonDemoViewController: ComponentDemoViewController {
         }
         addRow(label: "Alignment", control: alignmentSeg)
 
+        let squareSwitch = makeSwitch(isOn: false) { [weak self] isOn in
+            self?.cardButton.isSquare = isOn
+        }
+        addRow(label: "isSquare", control: squareSwitch)
+
         // CONTENT
         addSectionHeader("Content")
 
