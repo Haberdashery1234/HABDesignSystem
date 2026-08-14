@@ -239,34 +239,30 @@ final class HABLoadingViewDemoViewController: ComponentDemoViewController {
     
     // MARK: - Image Loading
     
-    /// Loads an animated image (GIF) from the asset catalog or bundle.
-    /// This creates a proper animated UIImage that can be displayed in a UIImageView.
+    /// Loads an animated GIF from the bundle and converts it to an animated UIImage.
+    /// - Parameter named: The name of the GIF file (without extension)
+    /// - Returns: An animated UIImage if successful, nil otherwise
     private func loadAnimatedImage(named: String) -> UIImage? {
-        // First try to load as a normal image (for single-frame images)
-        guard let asset = UIImage(named: named) else {
+        // Try to find the GIF in the bundle with .gif extension
+        guard let gifURL = Bundle.main.url(forResource: named, withExtension: "gif") else {
             return nil
         }
         
-        // If it's already an animated image with frames, return it
-        if asset.images != nil {
-            return asset
-        }
+        print("📁 Found GIF at: \(gifURL.lastPathComponent)")
         
-        // For GIF files in the bundle, we need to load the data and create frames
-        // Try to find the GIF in the main bundle
-        guard let gifURL = Bundle.main.url(forResource: named, withExtension: "gif"),
-              let gifData = try? Data(contentsOf: gifURL),
+        // Load the GIF data
+        guard let gifData = try? Data(contentsOf: gifURL),
               let source = CGImageSourceCreateWithData(gifData as CFData, nil) else {
-            // If not a GIF or can't load, return the static image
-            return asset
+            return nil
         }
         
         let frameCount = CGImageSourceGetCount(source)
-        guard frameCount > 1 else {
-            // Single frame, just return the asset
-            return asset
+        
+        guard frameCount > 0 else {
+            return nil
         }
         
+        // Extract all frames and their durations
         var images: [UIImage] = []
         var totalDuration: TimeInterval = 0
         
@@ -275,10 +271,11 @@ final class HABLoadingViewDemoViewController: ComponentDemoViewController {
                 continue
             }
             
-            // Get frame duration
-            var frameDuration: TimeInterval = 0.1 // Default
+            // Get frame duration from GIF properties
+            var frameDuration: TimeInterval = 0.1 // Default 100ms
             if let properties = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as? [String: Any],
                let gifProperties = properties[kCGImagePropertyGIFDictionary as String] as? [String: Any] {
+                // Try unclamped delay time first, then regular delay time
                 if let delayTime = gifProperties[kCGImagePropertyGIFUnclampedDelayTime as String] as? TimeInterval, delayTime > 0 {
                     frameDuration = delayTime
                 } else if let delayTime = gifProperties[kCGImagePropertyGIFDelayTime as String] as? TimeInterval {
@@ -291,6 +288,11 @@ final class HABLoadingViewDemoViewController: ComponentDemoViewController {
         }
         
         // Create animated image
-        return UIImage.animatedImage(with: images, duration: totalDuration)
+        if frameCount == 1 {
+            return images.first
+        }
+        
+        let animatedImage = UIImage.animatedImage(with: images, duration: totalDuration)
+        return animatedImage
     }
 }
