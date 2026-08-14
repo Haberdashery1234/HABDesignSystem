@@ -124,6 +124,28 @@ class FeedbackViewController: UIViewController {
         addHeader("HABLoadingView — Indeterminate Progress")
         let indeterminateView = HABLoadingView(style: .linear)
         stackView.addArrangedSubview(indeterminateView)
+        
+        addHeader("HABLoadingView — Custom Spinner")
+        let customSpinner = HABLoadingView(style: .customSpinner, message: "Processing…")
+        customSpinner.customSpinnerColor = .systemPurple
+        customSpinner.customSpinnerLineWidth = 4
+        customSpinner.spinnerSize = CGSize(width: 50, height: 50)
+        stackView.addArrangedSubview(customSpinner)
+        
+        addHeader("HABLoadingView — Custom Linear Progress (40%)")
+        let customProgress = HABLoadingView(style: .customLinear, message: "Syncing data…")
+        customProgress.progress = 0.4
+        stackView.addArrangedSubview(customProgress)
+        
+        addHeader("HABLoadingView — Custom Animation (GIF)")
+        // Load custom animated image from assets
+        let animatedImage = UIImage(named: "SampleAnimatedLoading")
+        let customAnimatedView = HABLoadingView(
+            style: .customAnimation(animatedImage),
+            message: "Loading with style…"
+        )
+        customAnimatedView.spinnerSize = CGSize(width: 80, height: 80)
+        stackView.addArrangedSubview(customAnimatedView)
 
         // MARK: HABEmptyState
 

@@ -37,6 +37,12 @@ open class ComponentDemoViewController: HABBaseViewController {
     private var sectionWrappers: [UIView]    = []
     private var internalDividers: [UIView]   = []
     private var sectionHeaderLabels: [UILabel] = []
+    
+    // Track dynamic setting views order for subclasses to manage
+    public var dynamicSettingViewsOrder: [UIView] = []
+    
+    // Track dynamic setting views for subclasses to manage
+    public var dynamicSettingViews: [UIView] = []
 
     // MARK: - Lifecycle
 
@@ -216,6 +222,40 @@ open class ComponentDemoViewController: HABBaseViewController {
         settingsStack.addArrangedSubview(div)
     }
 
+    // MARK: - Dynamic Settings Management
+    
+    /// Removes all tracked dynamic setting views.
+    /// Subclasses can use this to rebuild dynamic settings when state changes.
+    public func removeDynamicSettings() {
+        for view in dynamicSettingViews {
+            settingsStack.removeArrangedSubview(view)
+            view.removeFromSuperview()
+            
+            // Clean up from tracking arrays
+            if let index = sectionWrappers.firstIndex(of: view) {
+                sectionWrappers.remove(at: index)
+            }
+            if let index = internalDividers.firstIndex(of: view) {
+                internalDividers.remove(at: index)
+            }
+        }
+        dynamicSettingViews.removeAll()
+    }
+    
+    /// Returns the current count of views in the settings stack.
+    /// Use this to track views: capture count before adding, then use settingsStackViews(from:) after.
+    public func settingsStackViewCount() -> Int {
+        return settingsStack.arrangedSubviews.count
+    }
+    
+    /// Returns views added to the settings stack since the given index.
+    /// Useful for capturing newly added dynamic views to track in dynamicSettingViews.
+    public func settingsStackViews(from startIndex: Int) -> [UIView] {
+        let endIndex = settingsStack.arrangedSubviews.count
+        guard startIndex < endIndex else { return [] }
+        return Array(settingsStack.arrangedSubviews[startIndex..<endIndex])
+    }
+    
     // MARK: - Control Factories
 
     /// A `UISwitch` bound to a change closure.
