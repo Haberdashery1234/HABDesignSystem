@@ -111,7 +111,8 @@ final class HABLabelTests: XCTestCase {
         HABThemeManager.shared.theme = HABDarkTheme()
         defer { HABThemeManager.shared.theme = HABDefaultTheme() }
         XCTAssertNotNil(label.themeTextColor)
-        XCTAssertEqual(label.textColor, HABDarkTheme().colors.foreground)
+        // Theme colors are dynamic; resolve to compare with the theme's value.
+        XCTAssertEqual(label.textColor.resolvedColor(with: label.traitCollection), HABDarkTheme().colors.foreground)
     }
 
     func testThemeTextColorSurvivesThemeChange() {
@@ -119,7 +120,7 @@ final class HABLabelTests: XCTestCase {
         label.themeTextColor = { .habForegroundSecondary }
         HABThemeManager.shared.theme = HABDarkTheme()
         defer { HABThemeManager.shared.theme = HABDefaultTheme() }
-        XCTAssertEqual(label.textColor, HABDarkTheme().colors.foregroundSecondary)
+        XCTAssertEqual(label.textColor.resolvedColor(with: label.traitCollection), HABDarkTheme().colors.foregroundSecondary)
     }
 
     func testDirectTextColorIsNotOverwrittenByThemeChange() {

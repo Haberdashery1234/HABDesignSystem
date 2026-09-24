@@ -1,12 +1,12 @@
 //
 //  HABShadow.swift
-//  HABUIKit
+//  HABFoundation
 //
 //  Created by Christian Grise on 6/29/26.
 //
 
+#if canImport(UIKit)
 import UIKit
-import HABFoundation
 
 // MARK: - HABShadowStyle
 
@@ -56,7 +56,10 @@ public struct HABShadowStyle {
 
 // MARK: - HABShadow
 
-/// Shadow presets for HABUIKit.
+/// Default shadow presets.
+///
+/// Components read shadows from the active theme (`HABTheme.shadows`), which starts
+/// from these presets and can be overridden per theme.
 ///
 /// Shadows increase in elevation from `low` to `high`.
 /// Use `overlay` for modal dimming layers, not for view elevation.
@@ -66,8 +69,11 @@ public struct HABShadowStyle {
 /// HABShadow.high.apply(to: floatingButton.layer)
 /// ```
 public enum HABShadow {
+    // HABShadowStyle holds a UIColor; these presets are immutable, so sharing
+    // them across isolation domains is safe.
+
     /// No shadow.
-    public static let none = HABShadowStyle(
+    nonisolated(unsafe) public static let none = HABShadowStyle(
         color: .black,
         opacity: 0,
         radius: 0,
@@ -75,7 +81,7 @@ public enum HABShadow {
     )
 
     /// Subtle shadow for slightly elevated surfaces like cards.
-    public static let low = HABShadowStyle(
+    nonisolated(unsafe) public static let low = HABShadowStyle(
         color: .black,
         opacity: 0.06,
         radius: 4,
@@ -83,7 +89,7 @@ public enum HABShadow {
     )
 
     /// Medium shadow for interactive elements and focused containers.
-    public static let medium = HABShadowStyle(
+    nonisolated(unsafe) public static let medium = HABShadowStyle(
         color: .black,
         opacity: 0.10,
         radius: 8,
@@ -91,7 +97,7 @@ public enum HABShadow {
     )
 
     /// Strong shadow for floating elements like FABs and tooltips.
-    public static let high = HABShadowStyle(
+    nonisolated(unsafe) public static let high = HABShadowStyle(
         color: .black,
         opacity: 0.16,
         radius: 16,
@@ -99,10 +105,11 @@ public enum HABShadow {
     )
 
     /// Heavy shadow for modals and bottom sheets.
-    public static let overlay = HABShadowStyle(
+    nonisolated(unsafe) public static let overlay = HABShadowStyle(
         color: .black,
         opacity: 0.24,
         radius: 24,
         offset: CGSize(width: 0, height: 12)
     )
 }
+#endif

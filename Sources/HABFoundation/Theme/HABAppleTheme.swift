@@ -23,8 +23,8 @@ import UIKit
 public struct HABAppleTheme: HABTheme {
     public let name = "HABApple"
 
-    public var colors: HABColorTokens { HABColorTokens() }
-    public var typography: HABTypographyTokens { HABTypographyTokens() }
+    public let colors = HABColorTokens()
+    public let typography = HABTypographyTokens()
 
     public init() {}
 }

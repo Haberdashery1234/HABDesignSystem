@@ -636,7 +636,7 @@ private final class HABCustomProgressView: UIView {
 
         if animated {
             CATransaction.begin()
-            CATransaction.setAnimationDuration(HABAnimation.Duration.normal)
+            CATransaction.setAnimationDuration(habTheme.motion.normal)
             CATransaction.setAnimationTimingFunction(
                 HABAnimation.Curve.easeOut.timingFunction
             )

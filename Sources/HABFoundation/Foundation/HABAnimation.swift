@@ -1,22 +1,23 @@
 //
 //  HABAnimation.swift
-//  HABUIKit
+//  HABFoundation
 //
 //  Created by Christian Grise on 6/29/26.
 //
 
+#if canImport(UIKit)
 import UIKit
-import HABFoundation
 
 // MARK: - HABAnimation
 
-/// Animation constants for HABUIKit.
+/// Animation constants.
 ///
-/// Use `HABAnimation.Duration` for timing and `HABAnimation.Curve` for easing.
-/// For spring animations, use `HABAnimation.Spring`.
+/// `HABAnimation.Duration` and `HABAnimation.Spring` are the *default* motion values.
+/// Components read motion from the active theme (`HABTheme.motion`), which starts from
+/// these defaults and can be overridden per theme. Use `HABAnimation.Curve` for easing.
 ///
 /// ```swift
-/// UIView.animate(withDuration: HABAnimation.Duration.normal,
+/// UIView.animate(withDuration: HABThemeManager.shared.theme.motion.normal,
 ///                delay: 0,
 ///                options: HABAnimation.Curve.easeOut.options) {
 ///     view.alpha = 1
@@ -29,13 +30,14 @@ public enum HABAnimation {
     ///
     /// When it's on, replace movement — slides, scaling, springs — with a fade or no
     /// animation. Fades and progress indicators are fine to keep.
+    @MainActor
     public static var prefersReducedMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
     }
 
     // MARK: - Duration
 
-    /// Named duration constants for animations.
+    /// Default duration values. Themes can override these via `HABMotionTokens`.
     public enum Duration {
         /// 0s — immediate state change with no animation.
         public static let instant: TimeInterval = 0
@@ -68,26 +70,29 @@ public enum HABAnimation {
             self.timingFunction = timingFunction
         }
 
+        // CAMediaTimingFunction isn't Sendable, but these presets are never mutated,
+        // so sharing them across isolation domains is safe.
+
         /// Symmetric ease in/out. The default for most transitions.
-        public static let standard = HABAnimationCurve(
+        nonisolated(unsafe) public static let standard = HABAnimationCurve(
             options: .curveEaseInOut,
             timingFunction: .init(name: .easeInEaseOut)
         )
 
         /// Accelerates into the animation. Use for elements leaving the screen.
-        public static let easeIn = HABAnimationCurve(
+        nonisolated(unsafe) public static let easeIn = HABAnimationCurve(
             options: .curveEaseIn,
             timingFunction: .init(name: .easeIn)
         )
 
         /// Decelerates to rest. Use for elements arriving on screen.
-        public static let easeOut = HABAnimationCurve(
+        nonisolated(unsafe) public static let easeOut = HABAnimationCurve(
             options: .curveEaseOut,
             timingFunction: .init(name: .easeOut)
         )
 
         /// Constant speed throughout. Use for progress indicators and looping animations.
-        public static let linear = HABAnimationCurve(
+        nonisolated(unsafe) public static let linear = HABAnimationCurve(
             options: .curveLinear,
             timingFunction: .init(name: .linear)
         )
@@ -96,36 +101,37 @@ public enum HABAnimation {
     /// Easing curve presets.
     public enum Curve {
         /// Symmetric ease in/out. The default for most transitions.
-        public static let standard = HABAnimationCurve.standard
+        public static var standard: HABAnimationCurve { .standard }
 
         /// Accelerates into the animation. Use for elements leaving the screen.
-        public static let easeIn   = HABAnimationCurve.easeIn
+        public static var easeIn: HABAnimationCurve { .easeIn }
 
         /// Decelerates to rest. Use for elements arriving on screen.
-        public static let easeOut  = HABAnimationCurve.easeOut
+        public static var easeOut: HABAnimationCurve { .easeOut }
 
         /// Constant speed throughout. Use for progress indicators and looping animations.
-        public static let linear   = HABAnimationCurve.linear
+        public static var linear: HABAnimationCurve { .linear }
     }
 
     // MARK: - Spring
 
-    /// Spring animation presets for use with `UIView.animate(springDuration:bounce:)`.
+    /// A spring animation preset for `UIView.animate(springDuration:bounce:)`.
     ///
     /// ```swift
-    /// UIView.animate(springDuration: HABAnimation.Duration.normal,
-    ///                bounce: HABAnimation.Spring.gentle.bounce) {
+    /// let spring = HABThemeManager.shared.theme.motion.gentleSpring
+    /// UIView.animate(springDuration: spring.duration, bounce: spring.bounce) {
     ///     view.transform = .identity
     /// }
     /// ```
-    public struct HABSpringPreset {
+    public struct HABSpringPreset: Sendable, Equatable {
         /// Recommended duration for this spring preset.
         public let duration: TimeInterval
 
         /// Bounce amount. `0` is no bounce, `1` is very bouncy.
         public let bounce: CGFloat
 
-        private init(duration: TimeInterval, bounce: CGFloat) {
+        /// Creates a spring preset, e.g. for a custom theme's `HABMotionTokens`.
+        public init(duration: TimeInterval, bounce: CGFloat) {
             self.duration = duration
             self.bounce   = bounce
         }
@@ -137,7 +143,7 @@ public enum HABAnimation {
         public static let bouncy = HABSpringPreset(duration: 0.5, bounce: 0.4)
     }
 
-    /// Spring animation presets.
+    /// Default spring presets. Themes can override these via `HABMotionTokens`.
     public enum Spring {
         /// Low bounce, settles quickly. Use for most UI interactions.
         public static let gentle = HABSpringPreset.gentle
@@ -146,3 +152,4 @@ public enum HABAnimation {
         public static let bouncy = HABSpringPreset.bouncy
     }
 }
+#endif
