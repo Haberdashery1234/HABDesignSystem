@@ -73,6 +73,10 @@ public struct HABColorTokens {
     /// Content color for elements placed on a `secondary`-colored surface.
     public var onSecondary: UIColor
 
+    /// Content color for elements placed on a `destructive`-colored surface
+    /// (destructive buttons, notification badges).
+    public var onDestructive: UIColor
+
     // MARK: - Semantic States
 
     /// Destructive action color. Used for delete, remove, and error states.
@@ -132,6 +136,7 @@ public struct HABColorTokens {
     ///   - foregroundInverted: Inverted foreground color. Defaults to white in light mode, black in dark mode.
     ///   - onPrimary: Content color for primary surfaces. Defaults to `.white`.
     ///   - onSecondary: Content color for secondary surfaces. Defaults to `.white`.
+    ///   - onDestructive: Content color for destructive surfaces. Defaults to `.white`.
     ///   - destructive: Destructive action color. Defaults to `.systemRed`.
     ///   - destructiveSurface: Tinted destructive background. Defaults to red with 12% opacity.
     ///   - success: Success state color. Defaults to `.systemGreen`.
@@ -160,6 +165,7 @@ public struct HABColorTokens {
         }),
         onPrimary: UIColor            = .white,
         onSecondary: UIColor          = .white,
+        onDestructive: UIColor        = .white,
         destructive: UIColor          = .systemRed,
         destructiveSurface: UIColor   = UIColor(dynamicProvider: { _ in .systemRed.withAlphaComponent(0.12) }),
         success: UIColor              = .systemGreen,
@@ -194,6 +200,7 @@ public struct HABColorTokens {
         self.foregroundInverted  = foregroundInverted
         self.onPrimary           = onPrimary
         self.onSecondary         = onSecondary
+        self.onDestructive       = onDestructive
         self.destructive         = destructive
         self.destructiveSurface  = destructiveSurface
         self.success             = success

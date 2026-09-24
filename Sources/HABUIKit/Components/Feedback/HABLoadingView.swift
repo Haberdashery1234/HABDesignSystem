@@ -161,6 +161,7 @@ public final class HABLoadingView: UIView {
         
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
+        messageLabel.adjustsFontForContentSizeCategory = true
         
         animatedImageView.contentMode = .scaleAspectFit
         
@@ -366,10 +367,12 @@ public final class HABLoadingView: UIView {
     // MARK: - Accessibility
 
     private func updateAccessibility() {
-        accessibilityLabel = message ?? "Loading"
+        // One VoiceOver element: "Syncing data, 50%" rather than separate parts.
+        isAccessibilityElement = true
+        accessibilityLabel = message ?? HABStrings.loading
         accessibilityTraits = .updatesFrequently
         if let progress {
-            accessibilityValue = "\(Int(progress * 100)) percent"
+            accessibilityValue = HABStrings.percent(progress)
         } else {
             accessibilityValue = nil
         }

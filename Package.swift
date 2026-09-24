@@ -21,6 +21,7 @@ let swiftSettings: [SwiftSetting] = [
 
 let package = Package(
     name: "HABDesignSystem",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v26),
         .macCatalyst(.v26)
@@ -43,6 +44,10 @@ let package = Package(
         .target(
             name: "HABUIKit",
             dependencies: ["HABFoundation"],
+            resources: [
+                // Localizable.xcstrings: user-facing and VoiceOver strings.
+                .process("Resources")
+            ],
             swiftSettings: swiftSettings
         ),
 

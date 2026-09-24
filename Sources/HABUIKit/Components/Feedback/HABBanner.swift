@@ -29,7 +29,7 @@ public final class HABBanner: UIView {
     private let titleLabel = UILabel()
     private let messageLabel = UILabel()
     private let actionButton = UIButton(type: .system)
-    private let dismissButton = UIButton(type: .system)
+    private let dismissButton = HABMinimumHitAreaButton(type: .system)
 
     // MARK: - Init
 
@@ -68,9 +68,19 @@ public final class HABBanner: UIView {
         iconView.setContentHuggingPriority(.required, for: .horizontal)
 
         titleLabel.numberOfLines = 0
+        titleLabel.adjustsFontForContentSizeCategory = true
         messageLabel.numberOfLines = 0
+        messageLabel.adjustsFontForContentSizeCategory = true
+
+        // Status is otherwise only conveyed by color and icon shape, so give VoiceOver
+        // the icon as an element that says "Error", "Warning", etc.
+        iconView.isAccessibilityElement = true
+        iconView.accessibilityTraits = .image
+        // Read icon, title, message, then action/dismiss as one group.
+        shouldGroupAccessibilityChildren = true
 
         actionButton.titleLabel?.font = .habSubheadline
+        actionButton.titleLabel?.adjustsFontForContentSizeCategory = true
         actionButton.contentHorizontalAlignment = .leading
         actionButton.addTarget(self, action: #selector(actionTapped), for: .touchUpInside)
 
@@ -119,21 +129,26 @@ public final class HABBanner: UIView {
         let bgColor: UIColor
         let iconName: String
         let tintColor: UIColor
+        let statusName: String
 
         switch style {
             case .info:
+                statusName = HABStrings.information
                 bgColor = .habInfoSurface
                 iconName = "info.circle.fill"
                 tintColor = .habInfo
             case .success:
+                statusName = HABStrings.success
                 bgColor = .habSuccessSurface
                 iconName = "checkmark.circle.fill"
                 tintColor = .habSuccess
             case .warning:
+                statusName = HABStrings.warning
                 bgColor = .habWarningSurface
                 iconName = "exclamationmark.triangle.fill"
                 tintColor = .habWarning
             case .error:
+                statusName = HABStrings.error
                 bgColor = .habDestructiveSurface
                 iconName = "xmark.circle.fill"
                 tintColor = .habDestructive
@@ -141,6 +156,7 @@ public final class HABBanner: UIView {
 
         backgroundColor = bgColor
         iconView.image = UIImage(systemName: iconName)
+        iconView.accessibilityLabel = statusName
         iconView.tintColor = tintColor
 
         titleLabel.text = title

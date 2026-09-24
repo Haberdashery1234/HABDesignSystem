@@ -192,7 +192,7 @@ public final class HABButton: UIButton {
             case .secondary, .ghost:
                 return .habPrimary
             case .destructive:
-                return .white
+                return .habOnDestructive
         }
     }
     
@@ -296,6 +296,12 @@ public final class HABButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Accepts touches across at least 44×44pt, so `.small` buttons stay easy to hit
+    /// without being drawn larger.
+    public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        bounds.expandedToMinimum().contains(point)
+    }
+
     private func addActivityIndicator() {
         addSubview(activityIndicator)
         NSLayoutConstraint.activate([
@@ -345,7 +351,7 @@ public final class HABButton: UIButton {
                 didDisableInteractionForLoading = true
             }
             // Keep the caller's label (e.g. "Submit") and report the state as the value.
-            accessibilityValue = "Loading"
+            accessibilityValue = HABStrings.loading
             accessibilityTraits.insert(.notEnabled)
         } else {
             activityIndicator.stopAnimating()

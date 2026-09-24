@@ -22,6 +22,9 @@ public final class HABToast: UIView {
     /// Toasts are queued per container view: if one is already showing in `view`,
     /// this one appears after it's dismissed, instead of overlapping it.
     /// Tapping a toast dismisses it early.
+    ///
+    /// While VoiceOver is running, a toast stays up for at least
+    /// ``minimumVoiceOverDuration`` so there's time to hear it and act on it.
     public static func show(
         message: String,
         style: Style = .info,
@@ -36,6 +39,9 @@ public final class HABToast: UIView {
             present(request, in: view)
         }
     }
+
+    /// The shortest time a toast stays on screen while VoiceOver is running.
+    public static var minimumVoiceOverDuration: TimeInterval = 10
 
     // MARK: - Queue
 
@@ -80,22 +86,32 @@ public final class HABToast: UIView {
             bottomConstraint
         ])
 
-        view.layoutIfNeeded()
-
-        bottomConstraint.constant = -HABSpacing.lg
-        UIView.animate(
-            withDuration: HABAnimation.Spring.gentle.duration,
-            delay: 0,
-            usingSpringWithDamping: 1.0 - HABAnimation.Spring.gentle.bounce,
-            initialSpringVelocity: 0,
-            options: HABAnimation.Curve.easeOut.options
-        ) {
+        if HABAnimation.prefersReducedMotion {
+            // Reduce Motion: appear in place with a fade instead of sliding up.
+            bottomConstraint.constant = -HABSpacing.lg
             view.layoutIfNeeded()
+            toast.alpha = 0
+            UIView.animate(withDuration: HABAnimation.Duration.normal) { toast.alpha = 1 }
+        } else {
+            view.layoutIfNeeded()
+            bottomConstraint.constant = -HABSpacing.lg
+            UIView.animate(
+                withDuration: HABAnimation.Spring.gentle.duration,
+                delay: 0,
+                usingSpringWithDamping: 1.0 - HABAnimation.Spring.gentle.bounce,
+                initialSpringVelocity: 0,
+                options: HABAnimation.Curve.easeOut.options
+            ) {
+                view.layoutIfNeeded()
+            }
         }
 
-        UIAccessibility.post(notification: .announcement, argument: request.message)
+        UIAccessibility.post(notification: .announcement, argument: toast.announcement)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + request.duration) { [weak toast] in
+        let duration = UIAccessibility.isVoiceOverRunning
+            ? max(request.duration, minimumVoiceOverDuration)
+            : request.duration
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak toast] in
             toast?.dismiss()
         }
     }
@@ -153,6 +169,7 @@ public final class HABToast: UIView {
 
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.font = .habSubheadline
+        messageLabel.adjustsFontForContentSizeCategory = true
         messageLabel.numberOfLines = 0
 
         addSubview(iconImageView)
@@ -181,6 +198,8 @@ public final class HABToast: UIView {
             messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -vertPad)
         ])
 
+        // One VoiceOver element. Double-tapping it dismisses (via the tap gesture).
+        isAccessibilityElement = true
         accessibilityLabel = message
         accessibilityTraits = .staticText
 
@@ -217,6 +236,24 @@ public final class HABToast: UIView {
         iconImageView.tintColor = tintColor
         messageLabel.text = message
         messageLabel.textColor = .habForeground
+    }
+
+    // MARK: - Accessibility
+
+    /// What VoiceOver announces: the message, prefixed with the status for anything
+    /// other than `.info` ("Error: Couldn't save"), since status is otherwise only
+    /// conveyed by color and icon.
+    var announcement: String {
+        switch style {
+            case .info:
+                return message
+            case .success:
+                return HABStrings.status(HABStrings.success, message: message)
+            case .warning:
+                return HABStrings.status(HABStrings.warning, message: message)
+            case .error:
+                return HABStrings.status(HABStrings.error, message: message)
+        }
     }
 
     // MARK: - Dismiss

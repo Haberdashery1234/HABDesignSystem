@@ -45,4 +45,18 @@ final class HABBadgeTests: XCTestCase {
         badge.number = 1
         XCTAssertTrue(badge.isAccessibilityElement)
     }
+
+    func testSingularNotificationLabel() {
+        let badge = HABBadge()
+        badge.number = 1
+        XCTAssertEqual(badge.accessibilityLabel, "1 notification")
+    }
+
+    func testHeightIsAMinimumSoTextCanGrow() {
+        let badge = HABBadge()
+        let fixed18 = badge.constraints.contains {
+            $0.firstAttribute == .height && $0.relation == .equal && $0.constant == 18
+        }
+        XCTAssertFalse(fixed18)
+    }
 }
