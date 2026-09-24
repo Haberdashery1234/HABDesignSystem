@@ -193,7 +193,9 @@ public final class HABTag: UIView {
                 layer.borderWidth = 1
                 layer.borderColor = borderColor.cgColor
             case .subtle:
-                backgroundColor = tintedBg.withAlphaComponent(0.5)
+                // Half the tint of `.filled`. `withAlphaComponent` would *replace* the
+                // token's alpha (e.g. 0.12 -> 0.5), making subtle stronger than filled.
+                backgroundColor = tintedBg.scalingAlpha(by: 0.5)
                 layer.borderWidth = 0
         }
 
@@ -216,12 +218,20 @@ public final class HABTag: UIView {
         setupDynamicConstraints()
 
         // Accessibility
+        // The tag is a single VoiceOver element, which hides the dismiss button from
+        // VoiceOver. Expose dismissal as a custom action ("Actions" rotor) instead.
         isAccessibilityElement = true
         accessibilityLabel = label
-        if hasDismiss {
-            accessibilityTraits = [.button]
+        accessibilityTraits = [.staticText]
+        if let dismissAction {
+            accessibilityCustomActions = [
+                UIAccessibilityCustomAction(name: dismissAction.label) { [weak self] _ in
+                    self?.handleDismiss()
+                    return true
+                }
+            ]
         } else {
-            accessibilityTraits = [.staticText]
+            accessibilityCustomActions = nil
         }
 
         setNeedsLayout()
@@ -258,5 +268,18 @@ public final class HABTag: UIView {
 
     @objc private func themeDidChange() {
         updateAppearance()
+    }
+}
+
+// MARK: - UIColor alpha scaling
+
+private extension UIColor {
+    /// Returns a dynamic color whose alpha is this color's alpha multiplied by `factor`,
+    /// resolved per trait collection so adaptive colors keep adapting.
+    func scalingAlpha(by factor: CGFloat) -> UIColor {
+        UIColor { traits in
+            let resolved = self.resolvedColor(with: traits)
+            return resolved.withAlphaComponent(resolved.cgColor.alpha * factor)
+        }
     }
 }

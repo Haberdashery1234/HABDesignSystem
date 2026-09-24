@@ -161,7 +161,8 @@ public final class HABCardButton: UIControl {
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
 
-        subtitleLabel.textColor = .habForegroundSecondary
+        // Use the theme provider (not `textColor`) so theme changes keep it secondary.
+        subtitleLabel.themeTextColor = { .habForegroundSecondary }
 
         labelStack.addArrangedSubview(titleLabel)
         labelStack.addArrangedSubview(subtitleLabel)

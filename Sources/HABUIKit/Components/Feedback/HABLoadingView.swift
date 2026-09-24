@@ -124,6 +124,7 @@ public final class HABLoadingView: UIView {
     private var animatedImageWidthConstraint: NSLayoutConstraint!
     private var animatedImageHeightConstraint: NSLayoutConstraint!
     private var customProgressHeightConstraint: NSLayoutConstraint!
+    private var messageTopConstraint: NSLayoutConstraint!
     
     // Track active indicator constraints so we can remove them when style changes
     private var activeIndicatorConstraints: [NSLayoutConstraint] = []
@@ -174,8 +175,11 @@ public final class HABLoadingView: UIView {
         addSubview(indicatorContainerView)
         addSubview(messageLabel)
         
-        let gap = CGFloat(HABSpacing.sm)
-        
+        messageTopConstraint = messageLabel.topAnchor.constraint(
+            equalTo: indicatorContainerView.bottomAnchor,
+            constant: HABSpacing.sm
+        )
+
         NSLayoutConstraint.activate([
             // Container view at the top
             indicatorContainerView.topAnchor.constraint(equalTo: topAnchor),
@@ -190,10 +194,7 @@ public final class HABLoadingView: UIView {
             messageLabel.trailingAnchor.constraint(
                 lessThanOrEqualTo: trailingAnchor
             ),
-            messageLabel.topAnchor.constraint(
-                equalTo: indicatorContainerView.bottomAnchor,
-                constant: gap
-            ),
+            messageTopConstraint,
             messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
 
@@ -276,6 +277,8 @@ public final class HABLoadingView: UIView {
         // Update message label
         messageLabel.isHidden = (message == nil)
         messageLabel.text = message
+        // Collapse the gap when there's no message so the indicator isn't padded.
+        messageTopConstraint.constant = (message == nil) ? 0 : HABSpacing.sm
         messageLabel.font = .habFootnote
         messageLabel.textColor = .habForegroundSecondary
         messageLabel.textAlignment = .center
@@ -504,26 +507,41 @@ private final class HABCustomSpinnerView: UIView {
         shapeLayer.strokeColor = (customColor ?? .habPrimary).cgColor
     }
 
+    private static let rotationKey = "rotation"
+
     func startAnimating() {
         guard !isAnimating else { return }
         isAnimating = true
         isHidden = false
+        addRotationAnimation()
+    }
 
-        // Rotation animation
+    /// Core Animation can drop layer animations when the app backgrounds or the view
+    /// leaves the window. Re-add the rotation when we're back on screen if it's gone.
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        if window != nil, isAnimating, layer.animation(forKey: Self.rotationKey) == nil {
+            addRotationAnimation()
+        }
+    }
+
+    private func addRotationAnimation() {
         let rotation = CABasicAnimation(keyPath: "transform.rotation.z")
         rotation.fromValue = 0
         rotation.toValue = CGFloat.pi * 2
         rotation.duration = 1.0
         rotation.repeatCount = .infinity
         rotation.timingFunction = CAMediaTimingFunction(name: .linear)
+        // Keep the animation attached when the app is backgrounded.
+        rotation.isRemovedOnCompletion = false
 
-        layer.add(rotation, forKey: "rotation")
+        layer.add(rotation, forKey: Self.rotationKey)
     }
 
     func stopAnimating() {
         guard isAnimating else { return }
         isAnimating = false
-        layer.removeAllAnimations()
+        layer.removeAnimation(forKey: Self.rotationKey)
     }
 }
 
@@ -534,11 +552,20 @@ private final class HABCustomProgressView: UIView {
     private let trackLayer = CALayer()
     private let progressLayer = CALayer()
 
-    var progress: Float = 0 {
-        didSet {
+    /// Current progress (0...1). Setting this jumps without animation;
+    /// use `setProgress(_:animated:)` to animate.
+    var progress: Float {
+        get { storedProgress }
+        set {
+            storedProgress = min(max(newValue, 0), 1)
             updateProgress(animated: false)
         }
     }
+
+    /// Backing storage, so `setProgress(_:animated:)` can update the value without
+    /// going through the non-animated setter (which previously moved the bar before
+    /// the animated update ran, so it never animated).
+    private var storedProgress: Float = 0
     
     /// Custom progress color. If nil, uses the theme primary color.
     var customProgressColor: UIColor? {
@@ -591,7 +618,7 @@ private final class HABCustomProgressView: UIView {
     }
 
     func setProgress(_ progress: Float, animated: Bool) {
-        self.progress = min(max(progress, 0), 1)
+        storedProgress = min(max(progress, 0), 1)
         updateProgress(animated: animated)
     }
 

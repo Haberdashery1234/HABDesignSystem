@@ -8,6 +8,23 @@ on:
   workflow_dispatch:
 
 jobs:
+  lint:
+    name: SwiftLint
+    # Same macOS image as the test job, so lint results match what you see locally.
+    runs-on: macos-26
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Lint package and sample app
+        # --reporter github-actions-logging turns violations into inline PR annotations.
+        # Add --strict here once the existing warnings are cleaned up, to fail on warnings too.
+        run: ./Scripts/lint.sh --reporter github-actions-logging
+
   test:
     name: Build & Test (${{ matrix.scheme }})
     # This project's IPHONEOS_DEPLOYMENT_TARGET is 26.5 (FoundationModels
@@ -20,11 +37,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # HABUIKitSample: runs HABUIKitTests (framework unit tests) plus the
+        # SAHABDesignSystem: runs HABUIKitTests (framework unit tests) plus the
         #                 sample app unit + UI tests in a single job. The
         #                 HABUIKit scheme can't be used on CI because SPM-only
         #                 schemes have no platform anchor for xcodebuild.
-        scheme: [HABUIKitSample]
+        scheme: [SAHABDesignSystem]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -76,7 +93,7 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild test \
-            -project HABDesignSystemSample.xcodeproj \
+            -project SAHABDesignSystem.xcodeproj \
             -scheme "${{ matrix.scheme }}" \
             -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             -resultBundlePath "TestResults-${{ matrix.scheme }}.xcresult" \

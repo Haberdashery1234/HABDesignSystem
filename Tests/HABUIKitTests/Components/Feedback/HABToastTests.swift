@@ -84,7 +84,8 @@ final class HABToastTests: XCTestCase {
             )
         }
         
-        XCTAssertEqual(view.subviews.count, 4)
+        // Toasts in the same container are queued, so only the first is on screen.
+        XCTAssertEqual(view.subviews.count, 1)
     }
     
     func testShowTriggersAccessibilityAnnouncement() {
@@ -212,14 +213,46 @@ final class HABToastTests: XCTestCase {
     
     // MARK: - Multiple Toasts Tests
     
-    func testMultipleToastsCanBeShownSimultaneously() {
+    func testMultipleToastsAreQueuedNotStacked() {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
-        
+
         HABToast.show(message: "First", duration: 2.0, in: view)
         HABToast.show(message: "Second", duration: 2.0, in: view)
         HABToast.show(message: "Third", duration: 2.0, in: view)
-        
-        let toastCount = view.subviews.filter { $0 is HABToast }.count
-        XCTAssertEqual(toastCount, 3)
+
+        let toasts = view.subviews.compactMap { $0 as? HABToast }
+        XCTAssertEqual(toasts.count, 1)
+        XCTAssertEqual(toasts.first?.accessibilityLabel, "First")
+    }
+
+    func testQueuedToastAppearsAfterPreviousDismisses() {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
+        let expectation = XCTestExpectation(description: "Second toast shown")
+
+        HABToast.show(message: "First", duration: 0.1, in: view)
+        HABToast.show(message: "Second", duration: 2.0, in: view)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            let labels = view.subviews.compactMap { ($0 as? HABToast)?.accessibilityLabel }
+            XCTAssertEqual(labels, ["Second"])
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1.5)
+    }
+
+    func testToastsInDifferentContainersShowIndependently() {
+        let first = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
+        let second = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
+        HABToast.show(message: "A", duration: 2.0, in: first)
+        HABToast.show(message: "B", duration: 2.0, in: second)
+        XCTAssertEqual(first.subviews.count, 1)
+        XCTAssertEqual(second.subviews.count, 1)
+    }
+
+    func testToastHasTapToDismissGesture() {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
+        HABToast.show(message: "Tap me", duration: 2.0, in: view)
+        let toast = view.subviews.first as? HABToast
+        XCTAssertTrue(toast?.gestureRecognizers?.contains { $0 is UITapGestureRecognizer } ?? false)
     }
 }

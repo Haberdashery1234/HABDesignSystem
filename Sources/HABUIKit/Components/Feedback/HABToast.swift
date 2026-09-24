@@ -17,15 +17,50 @@ public final class HABToast: UIView {
 
     // MARK: - Static API
 
+    /// Shows a toast at the bottom of `view`.
+    ///
+    /// Toasts are queued per container view: if one is already showing in `view`,
+    /// this one appears after it's dismissed, instead of overlapping it.
+    /// Tapping a toast dismisses it early.
     public static func show(
         message: String,
         style: Style = .info,
         duration: TimeInterval = 3.0,
         in view: UIView
     ) {
-        let toast = HABToast(message: message, style: style)
+        let request = Request(message: message, style: style, duration: duration)
+        let key = ObjectIdentifier(view)
+        if activeToasts[key]?.toast != nil {
+            pendingRequests[key, default: []].append(request)
+        } else {
+            present(request, in: view)
+        }
+    }
+
+    // MARK: - Queue
+
+    private struct Request {
+        let message: String
+        let style: Style
+        let duration: TimeInterval
+    }
+
+    private struct WeakToast {
+        weak var toast: HABToast?
+    }
+
+    /// The toast currently on screen in each container view, keyed by that view.
+    private static var activeToasts: [ObjectIdentifier: WeakToast] = [:]
+    /// Toasts waiting for the current one in the same container to finish.
+    private static var pendingRequests: [ObjectIdentifier: [Request]] = [:]
+
+    private static func present(_ request: Request, in view: UIView) {
+        let key = ObjectIdentifier(view)
+        let toast = HABToast(message: request.message, style: request.style)
         toast.translatesAutoresizingMaskIntoConstraints = false
+        toast.containerView = view
         view.addSubview(toast)
+        activeToasts[key] = WeakToast(toast: toast)
 
         let bottomConstraint = toast.bottomAnchor.constraint(
             equalTo: view.safeAreaLayoutGuide.bottomAnchor,
@@ -58,11 +93,25 @@ public final class HABToast: UIView {
             view.layoutIfNeeded()
         }
 
-        UIAccessibility.post(notification: .announcement, argument: message)
+        UIAccessibility.post(notification: .announcement, argument: request.message)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            toast.dismiss()
+        DispatchQueue.main.asyncAfter(deadline: .now() + request.duration) { [weak toast] in
+            toast?.dismiss()
         }
+    }
+
+    /// Called when a toast finishes dismissing: shows the next queued toast for that container.
+    private static func toastDidDismiss(in view: UIView?) {
+        guard let view else { return }
+        let key = ObjectIdentifier(view)
+        activeToasts[key] = nil
+        guard var queue = pendingRequests[key], !queue.isEmpty else {
+            pendingRequests[key] = nil
+            return
+        }
+        let next = queue.removeFirst()
+        pendingRequests[key] = queue.isEmpty ? nil : queue
+        present(next, in: view)
     }
 
     // MARK: - Private Properties
@@ -71,6 +120,8 @@ public final class HABToast: UIView {
     private let style: Style
     private let messageLabel = UILabel()
     private let iconImageView = UIImageView()
+    private weak var containerView: UIView?
+    private var isDismissing = false
 
     // MARK: - Init
 
@@ -132,6 +183,12 @@ public final class HABToast: UIView {
 
         accessibilityLabel = message
         accessibilityTraits = .staticText
+
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+    }
+
+    @objc private func handleTap() {
+        dismiss()
     }
 
     // MARK: - Appearance
@@ -165,10 +222,17 @@ public final class HABToast: UIView {
     // MARK: - Dismiss
 
     private func dismiss() {
+        // A tap and the timer can both call this; only dismiss once.
+        guard !isDismissing else { return }
+        isDismissing = true
         UIView.animate(
             withDuration: HABAnimation.Duration.fast,
             animations: { self.alpha = 0 },
-            completion: { _ in self.removeFromSuperview() }
+            completion: { _ in
+                let container = self.containerView
+                self.removeFromSuperview()
+                HABToast.toastDidDismiss(in: container)
+            }
         )
     }
 

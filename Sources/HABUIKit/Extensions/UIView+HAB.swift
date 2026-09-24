@@ -89,6 +89,7 @@ public extension UIView {
     /// Fades the view in from alpha 0 to 1.
     func fadeIn(duration: TimeInterval = HABAnimation.Duration.normal) {
         alpha = 0
+        isHidden = false // Undo `fadeOut()`, which hides the view on completion.
         UIView.animate(withDuration: duration) { self.alpha = 1 }
     }
 

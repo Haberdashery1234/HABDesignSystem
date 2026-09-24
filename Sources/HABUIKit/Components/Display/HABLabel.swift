@@ -58,7 +58,32 @@ public final class HABLabel: UILabel {
         }
     }
 
+    /// Resolves the label's text color from the active theme. Re-evaluated whenever
+    /// the theme changes, so the color stays in sync. Defaults to `.habForeground`.
+    ///
+    /// ```swift
+    /// label.themeTextColor = { .habForegroundSecondary }
+    /// ```
+    ///
+    /// Assigning `textColor` directly clears this, and the label keeps that fixed
+    /// color across theme changes instead of resetting it.
+    public var themeTextColor: (() -> UIColor)? = { .habForeground } {
+        didSet { applyThemeTextColor() }
+    }
+
     // MARK: - Overrides
+
+    /// Assigning a color directly opts out of theme-driven color (`themeTextColor`
+    /// becomes `nil`), so a theme change no longer overwrites it.
+    public override var textColor: UIColor! {
+        get { super.textColor }
+        set {
+            if !isApplyingThemeTextColor {
+                themeTextColor = nil
+            }
+            super.textColor = newValue
+        }
+    }
 
     /// Setting `text` exits styled mode. The label returns to plain font rendering
     /// and Dynamic Type scaling via `adjustsFontForContentSizeCategory` resumes.
@@ -76,6 +101,9 @@ public final class HABLabel: UILabel {
     /// can be rebuilt from the current theme and type scale on any change.
     private var styledString: String?
 
+    /// True while the label itself assigns `textColor` from `themeTextColor`.
+    private var isApplyingThemeTextColor = false
+
     // MARK: - Init
 
     /// Creates a new label with the specified typography style.
@@ -89,7 +117,10 @@ public final class HABLabel: UILabel {
         self.textStyle = textStyle
         super.init(frame: .zero)
         numberOfLines = 0
-        textColor = .habForeground
+        // Property observers don't fire during init, so apply explicitly. Re-assigning
+        // the provider also guards against UILabel's init touching `textColor`.
+        themeTextColor = { .habForeground }
+        applyThemeTextColor()
         // Handles Dynamic Type automatically in plain-text mode.
         // No effect when styledText is set — changes are handled via the notification.
         adjustsFontForContentSizeCategory = true
@@ -115,8 +146,15 @@ public final class HABLabel: UILabel {
     // MARK: - Private
 
     @objc private func themeDidChange() {
-        textColor = .habForeground
+        applyThemeTextColor()
         handleStyleChange()
+    }
+
+    private func applyThemeTextColor() {
+        guard let themeTextColor else { return }
+        isApplyingThemeTextColor = true
+        textColor = themeTextColor()
+        isApplyingThemeTextColor = false
     }
 
     @objc private func contentSizeDidChange() {

@@ -242,6 +242,10 @@ public final class HABButton: UIButton {
         }
     }
     
+    /// True when `isLoading` turned interaction off, so ending loading restores only
+    /// what loading changed rather than overriding the caller's own setting.
+    private var didDisableInteractionForLoading = false
+
     private lazy var activityIndicator: UIActivityIndicatorView = {
         $0.style = .medium
         $0.hidesWhenStopped = true
@@ -331,19 +335,28 @@ public final class HABButton: UIButton {
         config.imagePlacement = resolvedImagePlacement
         
         if isLoading {
-            config.title = nil
-            config.image = nil
+            // Keep the title and icon in the layout but make them invisible, so the
+            // button keeps its width instead of collapsing around the spinner.
+            config.baseForegroundColor = .clear
             activityIndicator.startAnimating()
             activityIndicator.color = fgColor
-            isUserInteractionEnabled = false
-            accessibilityLabel = "Loading"
-            accessibilityTraits = [.button, .notEnabled]
+            if isUserInteractionEnabled {
+                isUserInteractionEnabled = false
+                didDisableInteractionForLoading = true
+            }
+            // Keep the caller's label (e.g. "Submit") and report the state as the value.
+            accessibilityValue = "Loading"
+            accessibilityTraits.insert(.notEnabled)
         } else {
             activityIndicator.stopAnimating()
-            isUserInteractionEnabled = true
-            accessibilityLabel = nil
-            accessibilityTraits = .button
+            if didDisableInteractionForLoading {
+                isUserInteractionEnabled = true
+                didDisableInteractionForLoading = false
+            }
+            accessibilityValue = nil
+            accessibilityTraits.remove(.notEnabled)
         }
+        accessibilityTraits.insert(.button)
         
         configuration = config
     }
