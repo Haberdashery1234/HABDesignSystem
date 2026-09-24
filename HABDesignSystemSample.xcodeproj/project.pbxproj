@@ -42,7 +42,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		03A049CB300FF06B006C9C95 /* SwiftlintRules.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = SwiftlintRules.yml; sourceTree = "<group>"; };
+		03A049CB300FF06B006C9C95 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		03D541D82FF35CC600BB2C51 /* HABDesignSystemSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HABDesignSystemSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D541ED2FF35CC800BB2C51 /* HABDesignSystemSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HABDesignSystemSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D541F72FF35CC800BB2C51 /* HABDesignSystemSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HABDesignSystemSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,7 +108,7 @@
 			children = (
 				0341BE562FF8A7CA00EB1F77 /* Frameworks */,
 				03D5415E2FF359B300BB2C51 /* Products */,
-				03A049CB300FF06B006C9C95 /* SwiftlintRules.yml */,
+				03A049CB300FF06B006C9C95 /* .swiftlint.yml */,
 				039BE3D2301D7C4200A95A45 /* Sample */,
 			);
 			sourceTree = "<group>";
@@ -281,7 +281,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -f /opt/homebrew/bin/swiftlint ]; then\n    /opt/homebrew/bin/swiftlint --config \"${SRCROOT}/SwiftlintRules.yml\" \"${SRCROOT}/Sources\"\nelif [ -f /usr/local/bin/swiftlint ]; then\n    /usr/local/bin/swiftlint --config \"${SRCROOT}/SwiftlintRules.yml\" \"${SRCROOT}/Sources\"\nelse\n    echo \"warning: SwiftLint not installed, download via Homebrew: brew install swiftlint\"\nfi\n";
+			shellScript = "if [ -f /opt/homebrew/bin/swiftlint ]; then\n    /opt/homebrew/bin/swiftlint --config \"${SRCROOT}/.swiftlint.yml\" \"${SRCROOT}/Sources\"\nelif [ -f /usr/local/bin/swiftlint ]; then\n    /usr/local/bin/swiftlint --config \"${SRCROOT}/.swiftlint.yml\" \"${SRCROOT}/Sources\"\nelse\n    echo \"warning: SwiftLint not installed, download via Homebrew: brew install swiftlint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

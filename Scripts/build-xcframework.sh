@@ -2,10 +2,11 @@
 #
 # build-xcframework.sh
 #
-# Builds three xcframeworks from the HABDesignSystem SPM package:
+# Builds xcframeworks from the HABDesignSystem SPM package:
 #   • HABFoundation.xcframework — design tokens, theme system
 #   • HABUIKit.xcframework      — UIKit components
-#   • HABSwiftUI.xcframework    — SwiftUI components
+#
+# (Add HABSwiftUI to FRAMEWORKS below once that target exists in Package.swift.)
 #
 # Each xcframework contains slices for:
 #   • iOS device        (arm64)
@@ -19,7 +20,6 @@
 # Output:
 #   build/HABFoundation.xcframework
 #   build/HABUIKit.xcframework
-#   build/HABSwiftUI.xcframework
 #
 
 set -euo pipefail
@@ -31,7 +31,7 @@ BUILD_DIR="build"
 DERIVED_DATA="$BUILD_DIR/DerivedData"
 
 # Frameworks to build, in dependency order.
-FRAMEWORKS=("HABFoundation" "HABUIKit" "HABSwiftUI")
+FRAMEWORKS=("HABFoundation" "HABUIKit")
 
 # Common xcodebuild flags.
 COMMON_FLAGS=(
@@ -80,6 +80,17 @@ for SCHEME in "${FRAMEWORKS[@]}"; do
         -archivePath "$BUILD_DIR/$SCHEME-macos.xcarchive" \
         | "${FORMATTER[@]}"
 
+    for ARCHIVE in ios ios-sim macos; do
+        FRAMEWORK_PATH="$BUILD_DIR/$SCHEME-$ARCHIVE.xcarchive/Products/Library/Frameworks/$SCHEME.framework"
+        if [ ! -d "$FRAMEWORK_PATH" ]; then
+            echo "error: $FRAMEWORK_PATH not found." >&2
+            echo "       SPM library products with automatic linkage may archive as static" >&2
+            echo "       objects rather than .framework bundles. If so, declare the product" >&2
+            echo "       with 'type: .dynamic' in Package.swift for binary distribution." >&2
+            exit 1
+        fi
+    done
+
     xcodebuild -create-xcframework \
         -framework "$BUILD_DIR/$SCHEME-ios.xcarchive/Products/Library/Frameworks/$SCHEME.framework" \
         -framework "$BUILD_DIR/$SCHEME-ios-sim.xcarchive/Products/Library/Frameworks/$SCHEME.framework" \
@@ -98,4 +109,3 @@ echo "To distribute via binary SPM, zip each xcframework:"
 echo "  cd $BUILD_DIR"
 echo "  zip -r HABFoundation.xcframework.zip HABFoundation.xcframework"
 echo "  zip -r HABUIKit.xcframework.zip HABUIKit.xcframework"
-echo "  zip -r HABSwiftUI.xcframework.zip HABSwiftUI.xcframework"

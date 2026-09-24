@@ -12,7 +12,9 @@ instead of rebuilding the same buttons, cards, and inputs per project.
   (`HABDefaultTheme`, `HABLightTheme`, `HABDarkTheme`, `HABAppleTheme`),
   runtime-swappable via `HABThemeManager.shared.theme` — components
   observe theme changes automatically via `NotificationCenter`, so
-  switching themes updates the whole UI live. No UIKit/SwiftUI dependency.
+  switching themes updates the whole UI live. Token types currently use
+  UIKit types (`UIColor`, `UIFont`); a platform-neutral layer is planned
+  alongside `HABSwiftUI`.
 - **`HABUIKit`** — UIKit components built on `HABFoundation`: buttons
   (`HABButton`, `HABCardButton`), containers (`HABCard`, `HABDivider`),
   display (`HABAvatar`, `HABBadge`, `HABLabel`, `HABTag`), feedback
@@ -51,7 +53,7 @@ quick look at `HABLoadingView` in action.
 
 ```swift
 // Package.swift
-.package(url: "https://github.com/Haberdashery1234/HABDesignSystem.git", from: "1.0.0"),
+.package(url: "https://github.com/Haberdashery1234/HABDesignSystem.git", from: "0.1.0"),
 ```
 
 ```swift
@@ -72,4 +74,9 @@ swift test
 
 ## Status
 
-Actively developed alongside Clarity, its first real consumer.
+Pre-1.0 (`0.x`): actively developed alongside Clarity, its first real
+consumer. Minor versions may include breaking API changes until 1.0.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
