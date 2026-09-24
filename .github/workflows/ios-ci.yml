@@ -37,11 +37,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # HABUIKitSample: runs HABUIKitTests (framework unit tests) plus the
+        # SAHABDesignSystem: runs HABUIKitTests (framework unit tests) plus the
         #                 sample app unit + UI tests in a single job. The
         #                 HABUIKit scheme can't be used on CI because SPM-only
         #                 schemes have no platform anchor for xcodebuild.
-        scheme: [HABUIKitSample]
+        scheme: [SAHABDesignSystem]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -93,7 +93,7 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild test \
-            -project HABDesignSystemSample.xcodeproj \
+            -project SAHABDesignSystem.xcodeproj \
             -scheme "${{ matrix.scheme }}" \
             -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             -resultBundlePath "TestResults-${{ matrix.scheme }}.xcresult" \

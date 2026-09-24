@@ -11,7 +11,6 @@ import HABUIKit
 import HABFoundation
 
 final class HABThemeConformanceTests: XCTestCase {
-
     // MARK: - Theme Names
 
     func testDefaultThemeName() {
@@ -38,9 +37,9 @@ final class HABThemeConformanceTests: XCTestCase {
         ]
         for theme in themes {
             let c = theme.colors
-            XCTAssertNotNil(c.primary,     "\(theme.name): primary is nil")
+            XCTAssertNotNil(c.primary, "\(theme.name): primary is nil")
             XCTAssertNotNil(c.destructive, "\(theme.name): destructive is nil")
-            XCTAssertNotNil(c.overlay,     "\(theme.name): overlay is nil")
+            XCTAssertNotNil(c.overlay, "\(theme.name): overlay is nil")
         }
     }
 
@@ -50,8 +49,8 @@ final class HABThemeConformanceTests: XCTestCase {
         ]
         for theme in themes {
             let t = theme.typography
-            XCTAssertNotNil(t.display.font,  "\(theme.name): display is nil")
-            XCTAssertNotNil(t.body.font,     "\(theme.name): body is nil")
+            XCTAssertNotNil(t.display.font, "\(theme.name): display is nil")
+            XCTAssertNotNil(t.body.font, "\(theme.name): body is nil")
             XCTAssertNotNil(t.caption2.font, "\(theme.name): caption2 is nil")
         }
     }

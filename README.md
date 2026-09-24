@@ -42,12 +42,12 @@ A `HABSwiftUI` target is planned but not implemented yet.
 
 ## Sample app
 
-`Sample/HABDesignSystemSample` is a small UIKit app exercising the
+`Sample/SAHABDesignSystem` is a small UIKit app exercising the
 component library end-to-end — see
-`Sample/HABDesignSystemSample/Resources/SampleAnimatedLoading.gif` for a
+`Sample/SAHABDesignSystem/Resources/SAAnimatedLoading.gif` for a
 quick look at `HABLoadingView` in action.
 
-![HABLoadingView sample](Sample/HABDesignSystemSample/Resources/SampleAnimatedLoading.gif)
+![HABLoadingView sample](Sample/SAHABDesignSystem/Resources/SAAnimatedLoading.gif)
 
 ## Getting started
 
