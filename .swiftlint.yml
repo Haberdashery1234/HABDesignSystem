@@ -19,10 +19,18 @@ opt_in_rules:
 - vertical_whitespace_opening_braces
 - vertical_whitespace_closing_braces
 
+# Lint the package (Sources, Tests) and the sample app. Paths are relative to
+# this file, so `swiftlint` run from the repo root picks all of them up.
+included:
+- Sources
+- Tests
+- Sample
+
 excluded:
+- .build
+- build
 - Carthage
 - Pods
-- SwiftLint/Common/3rdPartyLib
 
 closure_body_length:
     warning: 50
