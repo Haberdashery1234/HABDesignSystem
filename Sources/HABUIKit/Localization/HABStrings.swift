@@ -13,8 +13,6 @@
 
 import Foundation
 
-// swiftlint:disable hardcoded_localized_string
-
 enum HABStrings {
     /// "Loading" — busy button value and loading indicator label.
     static var loading: String {
@@ -39,25 +37,23 @@ enum HABStrings {
     // MARK: Status names (banners, toasts)
 
     static var information: String {
-        String(localized: "Information", bundle: .module, comment: "Status name read by VoiceOver for info banners and toasts.")
+        String(localized: .information)
     }
 
     static var success: String {
-        String(localized: "Success", bundle: .module, comment: "Status name read by VoiceOver for success banners and toasts.")
+        String(localized: .success)
     }
 
     static var warning: String {
-        String(localized: "Warning", bundle: .module, comment: "Status name read by VoiceOver for warning banners and toasts.")
+        String(localized: .warning)
     }
 
     static var error: String {
-        String(localized: "Error", bundle: .module, comment: "Status name read by VoiceOver for error banners and toasts.")
+        String(localized: .error)
     }
 
     /// "Error: Couldn't save" — a status name followed by a message.
     static func status(_ status: String, message: String) -> String {
-        String(localized: "\(status): \(message)", bundle: .module, comment: "VoiceOver announcement for a toast: status name, then the message. Example: \"Error: Couldn't save\".")
+        "\(status): \(message)"
     }
 }
-
-// swiftlint:enable hardcoded_localized_string

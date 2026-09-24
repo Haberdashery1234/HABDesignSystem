@@ -3,9 +3,13 @@
   "strings" : {
     "%@: %@" : {
       "comment" : "VoiceOver announcement for a toast: status name, then the message. Example: \"Error: Couldn't save\".",
-      "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "%1$@: %2$@" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        }
       }
     },
     "%lld notifications" : {
@@ -15,8 +19,18 @@
         "en" : {
           "variations" : {
             "plural" : {
-              "one" : { "stringUnit" : { "state" : "translated", "value" : "%lld notification" } },
-              "other" : { "stringUnit" : { "state" : "translated", "value" : "%lld notifications" } }
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld notification"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld notifications"
+                }
+              }
             }
           }
         }
@@ -26,42 +40,72 @@
       "comment" : "VoiceOver label for an avatar with no name.",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Avatar" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avatar"
+          }
+        }
       }
     },
     "Error" : {
       "comment" : "Status name read by VoiceOver for error banners and toasts.",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Error" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
       }
     },
     "Information" : {
       "comment" : "Status name read by VoiceOver for info banners and toasts.",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Information" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information"
+          }
+        }
       }
     },
     "Loading" : {
       "comment" : "VoiceOver text for a loading indicator, or a button that's busy.",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Loading" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
+          }
+        }
       }
     },
     "Success" : {
       "comment" : "Status name read by VoiceOver for success banners and toasts.",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Success" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success"
+          }
+        }
       }
     },
     "Warning" : {
       "comment" : "Status name read by VoiceOver for warning banners and toasts.",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Warning" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning"
+          }
+        }
       }
     }
   },
