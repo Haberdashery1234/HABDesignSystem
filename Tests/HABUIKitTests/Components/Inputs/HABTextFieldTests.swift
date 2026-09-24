@@ -195,4 +195,35 @@ final class HABTextFieldTests: XCTestCase {
         field.textFieldDidEndEditing(UITextField())
         XCTAssertTrue(mock.called)
     }
+
+    // MARK: - Layout regressions
+
+    func testUsesThemeBodyFontWithDynamicType() {
+        let field = HABTextField()
+        let inner = field.firstSubview(of: UITextField.self)
+        XCTAssertEqual(inner?.font, UIFont.habBody)
+        XCTAssertTrue(inner?.adjustsFontForContentSizeCategory ?? false)
+    }
+
+    func testFieldHeightIsAMinimumNotFixed() {
+        let field = HABTextField()
+        let fixed48 = field.allConstraintsInHierarchy().contains {
+            $0.firstAttribute == .height && $0.relation == .equal && $0.constant == 48
+        }
+        XCTAssertFalse(fixed48, "A fixed 48pt height clips text at large Dynamic Type sizes")
+    }
+}
+
+private extension UIView {
+    func firstSubview<T: UIView>(of type: T.Type) -> T? {
+        for sub in subviews {
+            if let match = sub as? T { return match }
+            if let match = sub.firstSubview(of: type) { return match }
+        }
+        return nil
+    }
+
+    func allConstraintsInHierarchy() -> [NSLayoutConstraint] {
+        constraints + subviews.flatMap { $0.allConstraintsInHierarchy() }
+    }
 }

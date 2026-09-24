@@ -31,6 +31,9 @@ public final class HABTextView: UIView {
     private let placeholderLabel = UILabel()
     private let bottomLabel = UILabel()
 
+    /// Hidden arranged subviews collapse, so no gap is left for an absent label or helper text.
+    private let outerStack = UIStackView()
+
     // MARK: - Public Properties
 
     public var style: Style = .outlined {
@@ -48,7 +51,8 @@ public final class HABTextView: UIView {
     public var errorText: String? {
         didSet {
             updateAppearance()
-            if let errorText {
+            // Announce only when the message changes (avoids repeats during live validation).
+            if let errorText, errorText != oldValue {
                 UIAccessibility.post(notification: .announcement, argument: errorText)
             }
         }
@@ -157,6 +161,7 @@ public final class HABTextView: UIView {
         textView.delegate = self
         textView.backgroundColor = .clear
         textView.font = .habBody
+        textView.adjustsFontForContentSizeCategory = true
         textView.isScrollEnabled = false
         textView.textContainerInset = UIEdgeInsets(
             top: HABSpacing.sm,
@@ -185,13 +190,17 @@ public final class HABTextView: UIView {
         bottomLabel.isAccessibilityElement = false
 
         // Add subviews
-        addSubview(fieldLabel)
-        addSubview(containerView)
-        addSubview(bottomLabel)
+        outerStack.axis = .vertical
+        outerStack.spacing = HABSpacing.xs
+        outerStack.addArrangedSubview(fieldLabel)
+        outerStack.addArrangedSubview(containerView)
+        outerStack.addArrangedSubview(bottomLabel)
+        addSubview(outerStack)
         containerView.addSubview(textView)
         containerView.addSubview(placeholderLabel)
 
         [
+            outerStack,
             fieldLabel,
             containerView,
             textView,
@@ -214,15 +223,11 @@ public final class HABTextView: UIView {
         minHeightConstraint = minH
 
         NSLayoutConstraint.activate([
-            // fieldLabel: top/leading/trailing of self
-            fieldLabel.topAnchor.constraint(equalTo: topAnchor),
-            fieldLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            fieldLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-            // containerView: below fieldLabel, leading/trailing aligned
-            containerView.topAnchor.constraint(equalTo: fieldLabel.bottomAnchor, constant: HABSpacing.xs),
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            // Label, field and helper text are stacked vertically and fill self
+            outerStack.topAnchor.constraint(equalTo: topAnchor),
+            outerStack.leadingAnchor.constraint(equalTo: leadingAnchor),
+            outerStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+            outerStack.bottomAnchor.constraint(equalTo: bottomAnchor),
             minH,
 
             // textView: fills containerView
@@ -234,13 +239,7 @@ public final class HABTextView: UIView {
             // placeholderLabel: matches textContainerInset top/leading
             placeholderLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: HABSpacing.sm),
             placeholderLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: placeholderLeadingInset),
-            placeholderLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -CGFloat(HABSpacing.sm)),
-
-            // bottomLabel: below containerView, leading/trailing, pinned to self bottom
-            bottomLabel.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: HABSpacing.xs),
-            bottomLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            bottomLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            placeholderLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -CGFloat(HABSpacing.sm))
         ])
     }
 

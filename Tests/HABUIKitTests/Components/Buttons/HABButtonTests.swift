@@ -103,10 +103,37 @@ final class HABButtonTests: XCTestCase {
         XCTAssertNotNil(button.icon)
     }
 
-    func testIsLoadingAccessibilityLabel() {
+    func testIsLoadingKeepsLabelAndReportsLoadingAsValue() {
+        let button = HABButton(style: .primary, title: "Submit")
+        button.accessibilityLabel = "Submit form"
+        button.isLoading = true
+        XCTAssertEqual(button.accessibilityLabel, "Submit form")
+        XCTAssertEqual(button.accessibilityValue, "Loading")
+        button.isLoading = false
+        XCTAssertEqual(button.accessibilityLabel, "Submit form")
+        XCTAssertNil(button.accessibilityValue)
+        XCTAssertFalse(button.accessibilityTraits.contains(.notEnabled))
+    }
+
+    func testIsLoadingKeepsTitleSoWidthDoesNotCollapse() {
         let button = HABButton(style: .primary, title: "Submit")
         button.isLoading = true
-        XCTAssertEqual(button.accessibilityLabel, "Loading")
+        XCTAssertEqual(button.configuration?.title, "Submit")
+    }
+
+    func testEndingLoadingDoesNotReenableCallerDisabledInteraction() {
+        let button = HABButton(style: .primary, title: "Submit")
+        button.isUserInteractionEnabled = false
+        button.isLoading = true
+        button.isLoading = false
+        XCTAssertFalse(button.isUserInteractionEnabled)
+    }
+
+    func testEndingLoadingRestoresInteraction() {
+        let button = HABButton(style: .primary, title: "Submit")
+        button.isLoading = true
+        button.isLoading = false
+        XCTAssertTrue(button.isUserInteractionEnabled)
     }
 
     func testIsLoadingAccessibilityTraits() {

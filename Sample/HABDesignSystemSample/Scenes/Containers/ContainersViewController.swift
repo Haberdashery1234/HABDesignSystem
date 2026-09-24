@@ -158,7 +158,7 @@ class ContainersViewController: UIViewController {
 
         let roleLabel = HABLabel(textStyle: .subheadline)
         roleLabel.text = "iOS Developer"
-        roleLabel.textColor = .habForegroundSecondary
+        roleLabel.themeTextColor = { .habForegroundSecondary }
         roleLabel.translatesAutoresizingMaskIntoConstraints = false
 
         let tag = HABTag(label: "Active", style: .filled, color: .success)

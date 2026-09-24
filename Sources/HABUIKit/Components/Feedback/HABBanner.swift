@@ -64,74 +64,52 @@ public final class HABBanner: UIView {
         layer.cornerRadius = HABRadius.md
         layer.masksToBounds = true
 
-        iconView.translatesAutoresizingMaskIntoConstraints = false
         iconView.contentMode = .scaleAspectFit
+        iconView.setContentHuggingPriority(.required, for: .horizontal)
 
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
-
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.numberOfLines = 0
 
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
         actionButton.titleLabel?.font = .habSubheadline
         actionButton.contentHorizontalAlignment = .leading
         actionButton.addTarget(self, action: #selector(actionTapped), for: .touchUpInside)
 
-        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+        dismissButton.setContentHuggingPriority(.required, for: .horizontal)
         dismissButton.addTarget(self, action: #selector(dismissTapped), for: .touchUpInside)
 
-        addSubview(iconView)
-        addSubview(titleLabel)
-        addSubview(messageLabel)
-        addSubview(actionButton)
-        addSubview(dismissButton)
+        // Text column: title, message, action. Hidden arranged subviews collapse, so a
+        // banner with no message or action has no leftover gap at the bottom.
+        let textStack = UIStackView(arrangedSubviews: [titleLabel, messageLabel, actionButton])
+        textStack.axis = .vertical
+        textStack.alignment = .leading
+        textStack.spacing = HABSpacing.xs
 
-        let pad = CGFloat(HABSpacing.md)
-        let iconToText = CGFloat(HABSpacing.sm)
-        let textToText = CGFloat(HABSpacing.xs)
+        // Row: icon, text column, dismiss button.
+        let rowStack = UIStackView(arrangedSubviews: [iconView, textStack, dismissButton])
+        rowStack.axis = .horizontal
+        rowStack.alignment = .top
+        rowStack.spacing = HABSpacing.sm
+        rowStack.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(rowStack)
+
+        let pad = HABSpacing.md
         let iconSize: CGFloat = 20
         let dismissSize: CGFloat = 20
 
         NSLayoutConstraint.activate([
-            // Icon
-            iconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: pad),
-            iconView.topAnchor.constraint(equalTo: topAnchor, constant: pad),
+            rowStack.topAnchor.constraint(equalTo: topAnchor, constant: pad),
+            rowStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: pad),
+            rowStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -pad),
+            rowStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -pad),
+
             iconView.widthAnchor.constraint(equalToConstant: iconSize),
             iconView.heightAnchor.constraint(equalToConstant: iconSize),
-
-            // Dismiss button
-            dismissButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -pad),
-            dismissButton.topAnchor.constraint(equalTo: topAnchor, constant: pad),
             dismissButton.widthAnchor.constraint(equalToConstant: dismissSize),
             dismissButton.heightAnchor.constraint(equalToConstant: dismissSize),
 
-            // Title
-            titleLabel.leadingAnchor.constraint(
-                equalTo: iconView.trailingAnchor,
-                constant: iconToText
-            ),
-            titleLabel.trailingAnchor.constraint(
-                equalTo: dismissButton.leadingAnchor,
-                constant: -iconToText
-            ),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: pad),
-
-            // Message
-            messageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            messageLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            messageLabel.topAnchor.constraint(
-                equalTo: titleLabel.bottomAnchor,
-                constant: textToText
-            ),
-
-            // Action button
-            actionButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            actionButton.topAnchor.constraint(
-                equalTo: messageLabel.bottomAnchor,
-                constant: textToText
-            ),
-            actionButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -pad)
+            // Let labels use the full text-column width.
+            titleLabel.widthAnchor.constraint(equalTo: textStack.widthAnchor),
+            messageLabel.widthAnchor.constraint(equalTo: textStack.widthAnchor)
         ])
     }
 

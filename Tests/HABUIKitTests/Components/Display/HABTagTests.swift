@@ -63,9 +63,31 @@ final class HABTagTests: XCTestCase {
         XCTAssertFalse(tag.accessibilityTraits.contains(.button))
     }
 
-    func testAccessibilityTraitsWithDismiss() {
+    func testDismissIsExposedAsVoiceOverCustomAction() {
+        var dismissed = false
+        let tag = HABTag(label: "Status")
+        tag.dismissAction = HABAccessibleAction(label: "Remove") { dismissed = true }
+
+        let actions = tag.accessibilityCustomActions ?? []
+        XCTAssertEqual(actions.map(\.name), ["Remove"])
+        _ = actions.first?.actionHandler?(actions[0])
+        XCTAssertTrue(dismissed)
+    }
+
+    func testClearingDismissRemovesCustomAction() {
         let tag = HABTag(label: "Status")
         tag.dismissAction = HABAccessibleAction(label: "Remove") {}
-        XCTAssertTrue(tag.accessibilityTraits.contains(.button))
+        tag.dismissAction = nil
+        XCTAssertTrue(tag.accessibilityCustomActions?.isEmpty ?? true)
+    }
+
+    func testSubtleBackgroundIsLighterThanFilled() {
+        let traits = UITraitCollection(userInterfaceStyle: .light)
+        let filled = HABTag(label: "A", style: .filled, color: .success)
+        let subtle = HABTag(label: "A", style: .subtle, color: .success)
+        let filledAlpha = filled.backgroundColor?.resolvedColor(with: traits).cgColor.alpha ?? 0
+        let subtleAlpha = subtle.backgroundColor?.resolvedColor(with: traits).cgColor.alpha ?? 0
+        XCTAssertGreaterThan(filledAlpha, 0)
+        XCTAssertEqual(subtleAlpha, filledAlpha * 0.5, accuracy: 0.001)
     }
 }

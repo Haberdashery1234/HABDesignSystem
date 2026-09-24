@@ -131,6 +131,15 @@ public final class HABTextField: UIView {
     private let trailingButton = UIButton(type: .system)
     private let bottomLabel = UILabel()
 
+    /// Stacks hidden arranged subviews collapse, so an absent label, helper text,
+    /// or icon doesn't leave empty space behind.
+    private let outerStack = UIStackView()
+    private let fieldStack = UIStackView()
+
+    private static let minimumFieldHeight: CGFloat = 48
+    private static let iconSize: CGFloat = 20
+    private static let trailingButtonSize: CGFloat = 44
+
     /// The visual style of the text field.
     ///
     /// Changing this property updates the field's background and border treatment immediately.
@@ -177,7 +186,9 @@ public final class HABTextField: UIView {
     public var errorText: String? {
         didSet {
             updateAppearance()
-            if let errorText {
+            // Announce only when the message changes, so per-keystroke validation
+            // that re-sets the same error doesn't repeat it to VoiceOver users.
+            if let errorText, errorText != oldValue {
                 UIAccessibility.post(notification: .announcement, argument: errorText)
             }
         }
@@ -200,7 +211,9 @@ public final class HABTextField: UIView {
     /// An action triggered when the user taps the trailing icon.
     ///
     /// Set this to make the trailing icon interactive (e.g., to toggle password visibility).
-    public var trailingAction: HABAccessibleAction?
+    public var trailingAction: HABAccessibleAction? {
+        didSet { updateAppearance() }
+    }
 
     /// A Boolean value that determines whether the field is disabled.
     ///
@@ -292,57 +305,66 @@ public final class HABTextField: UIView {
     
     private func setupViews() {
         textField.delegate = self
+        textField.font = .habBody
+        textField.adjustsFontForContentSizeCategory = true
         containerView.clipsToBounds = true
 
-        addSubview(fieldLabel)
-        containerView.addSubview(leadingIconView)
-        containerView.addSubview(textField)
-        containerView.addSubview(trailingButton)
-        addSubview(containerView)
-        addSubview(bottomLabel)
-        
-        [
-            fieldLabel,
-            leadingIconView,
-            textField,
-            trailingButton,
-            containerView,
-            bottomLabel
-        ].forEach { view in
-            view.translatesAutoresizingMaskIntoConstraints = false
+        fieldLabel.numberOfLines = 0
+        fieldLabel.adjustsFontForContentSizeCategory = true
+        bottomLabel.numberOfLines = 0
+        bottomLabel.adjustsFontForContentSizeCategory = true
+
+        leadingIconView.contentMode = .scaleAspectFit
+        leadingIconView.setContentHuggingPriority(.required, for: .horizontal)
+        trailingButton.setContentHuggingPriority(.required, for: .horizontal)
+
+        // Inside the field: [leading icon] [text field] [trailing button]
+        fieldStack.axis = .horizontal
+        fieldStack.alignment = .center
+        fieldStack.spacing = HABSpacing.sm
+        fieldStack.isLayoutMarginsRelativeArrangement = true
+        fieldStack.directionalLayoutMargins = NSDirectionalEdgeInsets(
+            top: 0, leading: HABSpacing.md - HABSpacing.xs, bottom: 0, trailing: HABSpacing.xs
+        )
+        fieldStack.addArrangedSubview(leadingIconView)
+        fieldStack.addArrangedSubview(textField)
+        fieldStack.addArrangedSubview(trailingButton)
+        containerView.addSubview(fieldStack)
+
+        // Outer: [top label] [field] [helper / error]
+        outerStack.axis = .vertical
+        outerStack.spacing = HABSpacing.xs
+        outerStack.addArrangedSubview(fieldLabel)
+        outerStack.addArrangedSubview(containerView)
+        outerStack.addArrangedSubview(bottomLabel)
+        addSubview(outerStack)
+
+        [outerStack, fieldStack, containerView, leadingIconView, textField, trailingButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
+
         NSLayoutConstraint.activate([
-            fieldLabel.topAnchor.constraint(equalTo: topAnchor),
-            fieldLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            fieldLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            containerView.topAnchor.constraint(equalTo: fieldLabel.bottomAnchor, constant: HABSpacing.xs),
-            containerView.leadingAnchor.constraint(equalTo: fieldLabel.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: fieldLabel.trailingAnchor),
-            containerView.heightAnchor.constraint(equalToConstant: 48),
-            
-            leadingIconView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            leadingIconView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            leadingIconView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            leadingIconView.widthAnchor.constraint(equalTo: leadingIconView.heightAnchor),
-            
-            textField.leadingAnchor.constraint(equalTo: leadingIconView.trailingAnchor),
-            textField.topAnchor.constraint(equalTo: containerView.topAnchor),
-            textField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            textField.trailingAnchor.constraint(equalTo: trailingButton.leadingAnchor),
-            
-            trailingButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            trailingButton.topAnchor.constraint(equalTo: containerView.topAnchor),
-            trailingButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            trailingButton.widthAnchor.constraint(equalTo: trailingButton.heightAnchor),
-            
-            bottomLabel.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: HABSpacing.xs),
-            bottomLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            bottomLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            outerStack.topAnchor.constraint(equalTo: topAnchor),
+            outerStack.leadingAnchor.constraint(equalTo: leadingAnchor),
+            outerStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+            outerStack.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            fieldStack.topAnchor.constraint(equalTo: containerView.topAnchor),
+            fieldStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            fieldStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            fieldStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+
+            // A minimum, not a fixed height, so larger Dynamic Type sizes can grow it.
+            containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: Self.minimumFieldHeight),
+            textField.heightAnchor.constraint(equalTo: fieldStack.heightAnchor),
+
+            leadingIconView.widthAnchor.constraint(equalToConstant: Self.iconSize),
+            leadingIconView.heightAnchor.constraint(equalToConstant: Self.iconSize),
+
+            trailingButton.widthAnchor.constraint(equalToConstant: Self.trailingButtonSize),
+            trailingButton.heightAnchor.constraint(equalToConstant: Self.trailingButtonSize)
         ])
-        
+
         fieldLabel.isAccessibilityElement = false
         leadingIconView.isAccessibilityElement = false
         bottomLabel.isAccessibilityElement = false
@@ -351,7 +373,7 @@ public final class HABTextField: UIView {
     }
     
     private func updateAppearance() {
-        fieldLabel.isHidden = ((topLabel?.isEmpty) == nil)
+        fieldLabel.isHidden = topLabel?.isEmpty ?? true
         if let topLabel {
             fieldLabel.text = topLabel
             fieldLabel.font = .habFootnote
@@ -381,6 +403,10 @@ public final class HABTextField: UIView {
             bottomLabel.isHidden = true
         }
         
+        textField.font = .habBody
+        leadingIconView.tintColor = .habForegroundSecondary
+        trailingButton.tintColor = .habForegroundSecondary
+
         if let leadingIcon {
             leadingIconView.image = leadingIcon
             leadingIconView.isHidden = false
@@ -395,6 +421,10 @@ public final class HABTextField: UIView {
         } else {
             trailingButton.isHidden = true
         }
+        // The 44pt trailing button carries its own padding; without it, match the leading inset.
+        fieldStack.directionalLayoutMargins.trailing = trailingButton.isHidden
+            ? HABSpacing.md - HABSpacing.xs
+            : HABSpacing.xs
         
         textField.textColor = .habForeground
         textField.tintColor = .habPrimary

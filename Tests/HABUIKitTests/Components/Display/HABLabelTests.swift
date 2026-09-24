@@ -101,4 +101,33 @@ final class HABLabelTests: XCTestCase {
             XCTAssertEqual(label.textStyle, key)
         }
     }
+
+    // MARK: - Theme text color
+
+    func testDefaultThemeTextColorIsForeground() {
+        let label = HABLabel()
+        XCTAssertNotNil(label.themeTextColor)
+        // Direct assignment inside the label must not clear the provider.
+        HABThemeManager.shared.theme = HABDarkTheme()
+        defer { HABThemeManager.shared.theme = HABDefaultTheme() }
+        XCTAssertNotNil(label.themeTextColor)
+        XCTAssertEqual(label.textColor, HABDarkTheme().colors.foreground)
+    }
+
+    func testThemeTextColorSurvivesThemeChange() {
+        let label = HABLabel()
+        label.themeTextColor = { .habForegroundSecondary }
+        HABThemeManager.shared.theme = HABDarkTheme()
+        defer { HABThemeManager.shared.theme = HABDefaultTheme() }
+        XCTAssertEqual(label.textColor, HABDarkTheme().colors.foregroundSecondary)
+    }
+
+    func testDirectTextColorIsNotOverwrittenByThemeChange() {
+        let label = HABLabel()
+        label.textColor = .systemPink
+        XCTAssertNil(label.themeTextColor)
+        HABThemeManager.shared.theme = HABDarkTheme()
+        defer { HABThemeManager.shared.theme = HABDefaultTheme() }
+        XCTAssertEqual(label.textColor, .systemPink)
+    }
 }

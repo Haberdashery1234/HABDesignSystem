@@ -151,4 +151,15 @@ final class UIViewTests: XCTestCase {
         view.roundCorners([.topLeft, .topRight], radius: 8)
         XCTAssertNotNil(view.layer.mask)
     }
+
+    func testFadeInAfterFadeOutMakesViewVisibleAgain() {
+        let view = UIView()
+        let exp = expectation(description: "fadeOut completion")
+        view.fadeOut(duration: 0) { exp.fulfill() }
+        wait(for: [exp], timeout: 1)
+        XCTAssertTrue(view.isHidden)
+
+        view.fadeIn(duration: 0)
+        XCTAssertFalse(view.isHidden)
+    }
 }
