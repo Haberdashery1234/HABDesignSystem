@@ -31,8 +31,8 @@ final class HABThemingTests: XCTestCase {
     }
 
     func testThemedColorsAreStableInstances() {
-        XCTAssertTrue(UIColor.habPrimary === UIColor.habPrimary)
-        XCTAssertTrue(UIColor.habBorder === UIColor.habBorder)
+        XCTAssertIdentical(UIColor.habPrimary, UIColor.habPrimary)
+        XCTAssertIdentical(UIColor.habBorder, UIColor.habBorder)
     }
 
     func testAdaptiveThemeColorsStillFollowAppearance() {

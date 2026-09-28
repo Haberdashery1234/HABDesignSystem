@@ -42,6 +42,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		030E1B02306ADBBE00D3215B /* HABUIKit.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = HABUIKit.xctestplan; path = Tests/HABUIKit.xctestplan; sourceTree = "<group>"; };
 		03A049CB300FF06B006C9C95 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		03D541D82FF35CC600BB2C51 /* SAHABDesignSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAHABDesignSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D541ED2FF35CC800BB2C51 /* SAHABDesignSystemTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAHABDesignSystemTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +107,7 @@
 		03D541532FF359B300BB2C51 = {
 			isa = PBXGroup;
 			children = (
+				030E1B02306ADBBE00D3215B /* HABUIKit.xctestplan */,
 				0341BE562FF8A7CA00EB1F77 /* Frameworks */,
 				03D5415E2FF359B300BB2C51 /* Products */,
 				03A049CB300FF06B006C9C95 /* .swiftlint.yml */,

@@ -116,7 +116,6 @@ public extension UIColor {
 
     /// Modal dimming overlay color. See `HABColorTokens.overlay`.
     static var habOverlay: UIColor { HABThemedColors.overlay }
-
 }
 
 // MARK: - Cached dynamic colors
@@ -133,7 +132,6 @@ enum HABThemedColors {
             pick(HABThemeManager.shared.theme.colors).resolvedColor(with: traits)
         }
     }
-
 
     nonisolated(unsafe) static let primary = themed { $0.primary }
     nonisolated(unsafe) static let secondary = themed { $0.secondary }

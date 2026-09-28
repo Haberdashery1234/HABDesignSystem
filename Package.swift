@@ -29,8 +29,8 @@ let package = Package(
     name: "HABDesignSystem",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v26),
-        .macCatalyst(.v26)
+        .iOS(.v18),
+        .macCatalyst(.v18)
     ],
     products: [
         .library(name: "HABFoundation", targets: ["HABFoundation"]),

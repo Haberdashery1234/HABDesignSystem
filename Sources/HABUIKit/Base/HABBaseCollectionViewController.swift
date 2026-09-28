@@ -5,7 +5,9 @@
 //  Created by Christian Grise on 6/29/26.
 //
 
+#if canImport(UIKit)
 import UIKit
+#endif
 import HABFoundation
 
 /// A UICollectionViewController subclass that automatically applies theme colors
