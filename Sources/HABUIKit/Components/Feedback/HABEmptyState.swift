@@ -60,10 +60,15 @@ public final class HABEmptyState: UIView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
+        titleLabel.adjustsFontForContentSizeCategory = true
 
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
+        messageLabel.adjustsFontForContentSizeCategory = true
+
+        // VoiceOver reads title, message, then the action as one group.
+        shouldGroupAccessibilityChildren = true
 
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         actionButton.addTarget(self, action: #selector(actionTapped), for: .touchUpInside)

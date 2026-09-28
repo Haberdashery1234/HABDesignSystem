@@ -61,11 +61,12 @@ public final class HABTag: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
 
     private let dismissButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = HABMinimumHitAreaButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -256,6 +257,16 @@ public final class HABTag: UIView {
             case .neutral:
                 return TagColors(foreground: .habForegroundSecondary, background: .habSurface, border: .habBorder)
         }
+    }
+
+    // MARK: - Hit testing
+
+    /// The tag is shorter than 44pt, so extend it to accept touches that fall inside the
+    /// dismiss button's enlarged touch area; otherwise they'd never reach the button.
+    public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if super.point(inside: point, with: event) { return true }
+        guard !dismissButton.isHidden else { return false }
+        return dismissButton.point(inside: convert(point, to: dismissButton), with: event)
     }
 
     // MARK: - Actions

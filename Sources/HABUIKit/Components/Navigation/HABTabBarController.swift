@@ -31,9 +31,10 @@ public class HABTabBarController: UITabBarController {
         appearance.shadowColor = .habBorderSubtle
 
         let itemAppearance = UITabBarItemAppearance()
-        itemAppearance.normal.iconColor = .habForegroundTertiary
+        // Secondary, not tertiary: unselected tab titles are text and need 4.5:1 contrast.
+        itemAppearance.normal.iconColor = .habForegroundSecondary
         itemAppearance.normal.titleTextAttributes = [
-            .foregroundColor: UIColor.habForegroundTertiary,
+            .foregroundColor: UIColor.habForegroundSecondary,
             .font: UIFont.habCaption1
         ]
         itemAppearance.selected.iconColor = .habPrimary

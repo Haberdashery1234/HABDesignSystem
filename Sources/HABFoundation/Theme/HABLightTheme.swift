@@ -5,7 +5,11 @@
 //  HABUIKit's curated light theme.
 //
 //  Palette concept: warm parchment backgrounds paired with Royal Blue
-//  (65, 105, 225) as the primary action color. All values are
+//  as the primary action color.
+//
+//  Contrast: every text color meets WCAG AA (4.5:1) against all four
+//  background/surface tokens, `on*` colors meet 4.5:1 on their fills, and
+//  `border` meets 3:1 as an input outline. Enforced by HABThemeContrastTests. All values are
 //  hardcoded — this theme does not shift with the system appearance.
 //  Pair it with HABDarkTheme and switch at runtime to support a
 //  manual light/dark toggle inside your app.
@@ -20,8 +24,8 @@ public struct HABLightTheme: HABTheme {
     public var colors: HABColorTokens {
         HABColorTokens(
             // ── Brand ──────────────────────────────────────────────────────
-            primary: .hab(r: 65, g: 105, b: 225),       // Royal Blue
-            secondary: .hab(r: 100, g: 149, b: 237),       // Cornflower Blue
+            primary: .hab(r: 35, g: 81, b: 219),       // Royal Blue (deepened slightly for 4.5:1 text)
+            secondary: .hab(r: 46, g: 111, b: 231),       // Cornflower Blue (deepened for white text)
             accent: .hab(r: 184, g: 145, b: 74),        // Antique Gold
 
             // ── Backgrounds ────────────────────────────────────────────────
@@ -33,7 +37,7 @@ public struct HABLightTheme: HABTheme {
             // ── Foreground ─────────────────────────────────────────────────
             foreground: .hab(r: 28, g: 25, b: 18),        // Warm near-black
             foregroundSecondary: .hab(r: 96, g: 88, b: 70),        // Medium warm brown
-            foregroundTertiary: .hab(r: 148, g: 140, b: 120),       // Muted warm gray
+            foregroundTertiary: .hab(r: 112, g: 105, b: 90),       // Muted warm gray (4.5:1 — used for placeholder text)
             foregroundDisabled: .hab(r: 190, g: 184, b: 167),       // Very muted warm
             foregroundInverted: .hab(r: 255, g: 255, b: 255),       // White (on dark/brand surfaces)
 
@@ -42,17 +46,17 @@ public struct HABLightTheme: HABTheme {
             onSecondary: .hab(r: 255, g: 255, b: 255),       // White on Cornflower
 
             // ── Semantic states ────────────────────────────────────────────
-            destructive: .hab(r: 192, g: 57, b: 43),        // Warm red
-            destructiveSurface: .hab(r: 192, g: 57, b: 43, a: 0.12),
-            success: .hab(r: 39, g: 160, b: 90),        // Medium green
-            successSurface: .hab(r: 39, g: 160, b: 90, a: 0.12),
-            warning: .hab(r: 214, g: 158, b: 46),        // Amber
-            warningSurface: .hab(r: 214, g: 158, b: 46, a: 0.12),
-            info: .hab(r: 65, g: 105, b: 225),       // Royal Blue (matches primary)
-            infoSurface: .hab(r: 65, g: 105, b: 225, a: 0.12),
+            destructive: .hab(r: 173, g: 52, b: 39),        // Warm red (4.5:1 as text, incl. on its tint)
+            destructiveSurface: .hab(r: 173, g: 52, b: 39, a: 0.12),
+            success: .hab(r: 28, g: 109, b: 61),        // Forest green (4.5:1 as text, incl. on its tint)
+            successSurface: .hab(r: 28, g: 109, b: 61, a: 0.12),
+            warning: .hab(r: 124, g: 90, b: 25),        // Dark amber / bronze (4.5:1 as text, incl. on its tint)
+            warningSurface: .hab(r: 124, g: 90, b: 25, a: 0.12),
+            info: .hab(r: 35, g: 81, b: 219),       // Matches primary
+            infoSurface: .hab(r: 35, g: 81, b: 219, a: 0.12),
 
             // ── UI Chrome ──────────────────────────────────────────────────
-            border: .hab(r: 205, g: 198, b: 180),       // Warm medium gray
+            border: .hab(r: 155, g: 140, b: 105),       // Warm gray (3:1 input outline)
             borderSubtle: .hab(r: 228, g: 223, b: 208),       // Very light warm gray
             overlay: .hab(r: 20, g: 16, b: 8, a: 0.4)// Warm black
         )

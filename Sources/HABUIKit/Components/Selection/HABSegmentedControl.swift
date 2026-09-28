@@ -78,6 +78,11 @@ public final class HABSegmentedControl: UIView {
         ])
 
         control.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
+
+        // Title fonts are set via attributes, which don't follow Dynamic Type on their own.
+        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (self: Self, _: UITraitCollection) in
+            self.updateAppearance()
+        }
     }
 
     // MARK: - Segments

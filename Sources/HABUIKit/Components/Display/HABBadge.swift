@@ -57,8 +57,9 @@ public final class HABBadge: UIView {
     private func setupView() {
         addSubview(countLabel)
 
-        // Fixed height of 18pt
-        heightAnchor.constraint(equalToConstant: 18).isActive = true
+        // At least 18pt tall; grows with the label at larger Dynamic Type sizes.
+        heightAnchor.constraint(greaterThanOrEqualToConstant: 18).isActive = true
+        countLabel.adjustsFontForContentSizeCategory = true
 
         // Width: at least 18pt, grows with label content
         let minWidth = widthAnchor.constraint(greaterThanOrEqualToConstant: 18)
@@ -73,12 +74,19 @@ public final class HABBadge: UIView {
         NSLayoutConstraint.activate([
             countLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             countLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            countLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 1),
+            countLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -1),
             countLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 4),
             countLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -4)
         ])
 
-        layer.cornerRadius = 9
         clipsToBounds = true
+    }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        // Stay a capsule as the height grows with Dynamic Type.
+        layer.cornerRadius = bounds.height / 2
     }
 
     // MARK: - Appearance
@@ -88,7 +96,7 @@ public final class HABBadge: UIView {
 
         countLabel.text = number > 99 ? "99+" : "\(number)"
         backgroundColor = .habDestructive
-        countLabel.textColor = .white
+        countLabel.textColor = .habOnDestructive
         countLabel.font = .habCaption2
 
         layer.borderWidth = 1.5
@@ -96,7 +104,7 @@ public final class HABBadge: UIView {
 
         // Accessibility
         isAccessibilityElement = true
-        accessibilityLabel = "\(number) notifications"
+        accessibilityLabel = HABStrings.notifications(number)
         accessibilityTraits = [.staticText]
     }
 

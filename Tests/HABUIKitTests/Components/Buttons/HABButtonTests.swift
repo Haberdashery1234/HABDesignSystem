@@ -156,4 +156,19 @@ final class HABButtonTests: XCTestCase {
             object: HABThemeManager.shared
         )
     }
+
+    // MARK: - Touch target
+
+    func testSmallButtonAcceptsTouchesAcrossAtLeast44Points() {
+        let button = HABButton(style: .primary, size: .small, title: "OK")
+        button.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
+        // 7pt above the drawn button is still inside the 44pt touch area.
+        XCTAssertTrue(button.point(inside: CGPoint(x: 30, y: -6), with: nil))
+        XCTAssertFalse(button.point(inside: CGPoint(x: 30, y: -10), with: nil))
+    }
+
+    func testDestructiveUsesOnDestructiveForeground() {
+        let button = HABButton(style: .destructive, title: "Delete")
+        XCTAssertEqual(button.configuration?.baseForegroundColor, UIColor.habOnDestructive)
+    }
 }

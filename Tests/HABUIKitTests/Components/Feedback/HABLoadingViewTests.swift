@@ -84,11 +84,17 @@ final class HABLoadingViewTests: XCTestCase {
     func testAccessibilityValueWithProgress() {
         let view = HABLoadingView(style: .linear)
         view.progress = 0.5
-        XCTAssertEqual(view.accessibilityValue, "50 percent")
+        // Localized percent ("50%" in English; VoiceOver reads "50 percent").
+        XCTAssertEqual(view.accessibilityValue, Double(0.5).formatted(.percent.precision(.fractionLength(0))))
     }
 
     func testAccessibilityValueNilWhenNoProgress() {
         let view = HABLoadingView()
         XCTAssertNil(view.accessibilityValue)
+    }
+
+    func testIsSingleAccessibilityElement() {
+        let view = HABLoadingView(message: "Syncing data")
+        XCTAssertTrue(view.isAccessibilityElement)
     }
 }

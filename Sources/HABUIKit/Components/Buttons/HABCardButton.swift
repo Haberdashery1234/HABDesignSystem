@@ -265,7 +265,10 @@ public final class HABCardButton: UIControl {
 
     public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         UIView.animate(withDuration: 0.12) {
-            self.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
+            // With Reduce Motion on, dim only; skip the shrink.
+            if !HABAnimation.prefersReducedMotion {
+                self.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
+            }
             self.alpha = 0.85
         }
         return super.beginTracking(touch, with: event)

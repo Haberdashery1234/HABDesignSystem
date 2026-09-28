@@ -23,6 +23,16 @@ import HABFoundation
 /// }
 /// ```
 public enum HABAnimation {
+    // MARK: - Accessibility
+
+    /// `true` when the user has turned on Reduce Motion (Settings › Accessibility › Motion).
+    ///
+    /// When it's on, replace movement — slides, scaling, springs — with a fade or no
+    /// animation. Fades and progress indicators are fine to keep.
+    public static var prefersReducedMotion: Bool {
+        UIAccessibility.isReduceMotionEnabled
+    }
+
     // MARK: - Duration
 
     /// Named duration constants for animations.

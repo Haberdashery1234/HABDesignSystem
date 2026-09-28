@@ -69,6 +69,9 @@ public extension UIColor {
     /// Content color for elements on a secondary-colored surface. See `HABColorTokens.onSecondary`.
     static var habOnSecondary: UIColor { HABThemeManager.shared.theme.colors.onSecondary }
 
+    /// Content color for elements on a destructive-colored surface. See `HABColorTokens.onDestructive`.
+    static var habOnDestructive: UIColor { HABThemeManager.shared.theme.colors.onDestructive }
+
     // MARK: - Semantic States
 
     /// Destructive action color. See `HABColorTokens.destructive`.

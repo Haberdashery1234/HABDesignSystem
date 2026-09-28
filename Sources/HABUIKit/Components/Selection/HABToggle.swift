@@ -179,6 +179,7 @@ public final class HABToggle: UIView {
 
     private func setupSubviews() {
         titleLabel.font = .habBody
+        titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.textColor = .habForeground
         titleLabel.numberOfLines = 0
 

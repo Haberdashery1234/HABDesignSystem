@@ -166,7 +166,7 @@ public final class HABAvatar: UIView {
 
         // Accessibility
         isAccessibilityElement = true
-        accessibilityLabel = name ?? "Avatar"
+        accessibilityLabel = name ?? HABStrings.avatar
         accessibilityTraits = [.image]
     }
 

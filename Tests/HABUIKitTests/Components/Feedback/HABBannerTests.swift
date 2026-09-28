@@ -264,4 +264,22 @@ final class HABBannerTests: XCTestCase {
         banner.style = .error
         XCTAssertEqual(banner.style, .error)
     }
+
+    // MARK: - Status for VoiceOver
+
+    func testStatusIconIsAnnouncedByName() {
+        let expected: [(HABBanner.Style, String)] = [
+            (.info, "Information"), (.success, "Success"), (.warning, "Warning"), (.error, "Error")
+        ]
+        for (style, name) in expected {
+            let banner = HABBanner(title: "Title", style: style)
+            let icon = banner.allSubviews.compactMap { $0 as? UIImageView }
+                .first { $0.isAccessibilityElement }
+            XCTAssertEqual(icon?.accessibilityLabel, name, "\(style)")
+        }
+    }
+}
+
+private extension UIView {
+    var allSubviews: [UIView] { subviews + subviews.flatMap(\.allSubviews) }
 }

@@ -176,14 +176,17 @@ public final class HABTextView: UIView {
         // Configure placeholderLabel
         placeholderLabel.font = .habBody
         placeholderLabel.numberOfLines = 0
+        placeholderLabel.adjustsFontForContentSizeCategory = true
 
         // Configure fieldLabel
         fieldLabel.font = .habFootnote
-        fieldLabel.numberOfLines = 1
+        fieldLabel.numberOfLines = 0
+        fieldLabel.adjustsFontForContentSizeCategory = true
 
         // Configure bottomLabel
         bottomLabel.font = .habCaption1
         bottomLabel.numberOfLines = 0
+        bottomLabel.adjustsFontForContentSizeCategory = true
 
         // Accessibility
         fieldLabel.isAccessibilityElement = false

@@ -28,6 +28,21 @@ instead of rebuilding the same buttons, cards, and inputs per project.
 
 A `HABSwiftUI` target is planned but not implemented yet.
 
+## Accessibility
+
+- **Contrast:** `HABLightTheme` and `HABDarkTheme` meet WCAG AA for every
+  pairing the components draw: 4.5:1 for text, including semantic text on its
+  own tint, and 3:1 for input outlines. `HABThemeContrastTests` enforces this.
+  `HABAppleTheme` mirrors Apple's system colors as-is, so it follows Apple's
+  own contrast.
+- **Touch targets:** interactive elements accept touches across at least
+  44×44pt, even when they're drawn smaller.
+- **Dynamic Type:** all component text scales live with the user's text size.
+- **Reduce Motion:** movement is swapped for fades
+  (`HABAnimation.prefersReducedMotion`).
+- **VoiceOver:** statuses are announced by name ("Error", "Warning"), not just
+  by color, and built-in strings are localized via the package's String Catalog.
+
 ## Distribution
 
 - **Swift Package Manager** — add this repo as a package dependency.

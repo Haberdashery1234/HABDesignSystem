@@ -90,4 +90,16 @@ final class HABTagTests: XCTestCase {
         XCTAssertGreaterThan(filledAlpha, 0)
         XCTAssertEqual(subtleAlpha, filledAlpha * 0.5, accuracy: 0.001)
     }
+
+    func testDismissTouchAreaExtendsBeyondSmallTag() {
+        let tag = HABTag(label: "Status")
+        tag.dismissAction = HABAccessibleAction(label: "Remove") {}
+        tag.frame = CGRect(x: 0, y: 0, width: 100, height: 24)
+        tag.layoutIfNeeded()
+        // Below the 24pt tag, level with the dismiss button: accepted.
+        XCTAssertTrue(tag.point(inside: CGPoint(x: 90, y: 30), with: nil))
+        // Same spot with no dismiss button: rejected.
+        tag.dismissAction = nil
+        XCTAssertFalse(tag.point(inside: CGPoint(x: 90, y: 30), with: nil))
+    }
 }
