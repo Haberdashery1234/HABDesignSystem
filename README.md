@@ -7,12 +7,11 @@ instead of rebuilding the same buttons, cards, and inputs per project.
 
 ## Packages
 
-- **`HABFoundation`** — the tokens: colors, spacing, radius, typography,
-  plus the `HABTheme` protocol and `HABThemeManager`. Ships four themes
-  (`HABDefaultTheme`, `HABLightTheme`, `HABDarkTheme`, `HABAppleTheme`),
-  runtime-swappable via `HABThemeManager.shared.theme` — components
-  observe theme changes automatically via `NotificationCenter`, so
-  switching themes updates the whole UI live. Token types currently use
+- **`HABFoundation`** — the tokens: colors, typography, spacing, radius,
+  shadow and motion, plus the `HABTheme` protocol, `HABThemeManager` and
+  `HABThemeTrait`. Ships four themes (`HABDefaultTheme`, `HABLightTheme`,
+  `HABDarkTheme`, `HABAppleTheme`), runtime-swappable via
+  `HABThemeManager.shared.theme` (see [Theming](#theming)). Token types currently use
   UIKit types (`UIColor`, `UIFont`); a platform-neutral layer is planned
   alongside `HABSwiftUI`.
 - **`HABUIKit`** — UIKit components built on `HABFoundation`: buttons
@@ -27,6 +26,40 @@ instead of rebuilding the same buttons, cards, and inputs per project.
   free.
 
 A `HABSwiftUI` target is planned but not implemented yet.
+
+## Theming
+
+```swift
+HABThemeManager.shared.theme = HABDarkTheme()
+```
+
+- **Colors update themselves.** `UIColor.habPrimary`, `.habSurface` and the
+  rest are dynamic colors. When the theme changes, `HABThemeManager` bumps
+  `HABThemeTrait` on every window scene and UIKit re-resolves them wherever
+  they're used, including colors your own views assigned.
+- **Everything else is notified.** Fonts, `CGColor`s (layer borders and
+  shadows) and radius/shadow tokens are re-applied when
+  `HABThemeManager.themeDidChangeNotification` fires. HAB components and
+  `HABBaseViewController` subclasses handle this for you. Override
+  `themeDidChange()` for your own layer colors and fonts.
+- **Custom themes** conform to `HABTheme` and provide `colors` and
+  `typography`. `radius`, `shadows` and `motion` are optional and default to
+  the library values. Store tokens with `let` so they're built once.
+- **Threading:** the theme can be read and set from any thread. Trait
+  updates and notifications always happen on the main thread.
+
+```swift
+struct ClarityTheme: HABTheme {
+    let name = "Clarity"
+    let colors: HABColorTokens = {
+        var tokens = HABColorTokens()
+        tokens.primary = UIColor(named: "ClarityTeal")!
+        return tokens
+    }()
+    let typography = HABTypographyTokens()
+    let radius = HABRadiusTokens(md: 14, lg: 20)   // optional
+}
+```
 
 ## Accessibility
 
@@ -52,8 +85,7 @@ A `HABSwiftUI` target is planned but not implemented yet.
 ## Requirements
 
 - iOS 26+ / Mac Catalyst 26+
-- Swift 6.2 tools (targets build in Swift 5 language mode to avoid
-  Sendable churn in the UIKit-heavy component code)
+- Swift 6.2 tools; library targets build in Swift 6 language mode
 
 ## Sample app
 
@@ -72,8 +104,7 @@ quick look at `HABLoadingView` in action.
 ```
 
 ```swift
-import HABFoundation
-import HABUIKit
+import HABUIKit   // also brings in HABFoundation
 
 let button = HABButton()
 HABThemeManager.shared.theme = HABDarkTheme()

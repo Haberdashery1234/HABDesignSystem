@@ -123,14 +123,14 @@ public final class HABCard: UIView {
     // MARK: - Appearance
 
     private func updateAppearance() {
-        layer.cornerRadius = HABRadius.lg
+        layer.cornerRadius = habTheme.radius.lg
         backgroundColor = .habSurface
 
         switch style {
             case .elevated:
                 layer.borderWidth = 0
                 layer.borderColor = UIColor.clear.cgColor
-                HABShadow.low.apply(to: layer)
+                habTheme.shadows.low.apply(to: layer)
             case .outlined:
                 layer.borderWidth = 1
                 layer.borderColor = UIColor.habBorder.cgColor

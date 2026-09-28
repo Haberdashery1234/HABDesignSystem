@@ -26,6 +26,9 @@ public struct HABDefaultTheme: HABTheme {
 
     public var colors: HABColorTokens { base.colors }
     public var typography: HABTypographyTokens { base.typography }
+    public var radius: HABRadiusTokens { base.radius }
+    public var shadows: HABShadowTokens { base.shadows }
+    public var motion: HABMotionTokens { base.motion }
 
     public init() {}
 }

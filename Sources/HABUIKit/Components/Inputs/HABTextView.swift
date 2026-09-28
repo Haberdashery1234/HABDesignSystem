@@ -259,7 +259,7 @@ public final class HABTextView: UIView {
         }
 
         // containerView style
-        containerView.layer.cornerRadius = HABRadius.sm
+        containerView.layer.cornerRadius = habTheme.radius.sm
         switch style {
             case .outlined:
                 containerView.layer.borderWidth = 1

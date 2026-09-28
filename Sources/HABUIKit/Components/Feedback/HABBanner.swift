@@ -61,7 +61,6 @@ public final class HABBanner: UIView {
     // MARK: - Setup
 
     private func setupViews() {
-        layer.cornerRadius = HABRadius.md
         layer.masksToBounds = true
 
         iconView.contentMode = .scaleAspectFit
@@ -155,6 +154,7 @@ public final class HABBanner: UIView {
         }
 
         backgroundColor = bgColor
+        layer.cornerRadius = habTheme.radius.md
         iconView.image = UIImage(systemName: iconName)
         iconView.accessibilityLabel = statusName
         iconView.tintColor = tintColor

@@ -329,9 +329,12 @@ public final class HABButton: UIButton {
         }
         
         config.title = title
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { [weak self] incoming in
+        // Capture the font value rather than `self`: the transformer may run outside
+        // the main actor, where reading the button's state isn't allowed in Swift 6.
+        let font = labelFont
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var outgoing = incoming
-            outgoing.font = self?.labelFont
+            outgoing.font = font
             return outgoing
         }
         

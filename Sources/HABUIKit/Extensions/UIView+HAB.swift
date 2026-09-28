@@ -94,7 +94,10 @@ public extension UIView {
     }
 
     /// Fades the view out to alpha 0, then hides it.
-    func fadeOut(duration: TimeInterval = HABAnimation.Duration.normal, completion: (() -> Void)? = nil) {
+    func fadeOut(
+        duration: TimeInterval = HABAnimation.Duration.normal,
+        completion: (@MainActor @Sendable () -> Void)? = nil
+    ) {
         UIView.animate(
             withDuration: duration,
             animations: { self.alpha = 0 },

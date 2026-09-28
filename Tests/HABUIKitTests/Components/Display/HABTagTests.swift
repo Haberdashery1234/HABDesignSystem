@@ -94,6 +94,7 @@ final class HABTagTests: XCTestCase {
     func testDismissTouchAreaExtendsBeyondSmallTag() {
         let tag = HABTag(label: "Status")
         tag.dismissAction = HABAccessibleAction(label: "Remove") {}
+        tag.translatesAutoresizingMaskIntoConstraints = true
         tag.frame = CGRect(x: 0, y: 0, width: 100, height: 24)
         tag.layoutIfNeeded()
         // Below the 24pt tag, level with the dismiss button: accepted.

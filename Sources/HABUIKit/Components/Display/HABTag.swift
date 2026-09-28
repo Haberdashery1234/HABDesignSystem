@@ -99,7 +99,6 @@ public final class HABTag: UIView {
     // MARK: - Setup
 
     private func setupView() {
-        layer.cornerRadius = HABRadius.pill
         clipsToBounds = true
 
         addSubview(dotView)
@@ -184,6 +183,8 @@ public final class HABTag: UIView {
         let tintedBg = colors.background
         let borderColor = colors.border
 
+        layer.cornerRadius = habTheme.radius.pill
+
         // Apply style
         switch style {
             case .filled:
@@ -227,7 +228,8 @@ public final class HABTag: UIView {
         if let dismissAction {
             accessibilityCustomActions = [
                 UIAccessibilityCustomAction(name: dismissAction.label) { [weak self] _ in
-                    self?.handleDismiss()
+                    // VoiceOver invokes this on the main thread; make that explicit for Swift 6.
+                    MainActor.assumeIsolated { self?.handleDismiss() }
                     return true
                 }
             ]

@@ -26,7 +26,17 @@ import UIKit
 public struct HABDarkTheme: HABTheme {
     public let name = "HABDark"
 
-    public var colors: HABColorTokens {
+    /// Built once per theme instance (tokens are read often).
+    public let colors: HABColorTokens
+
+    public let typography: HABTypographyTokens
+
+    public init() {
+        colors = Self.makeColors()
+        typography = HABTypographyTokens()
+    }
+
+    private static func makeColors() -> HABColorTokens {
         HABColorTokens(
             // ── Brand ──────────────────────────────────────────────────────
             primary: .hab(r: 137, g: 167, b: 244),       // Brightened Royal Blue (dark-mode contrast)
@@ -67,10 +77,6 @@ public struct HABDarkTheme: HABTheme {
             overlay: .hab(r: 0, g: 0, b: 0, a: 0.6)// Deeper overlay on dark
         )
     }
-
-    public var typography: HABTypographyTokens { HABTypographyTokens() }
-
-    public init() {}
 }
 
 // MARK: - Private color helper

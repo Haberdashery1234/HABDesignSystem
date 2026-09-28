@@ -5,18 +5,23 @@
 //  Created by Christian Grise on 6/29/26.
 //
 
+#if canImport(UIKit)
 import UIKit
+#endif
 import HABFoundation
 
 /// A UICollectionViewController subclass that automatically applies theme colors
 /// to the view and collection view, and re-applies them when the theme changes.
 ///
-/// Subclass this and override `themeDidChange()` to respond to theme changes:
+/// Colors assigned from `UIColor.hab*` update on their own when the theme changes
+/// (they're dynamic; see `HABThemeTrait`). Override `themeDidChange()` for things that
+/// don't: fonts, layer `CGColor`s, and radius/shadow tokens.
 ///
 /// ```swift
 /// override func themeDidChange() {
 ///     super.themeDidChange()
-///     myLabel.textColor = .habForeground
+///     titleLabel.font = .habHeadline
+///     cardView.layer.borderColor = UIColor.habBorder.resolvedColor(with: traitCollection).cgColor
 /// }
 /// ```
 open class HABBaseCollectionViewController: UICollectionViewController {
@@ -43,8 +48,8 @@ open class HABBaseCollectionViewController: UICollectionViewController {
 
     // MARK: - Theme
 
-    /// Called whenever the active theme changes. Override in subclasses to update
-    /// component colors. Always call super.
+    /// Called whenever the active theme changes (on the main thread). Override to
+    /// re-apply fonts, `CGColor`s and radius/shadow tokens. Always call super.
     @objc open func themeDidChange() {}
 
     @objc private func handleThemeChange() {

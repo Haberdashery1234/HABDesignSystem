@@ -235,7 +235,7 @@ public final class HABCardButton: UIControl {
     }
 
     private func updateAppearance() {
-        layer.cornerRadius = HABRadius.lg
+        layer.cornerRadius = habTheme.radius.lg
         backgroundColor = .habSurface
         iconImageView.tintColor = .habPrimary
 
@@ -243,7 +243,7 @@ public final class HABCardButton: UIControl {
             case .elevated:
                 layer.borderWidth = 0
                 layer.borderColor = UIColor.clear.cgColor
-                HABShadow.low.apply(to: layer)
+                habTheme.shadows.low.apply(to: layer)
             case .outlined:
                 layer.borderWidth = 1
                 layer.borderColor = UIColor.habBorder.cgColor
@@ -264,7 +264,7 @@ public final class HABCardButton: UIControl {
     // MARK: - Touch Tracking
 
     public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        UIView.animate(withDuration: 0.12) {
+        UIView.animate(withDuration: habTheme.motion.fast) {
             // With Reduce Motion on, dim only; skip the shrink.
             if !HABAnimation.prefersReducedMotion {
                 self.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
@@ -275,12 +275,8 @@ public final class HABCardButton: UIControl {
     }
 
     public override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-        UIView.animate(
-            withDuration: 0.3,
-            delay: 0,
-            usingSpringWithDamping: 0.6,
-            initialSpringVelocity: 0.5
-        ) {
+        let spring = habTheme.motion.gentleSpring
+        UIView.animate(springDuration: spring.duration, bounce: spring.bounce) {
             self.transform = .identity
             self.alpha = self.isEnabled ? 1 : 0.4
         }
@@ -288,7 +284,7 @@ public final class HABCardButton: UIControl {
     }
 
     public override func cancelTracking(with event: UIEvent?) {
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: habTheme.motion.fast) {
             self.transform = .identity
             self.alpha = self.isEnabled ? 1 : 0.4
         }

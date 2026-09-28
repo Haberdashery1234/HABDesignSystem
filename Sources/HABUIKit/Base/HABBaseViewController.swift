@@ -11,12 +11,15 @@ import HABFoundation
 /// A UIViewController subclass that automatically sets the view background
 /// to the active theme's background color and re-applies it when the theme changes.
 ///
-/// Subclass this and override `themeDidChange()` to respond to theme changes:
+/// Colors assigned from `UIColor.hab*` update on their own when the theme changes
+/// (they're dynamic; see `HABThemeTrait`). Override `themeDidChange()` for things that
+/// don't: fonts, layer `CGColor`s, and radius/shadow tokens.
 ///
 /// ```swift
 /// override func themeDidChange() {
 ///     super.themeDidChange()
-///     myLabel.textColor = .habForeground
+///     titleLabel.font = .habHeadline
+///     cardView.layer.borderColor = UIColor.habBorder.resolvedColor(with: traitCollection).cgColor
 /// }
 /// ```
 open class HABBaseViewController: UIViewController {
@@ -42,8 +45,8 @@ open class HABBaseViewController: UIViewController {
 
     // MARK: - Theme
 
-    /// Called whenever the active theme changes. Override in subclasses to update
-    /// component colors. Always call super.
+    /// Called whenever the active theme changes (on the main thread). Override to
+    /// re-apply fonts, `CGColor`s and radius/shadow tokens. Always call super.
     @objc open func themeDidChange() {}
 
     @objc private func handleThemeChange() {

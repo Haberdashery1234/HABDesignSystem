@@ -14,8 +14,14 @@
 
 import PackageDescription
 
+// Library targets build in Swift 6 language mode (full data-race checking).
 let swiftSettings: [SwiftSetting] = [
-    // Swift 5 semantics avoids Sendable annotation churn in UIKit-heavy code.
+    .swiftLanguageMode(.v6)
+]
+
+// Tests stay in Swift 5 mode for now so test classes don't all need @MainActor
+// annotations at once; migrate them separately.
+let testSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v5)
 ]
 
@@ -23,8 +29,8 @@ let package = Package(
     name: "HABDesignSystem",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v26),
-        .macCatalyst(.v26)
+        .iOS(.v18),
+        .macCatalyst(.v18)
     ],
     products: [
         .library(name: "HABFoundation", targets: ["HABFoundation"]),
@@ -32,7 +38,8 @@ let package = Package(
     ],
     targets: [
         // MARK: - HABFoundation
-        // Design tokens, theme protocol, theme manager, spacing, typography.
+        // Design tokens (color, typography, spacing, radius, shadow, motion), the theme
+        // protocol, theme manager and theme trait.
         // No dependency on HABUIKit or HABSwiftUI.
         .target(
             name: "HABFoundation",
@@ -55,7 +62,7 @@ let package = Package(
         .testTarget(
             name: "HABUIKitTests",
             dependencies: ["HABUIKit"],
-            swiftSettings: swiftSettings
+            swiftSettings: testSwiftSettings
         )
     ]
 )

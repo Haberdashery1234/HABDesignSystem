@@ -21,7 +21,17 @@ import UIKit
 public struct HABLightTheme: HABTheme {
     public let name = "HABLight"
 
-    public var colors: HABColorTokens {
+    /// Built once per theme instance (tokens are read often).
+    public let colors: HABColorTokens
+
+    public let typography: HABTypographyTokens
+
+    public init() {
+        colors = Self.makeColors()
+        typography = HABTypographyTokens()
+    }
+
+    private static func makeColors() -> HABColorTokens {
         HABColorTokens(
             // ── Brand ──────────────────────────────────────────────────────
             primary: .hab(r: 35, g: 81, b: 219),       // Royal Blue (deepened slightly for 4.5:1 text)
@@ -61,10 +71,6 @@ public struct HABLightTheme: HABTheme {
             overlay: .hab(r: 20, g: 16, b: 8, a: 0.4)// Warm black
         )
     }
-
-    public var typography: HABTypographyTokens { HABTypographyTokens() }
-
-    public init() {}
 }
 
 // MARK: - Private color helper

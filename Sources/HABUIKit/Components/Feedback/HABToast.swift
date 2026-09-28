@@ -91,14 +91,14 @@ public final class HABToast: UIView {
             bottomConstraint.constant = -HABSpacing.lg
             view.layoutIfNeeded()
             toast.alpha = 0
-            UIView.animate(withDuration: HABAnimation.Duration.normal) { toast.alpha = 1 }
+            UIView.animate(withDuration: habTheme.motion.normal) { toast.alpha = 1 }
         } else {
             view.layoutIfNeeded()
             bottomConstraint.constant = -HABSpacing.lg
             UIView.animate(
-                withDuration: HABAnimation.Spring.gentle.duration,
+                withDuration: habTheme.motion.gentleSpring.duration,
                 delay: 0,
-                usingSpringWithDamping: 1.0 - HABAnimation.Spring.gentle.bounce,
+                usingSpringWithDamping: 1.0 - habTheme.motion.gentleSpring.bounce,
                 initialSpringVelocity: 0,
                 options: HABAnimation.Curve.easeOut.options
             ) {
@@ -111,8 +111,13 @@ public final class HABToast: UIView {
         let duration = UIAccessibility.isVoiceOverRunning
             ? max(request.duration, minimumVoiceOverDuration)
             : request.duration
+        // A main-queue timer rather than `Task.sleep`: it fires reliably whenever the
+        // main run loop turns (including while a test is blocked in `wait(for:)`),
+        // and `assumeIsolated` states the main-actor guarantee for Swift 6.
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak toast] in
-            toast?.dismiss()
+            MainActor.assumeIsolated {
+                toast?.dismiss()
+            }
         }
     }
 
@@ -160,9 +165,7 @@ public final class HABToast: UIView {
     // MARK: - Setup
 
     private func setupViews() {
-        layer.cornerRadius = HABRadius.lg
         layer.masksToBounds = false
-        HABShadow.medium.apply(to: layer)
 
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.contentMode = .scaleAspectFit
@@ -232,6 +235,8 @@ public final class HABToast: UIView {
         }
 
         backgroundColor = .habSurfaceElevated
+        layer.cornerRadius = habTheme.radius.lg
+        habTheme.shadows.medium.apply(to: layer)
         iconImageView.image = UIImage(systemName: iconName)
         iconImageView.tintColor = tintColor
         messageLabel.text = message
@@ -263,7 +268,7 @@ public final class HABToast: UIView {
         guard !isDismissing else { return }
         isDismissing = true
         UIView.animate(
-            withDuration: HABAnimation.Duration.fast,
+            withDuration: habTheme.motion.fast,
             animations: { self.alpha = 0 },
             completion: { _ in
                 let container = self.containerView

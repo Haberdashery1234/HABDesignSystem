@@ -380,7 +380,7 @@ public final class HABTextField: UIView {
             fieldLabel.textColor = .habForegroundSecondary
         }
         
-        containerView.layer.cornerRadius = HABRadius.sm
+        containerView.layer.cornerRadius = habTheme.radius.sm
         if style == .outlined {
             containerView.layer.borderColor = UIColor.habBorder.cgColor
             containerView.layer.borderWidth = 1

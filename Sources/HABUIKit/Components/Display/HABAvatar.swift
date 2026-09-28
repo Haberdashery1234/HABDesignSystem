@@ -144,7 +144,7 @@ public final class HABAvatar: UIView {
             case .circle:
                 layer.cornerRadius = diameter / 2
             case .rounded:
-                layer.cornerRadius = HABRadius.md
+                layer.cornerRadius = habTheme.radius.md
         }
         layer.masksToBounds = true
 
