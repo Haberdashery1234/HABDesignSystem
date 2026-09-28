@@ -111,9 +111,13 @@ public final class HABToast: UIView {
         let duration = UIAccessibility.isVoiceOverRunning
             ? max(request.duration, minimumVoiceOverDuration)
             : request.duration
-        Task { [weak toast] in
-            try? await Task.sleep(for: .seconds(duration))
-            toast?.dismiss()
+        // A main-queue timer rather than `Task.sleep`: it fires reliably whenever the
+        // main run loop turns (including while a test is blocked in `wait(for:)`),
+        // and `assumeIsolated` states the main-actor guarantee for Swift 6.
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak toast] in
+            MainActor.assumeIsolated {
+                toast?.dismiss()
+            }
         }
     }
 
