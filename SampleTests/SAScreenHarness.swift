@@ -73,11 +73,25 @@ enum SAControlExerciser {
     /// (some demos rebuild their settings when a segment changes).
     static func exerciseControls(in root: UIView, passes: Int = 2) {
         for _ in 0..<passes {
-            for control in root.saDescendants(of: UIControl.self) {
+            for control in root.saDescendants(of: UIControl.self) where shouldExercise(control, in: root) {
                 exercise(control)
             }
             root.layoutIfNeeded()
         }
+    }
+
+    /// Only the controls a screen adds itself. Controls nested inside another control are
+    /// that control's private parts (the buttons inside a compact `UIDatePicker` open a
+    /// calendar popup and throw when it can't be presented), so they're skipped. The one
+    /// exception is `HABChipGroup`, whose chips are the way you use it.
+    private static func shouldExercise(_ control: UIControl, in root: UIView) -> Bool {
+        if control is UIDatePicker { return false }
+        var ancestor = control.superview
+        while let view = ancestor, view !== root {
+            if view is UIControl, !(view is HABChipGroup) { return false }
+            ancestor = view.superview
+        }
+        return true
     }
 
     static func exercise(_ control: UIControl) {
