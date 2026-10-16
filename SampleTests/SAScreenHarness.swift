@@ -18,11 +18,10 @@ final class SAScreenHarness {
     let navigationController: SANavigationController
 
     init(root: UIViewController) {
-        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            window = UIWindow(windowScene: scene)
-        } else {
-            window = UIWindow(frame: CGRect(x: 0, y: 0, width: 393, height: 852))
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            fatalError("SAScreenHarness requires a connected UIWindowScene to run tests")
         }
+        window = UIWindow(windowScene: scene)
         navigationController = SANavigationController(rootViewController: root)
         window.rootViewController = navigationController
         window.isHidden = false

@@ -16,6 +16,18 @@ final class HABFloatingActionButtonTests: XCTestCase {
             action: HABAccessibleAction(label: "Add Medication", action: onTap)
         )
     }
+    
+    private func makeTestWindow(frame: CGRect) -> UIWindow {
+        // Try to get a window scene if available, otherwise fall back to frame-based init
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            window.frame = frame
+            return window
+        } else {
+            // Fall back to deprecated initializer for test environments 
+            return UIWindow(frame: frame)
+        }
+    }
 
     func testActionLabelIsTheVoiceOverLabel() {
         let button = makeButton()
@@ -67,11 +79,11 @@ final class HABFloatingActionButtonTests: XCTestCase {
     }
 
     func testStaysPutWhenScrollViewScrolls() {
-        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let window = makeTestWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
         let scrollView = UIScrollView(frame: window.bounds)
         scrollView.contentSize = CGSize(width: 320, height: 2000)
         window.addSubview(scrollView)
-        window.isHidden = false
+        window.makeKeyAndVisible()
         let button = makeButton()
         button.install(in: scrollView)
         scrollView.layoutIfNeeded()

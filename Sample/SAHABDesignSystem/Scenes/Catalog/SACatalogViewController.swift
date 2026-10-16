@@ -41,13 +41,32 @@ class SACatalogViewController: UITableViewController {
         Section(title: "Lists & Forms", items: [
             Item(
                 title: "List Cell",
-                subtitle: "HABListCell, section headers, swipe actions, empty state, FAB",
+                subtitle: "HABListCell, HABSectionHeaderFooterView, swipe actions, empty state, HABFloatingActionButton",
                 destination: { SAHABListDemoViewController() }
             ),
             Item(
                 title: "Form",
-                subtitle: "HABFormSection, HABMenuButton, HABStepper, HABChipGroup",
+                subtitle: "HABFormSection, HABMenuButton, HABStepper, HABChipGroup, HABTextField.onTextChanged",
                 destination: { SAHABFormDemoViewController() }
+            )
+        ]),
+        Section(title: "Navigation & Layout", items: [
+            Item(
+                title: "Tab Bar Controller",
+                subtitle: "HABTabBarController — tabs, badges, onTabSelected",
+                destination: { SAHABTabBarControllerDemoViewController() }
+            ),
+            Item(
+                title: "Collection View",
+                subtitle: "HABBaseCollectionViewController — themed grid",
+                destination: { SAHABCollectionDemoViewController() }
+            )
+        ]),
+        Section(title: "Media", items: [
+            Item(
+                title: "Image View",
+                subtitle: "HABImageView — content mode, radius, placeholder",
+                destination: { SAHABImageViewDemoViewController() }
             )
         ]),
         Section(title: "Inputs", items: [
