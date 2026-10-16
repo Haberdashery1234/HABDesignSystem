@@ -174,7 +174,12 @@ open class HABTabBarController: UITabBarController {
     // MARK: - Selection
 
     open override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        super.tabBar(tabBar, didSelect: item)
+        // UITabBarDelegate methods are optional, and UITabBarController doesn't
+        // implement this one on every OS version (iOS 26 doesn't). Calling super
+        // unconditionally raises "unrecognized selector".
+        if UITabBarController.instancesRespond(to: #selector(UITabBarDelegate.tabBar(_:didSelect:))) {
+            super.tabBar(tabBar, didSelect: item)
+        }
         // Look the index up from the item rather than reading `selectedIndex`, which
         // UIKit may not have updated yet at this point.
         if let index = viewControllers?.firstIndex(where: { $0.tabBarItem === item }) {

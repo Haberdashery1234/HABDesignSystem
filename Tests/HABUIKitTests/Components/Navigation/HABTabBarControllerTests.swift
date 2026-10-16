@@ -98,8 +98,10 @@ final class HABTabBarControllerTests: XCTestCase {
 
         let item = try XCTUnwrap(HABTabBarController(tabs: [tab]).viewControllers?.first?.tabBarItem)
         XCTAssertEqual(item.title, "Home")
-        XCTAssertIdentical(item.image, image)
-        XCTAssertIdentical(item.selectedImage, selectedImage)
+        // UITabBarItem stores its own copies of the images, so compare what they draw.
+        XCTAssertEqual(item.image?.pngData(), image?.pngData())
+        XCTAssertEqual(item.selectedImage?.pngData(), selectedImage?.pngData())
+        XCTAssertNotEqual(item.image?.pngData(), item.selectedImage?.pngData())
     }
 
     func testSelectedImageFallsBackToImage() throws {
@@ -107,7 +109,7 @@ final class HABTabBarControllerTests: XCTestCase {
         let tab = HABTab(title: "Home", image: image, viewController: UIViewController())
 
         let item = try XCTUnwrap(HABTabBarController(tabs: [tab]).viewControllers?.first?.tabBarItem)
-        XCTAssertIdentical(item.selectedImage, image)
+        XCTAssertEqual(item.selectedImage?.pngData(), image?.pngData())
     }
 
     func testTabBarItemAccessibilityIdentifier() throws {
@@ -326,10 +328,10 @@ final class HABTabBarControllerTests: XCTestCase {
         XCTAssertEqual(font?.pointSize, LargeCaptionTheme.captionFont.pointSize)
     }
 
-    func testThemeDidChangeCalledOnLoad() {
+    func testThemeDidChangeCalledOnceOnLoad() {
+        // UITabBarController may load its view during init (it does on iOS 26), so
+        // only check that the hook has run exactly once by the time the view exists.
         let controller = ThemeObservingTabBarController()
-        XCTAssertEqual(controller.themeChangeCount, 0)
-
         controller.loadViewIfNeeded()
 
         XCTAssertEqual(controller.themeChangeCount, 1)

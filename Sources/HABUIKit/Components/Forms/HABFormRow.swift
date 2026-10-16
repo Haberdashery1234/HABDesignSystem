@@ -194,7 +194,15 @@ public final class HABFormRow: UIView {
 
     /// For a read-only value row, the content's current text (e.g. the value label's text).
     public override var accessibilityValue: String? {
-        get { isReadOnlyValueRow ? content.accessibilityLabel : super.accessibilityValue }
+        get {
+            guard isReadOnlyValueRow else { return super.accessibilityValue }
+            // A label's default accessibilityLabel (its text) only exists once UIKit's
+            // accessibility support is loaded, so read the text directly.
+            if let label = content as? UILabel {
+                return label.accessibilityLabel ?? label.text
+            }
+            return content.accessibilityLabel
+        }
         set { super.accessibilityValue = newValue }
     }
 

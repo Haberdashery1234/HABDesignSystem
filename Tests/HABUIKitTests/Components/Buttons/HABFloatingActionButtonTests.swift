@@ -31,10 +31,12 @@ final class HABFloatingActionButtonTests: XCTestCase {
     }
 
     func testIs56PointsTall() {
+        let host = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
         let button = makeButton()
-        let size = button.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        XCTAssertEqual(size.height, 56, accuracy: 0.5)
-        XCTAssertGreaterThanOrEqual(size.width, 56)
+        button.install(in: host)
+        host.layoutIfNeeded()
+        XCTAssertEqual(button.bounds.height, 56, accuracy: 0.5)
+        XCTAssertGreaterThanOrEqual(button.bounds.width, 56)
     }
 
     func testHasAShadow() {
@@ -65,17 +67,23 @@ final class HABFloatingActionButtonTests: XCTestCase {
     }
 
     func testStaysPutWhenScrollViewScrolls() {
-        let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let scrollView = UIScrollView(frame: window.bounds)
         scrollView.contentSize = CGSize(width: 320, height: 2000)
+        window.addSubview(scrollView)
+        window.isHidden = false
         let button = makeButton()
         button.install(in: scrollView)
         scrollView.layoutIfNeeded()
-        let before = button.convert(button.bounds, to: nil).minY - scrollView.convert(scrollView.bounds, to: nil).minY
+        // Distance from the top of the visible area, which shouldn't change as content scrolls.
+        let before = button.frame.minY - scrollView.contentOffset.y
+        XCTAssertGreaterThan(before, 0, "The button should be laid out inside the visible area")
 
         scrollView.contentOffset.y = 300
         scrollView.layoutIfNeeded()
-        let after = button.convert(button.bounds, to: nil).minY - scrollView.convert(scrollView.bounds, to: nil).minY
+        let after = button.frame.minY - scrollView.contentOffset.y
         XCTAssertEqual(before, after, accuracy: 0.5)
+        window.isHidden = true
     }
 
     func testUpdatePlacementBringsButtonToFront() {
