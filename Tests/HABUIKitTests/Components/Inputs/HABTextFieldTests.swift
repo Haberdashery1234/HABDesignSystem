@@ -212,6 +212,37 @@ final class HABTextFieldTests: XCTestCase {
         }
         XCTAssertFalse(fixed48, "A fixed 48pt height clips text at large Dynamic Type sizes")
     }
+
+    // MARK: - onTextChanged
+
+    func testOnTextChangedFiresOnEditingChanged() {
+        var received: [String] = []
+        let field = HABTextField(onTextChanged: { received.append($0) })
+        guard let inner = field.firstSubview(of: UITextField.self) else {
+            return XCTFail("Expected an inner UITextField")
+        }
+        inner.text = "Lisin"
+        inner.simulate(.editingChanged)
+        inner.text = "Lisinopril"
+        inner.simulate(.editingChanged)
+        XCTAssertEqual(received, ["Lisin", "Lisinopril"])
+    }
+
+    func testOnTextChangedNotCalledForProgrammaticText() {
+        var callCount = 0
+        let field = HABTextField()
+        field.onTextChanged = { _ in callCount += 1 }
+        field.text = "Set in code"
+        XCTAssertEqual(callCount, 0)
+    }
+
+    func testOnTextChangedCanBeAssignedAfterInit() {
+        var received: String?
+        let field = HABTextField()
+        field.onTextChanged = { received = $0 }
+        field.firstSubview(of: UITextField.self)?.simulate(.editingChanged)
+        XCTAssertEqual(received, "")
+    }
 }
 
 private extension UIView {

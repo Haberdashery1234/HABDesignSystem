@@ -8,10 +8,14 @@
 import UIKit
 import HABFoundation
 
-public class HABNavigationController: UINavigationController {
+/// A `UINavigationController` styled with the active HAB theme: background, title font
+/// and colors, and tint. The appearance is re-applied when the theme changes.
+///
+/// Subclass it to add app-specific behavior; call `super.viewDidLoad()` to keep the theming.
+open class HABNavigationController: UINavigationController {
     // MARK: - Lifecycle
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         updateAppearance()
         NotificationCenter.default.addObserver(

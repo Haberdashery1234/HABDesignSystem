@@ -25,6 +25,7 @@ included:
 - Sources
 - Tests
 - Sample
+- SampleTests
 
 excluded:
 - .build

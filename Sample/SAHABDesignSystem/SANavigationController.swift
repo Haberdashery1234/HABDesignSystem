@@ -11,40 +11,14 @@ import UIKit
 import HABFoundation
 import HABUIKit
 
-final class SANavigationController: UINavigationController {
+/// The sample app's navigation controller: `HABNavigationController`'s theming, plus a
+/// palette button on every screen that opens the theme switcher.
+final class SANavigationController: HABNavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        applyNavigationBarAppearance()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(themeDidChange),
-            name: HABThemeManager.themeDidChangeNotification,
-            object: nil
-        )
-    }
-
-    // MARK: - Theme
-
-    @objc private func themeDidChange() {
-        applyNavigationBarAppearance()
-    }
-
-    private func applyNavigationBarAppearance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .habBackground
-        appearance.shadowColor = .habBorderSubtle
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.habForeground]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.habForeground]
-        navigationBar.standardAppearance = appearance
-        navigationBar.scrollEdgeAppearance = appearance
-        navigationBar.compactAppearance = appearance
-        navigationBar.tintColor = .habPrimary
     }
 }
-
-// MARK: - UINavigationControllerDelegate
 
 extension SANavigationController: UINavigationControllerDelegate {
     func navigationController(
@@ -55,12 +29,18 @@ extension SANavigationController: UINavigationControllerDelegate {
         // The theme switcher doesn't need a button to push itself
         guard !(viewController is SAThemeSwitcherViewController) else { return }
 
-        viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
+        // Add the palette next to any buttons the screen has (rather than replacing
+        // them), and only once: this runs every time the screen is shown.
+        let items = viewController.navigationItem.rightBarButtonItems ?? []
+        guard !items.contains(where: { $0.action == #selector(openThemeSwitcher) }) else { return }
+        let paletteButton = UIBarButtonItem(
             image: UIImage(systemName: "paintpalette"),
             style: .plain,
             target: self,
             action: #selector(openThemeSwitcher)
         )
+        paletteButton.accessibilityLabel = "Theme"
+        viewController.navigationItem.rightBarButtonItems = items + [paletteButton]
     }
 
     @objc private func openThemeSwitcher() {

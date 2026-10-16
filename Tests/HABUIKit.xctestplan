@@ -12,7 +12,13 @@
 
   },
   "testTargets" : [
-
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "HABUIKitTests",
+        "name" : "HABUIKitTests"
+      }
+    }
   ],
   "version" : 1
 }

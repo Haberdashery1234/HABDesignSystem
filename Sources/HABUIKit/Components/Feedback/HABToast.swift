@@ -32,9 +32,9 @@ public final class HABToast: UIView {
         in view: UIView
     ) {
         let request = Request(message: message, style: style, duration: duration)
-        let key = ObjectIdentifier(view)
-        if activeToasts[key]?.toast != nil {
-            pendingRequests[key, default: []].append(request)
+        let containerQueue = queue(for: view)
+        if containerQueue.activeToast != nil {
+            containerQueue.pending.append(request)
         } else {
             present(request, in: view)
         }
@@ -51,22 +51,30 @@ public final class HABToast: UIView {
         let duration: TimeInterval
     }
 
-    private struct WeakToast {
-        weak var toast: HABToast?
+    /// The toast on screen in one container view, and the toasts waiting behind it.
+    private final class ContainerQueue {
+        weak var activeToast: HABToast?
+        var pending: [Request] = []
     }
 
-    /// The toast currently on screen in each container view, keyed by that view.
-    private static var activeToasts: [ObjectIdentifier: WeakToast] = [:]
-    /// Toasts waiting for the current one in the same container to finish.
-    private static var pendingRequests: [ObjectIdentifier: [Request]] = [:]
+    /// One queue per container view. The table holds the views weakly, so a queue goes
+    /// away with its view. (Keying by `ObjectIdentifier` instead let a new view that
+    /// reused a freed view's address inherit that view's leftover toasts.)
+    private static let queues = NSMapTable<UIView, ContainerQueue>.weakToStrongObjects()
+
+    private static func queue(for view: UIView) -> ContainerQueue {
+        if let existing = queues.object(forKey: view) { return existing }
+        let created = ContainerQueue()
+        queues.setObject(created, forKey: view)
+        return created
+    }
 
     private static func present(_ request: Request, in view: UIView) {
-        let key = ObjectIdentifier(view)
         let toast = HABToast(message: request.message, style: request.style)
         toast.translatesAutoresizingMaskIntoConstraints = false
         toast.containerView = view
         view.addSubview(toast)
-        activeToasts[key] = WeakToast(toast: toast)
+        queue(for: view).activeToast = toast
 
         let bottomConstraint = toast.bottomAnchor.constraint(
             equalTo: view.safeAreaLayoutGuide.bottomAnchor,
@@ -123,16 +131,13 @@ public final class HABToast: UIView {
 
     /// Called when a toast finishes dismissing: shows the next queued toast for that container.
     private static func toastDidDismiss(in view: UIView?) {
-        guard let view else { return }
-        let key = ObjectIdentifier(view)
-        activeToasts[key] = nil
-        guard var queue = pendingRequests[key], !queue.isEmpty else {
-            pendingRequests[key] = nil
+        guard let view, let queue = queues.object(forKey: view) else { return }
+        queue.activeToast = nil
+        guard !queue.pending.isEmpty else {
+            queues.removeObject(forKey: view)
             return
         }
-        let next = queue.removeFirst()
-        pendingRequests[key] = queue.isEmpty ? nil : queue
-        present(next, in: view)
+        present(queue.pending.removeFirst(), in: view)
     }
 
     // MARK: - Private Properties

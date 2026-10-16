@@ -37,7 +37,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # SAHABDesignSystem: runs HABUIKitTests (framework unit tests) plus the
+        # SAHABDesignSystem: runs SAHABUIKitTests (the package's
+        #                 Tests/HABUIKitTests, built by the project) plus the
         #                 sample app unit + UI tests in a single job. The
         #                 HABUIKit scheme can't be used on CI because SPM-only
         #                 schemes have no platform anchor for xcodebuild.

@@ -55,10 +55,22 @@ import HABFoundation
 /// }
 /// ```
 ///
+/// ## Reacting to Typing
+///
+/// Set ``onTextChanged`` to react while the user types, e.g. to keep a draft in sync or
+/// validate as they go:
+///
+/// ```swift
+/// nameField.onTextChanged = { [weak self] text in
+///     self?.draft.name = text
+///     self?.saveButton.isEnabled = !text.isEmpty
+/// }
+/// ```
+///
 /// ## Topics
 ///
 /// ### Creating a Text Field
-/// - ``init(style:topLabel:helperText:errorText:leadingIcon:trailingIcon:trailingAction:isDisabled:delegate:)``
+/// - ``init(style:topLabel:helperText:errorText:leadingIcon:trailingIcon:trailingAction:isDisabled:delegate:onTextChanged:)``
 ///
 /// ### Configuring Appearance
 /// - ``style``
@@ -86,6 +98,9 @@ import HABFoundation
 /// - ``returnKeyType``
 /// - ``autocapitalizationType``
 /// - ``autocorrectionType``
+///
+/// ### Responding to Changes
+/// - ``onTextChanged``
 ///
 /// ### Managing Delegation
 /// - ``delegate``
@@ -258,6 +273,13 @@ public final class HABTextField: UIView {
     ///
     /// Set this to receive text field delegate callbacks such as `textFieldShouldReturn(_:)`.
     public weak var delegate: UITextFieldDelegate?
+
+    /// Called with the full text after each edit the user makes: typing, deleting,
+    /// pasting, dictation and autocorrection.
+    ///
+    /// Like `UITextField`'s `.editingChanged` event, it isn't called when you set ``text``
+    /// in code.
+    public var onTextChanged: ((String) -> Void)?
     
     /// Creates a new text field with the specified configuration.
     ///
@@ -271,10 +293,11 @@ public final class HABTextField: UIView {
     ///   - trailingAction: Action for the trailing icon. Defaults to `nil`.
     ///   - isDisabled: Whether the field starts disabled. Defaults to `false`.
     ///   - delegate: The text field delegate. Defaults to `nil`.
+    ///   - onTextChanged: Called with the text after each edit the user makes. Defaults to `nil`.
     ///
     /// The text field automatically registers for theme change notifications and updates
     /// its appearance when the active theme changes.
-    public init(style: Style = .outlined, topLabel: String? = nil, helperText: String? = nil, errorText: String? = nil, leadingIcon: UIImage? = nil, trailingIcon: UIImage? = nil, trailingAction: HABAccessibleAction? = nil, isDisabled: Bool = false, delegate: UITextFieldDelegate? = nil) {
+    public init(style: Style = .outlined, topLabel: String? = nil, helperText: String? = nil, errorText: String? = nil, leadingIcon: UIImage? = nil, trailingIcon: UIImage? = nil, trailingAction: HABAccessibleAction? = nil, isDisabled: Bool = false, delegate: UITextFieldDelegate? = nil, onTextChanged: ((String) -> Void)? = nil) {
         self.style = style
         self.topLabel = topLabel
         self.helperText = helperText
@@ -284,6 +307,7 @@ public final class HABTextField: UIView {
         self.trailingAction = trailingAction
         self.isDisabled = isDisabled
         self.delegate = delegate
+        self.onTextChanged = onTextChanged
         super.init(frame: .zero)
         setupViews()
         updateAppearance()
@@ -370,6 +394,7 @@ public final class HABTextField: UIView {
         bottomLabel.isAccessibilityElement = false
 
         trailingButton.addTarget(self, action: #selector(trailingButtonTapped), for: .touchUpInside)
+        textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
     
     private func updateAppearance() {
@@ -467,6 +492,10 @@ public final class HABTextField: UIView {
     
     @objc private func trailingButtonTapped() {
         trailingAction?.action()
+    }
+
+    @objc private func textDidChange() {
+        onTextChanged?(text)
     }
 }
 
