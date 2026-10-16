@@ -38,6 +38,18 @@ class SACatalogViewController: UITableViewController {
             Item(title: "Badge", subtitle: "HABBadge — count overlay", destination: { SAHABBadgeDemoViewController() }),
             Item(title: "Avatar", subtitle: "HABAvatar — size, shape, image/initials", destination: { SAHABAvatarDemoViewController() })
         ]),
+        Section(title: "Lists & Forms", items: [
+            Item(
+                title: "List Cell",
+                subtitle: "HABListCell, section headers, swipe actions, empty state, FAB",
+                destination: { SAHABListDemoViewController() }
+            ),
+            Item(
+                title: "Form",
+                subtitle: "HABFormSection, HABMenuButton, HABStepper, HABChipGroup",
+                destination: { SAHABFormDemoViewController() }
+            )
+        ]),
         Section(title: "Inputs", items: [
             Item(title: "Text Field", subtitle: "HABTextField — style, icons, state", destination: { SAHABTextFieldDemoViewController() }),
             Item(title: "Text View", subtitle: "HABTextView — multiline input", destination: { SAHABTextViewDemoViewController() })
@@ -52,12 +64,14 @@ class SACatalogViewController: UITableViewController {
         ]),
         Section(title: "Containers", items: [
             Item(title: "Card", subtitle: "HABCard — elevated, outlined, flat", destination: { SAHABCardDemoViewController() }),
-            Item(title: "Divider", subtitle: "HABDivider — horizontal, vertical", destination: { SAHABDividerDemoViewController() })
+            Item(title: "Divider", subtitle: "HABDivider — horizontal, vertical", destination: { SAHABDividerDemoViewController() }),
+            Item(title: "Callout Card", subtitle: "HABCalloutCard — tinted, accent bar", destination: { SAHABCalloutCardDemoViewController() })
         ]),
         Section(title: "Feedback", items: [
             Item(title: "Toast", subtitle: "HABToast — temporary overlay", destination: { SAHABToastDemoViewController() }),
             Item(title: "Banner", subtitle: "HABBanner — inline notification", destination: { SAHABBannerDemoViewController() }),
             Item(title: "Loading", subtitle: "HABLoadingView — spinner + progress", destination: { SAHABLoadingViewDemoViewController() }),
+            Item(title: "Progress Bar", subtitle: "HABProgressBar — exact progress", destination: { SAHABProgressBarDemoViewController() }),
             Item(title: "Empty State", subtitle: "HABEmptyState — icon, message, action", destination: { SAHABEmptyStateDemoViewController() })
         ]),
         Section(title: "Settings", items: [

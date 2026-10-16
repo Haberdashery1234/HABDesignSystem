@@ -22,18 +22,43 @@ import HABFoundation
 ///     cardView.layer.borderColor = UIColor.habBorder.resolvedColor(with: traitCollection).cgColor
 /// }
 /// ```
+///
+/// Set ``floatingActionButton`` to pin an ``HABFloatingActionButton`` to the bottom
+/// trailing corner of the view.
 open class HABBaseViewController: UIViewController {
+    // MARK: - Floating Action Button
+
+    /// A button pinned to the bottom trailing corner, above the rest of the view.
+    public var floatingActionButton: HABFloatingActionButton? {
+        didSet {
+            guard floatingActionButton !== oldValue else { return }
+            oldValue?.uninstall()
+            if isViewLoaded, let floatingActionButton {
+                floatingActionButton.install(in: view)
+            }
+        }
+    }
+
     // MARK: - Lifecycle
 
     open override func viewDidLoad() {
         super.viewDidLoad()
         updateAppearance()
+        if let floatingActionButton, floatingActionButton.superview == nil {
+            floatingActionButton.install(in: view)
+        }
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleThemeChange),
             name: HABThemeManager.themeDidChangeNotification,
             object: nil
         )
+    }
+
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // Keep the button above subviews added after it.
+        floatingActionButton?.updatePlacement()
     }
 
     // MARK: - Appearance

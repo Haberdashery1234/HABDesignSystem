@@ -15,15 +15,19 @@ instead of rebuilding the same buttons, cards, and inputs per project.
   UIKit types (`UIColor`, `UIFont`); a platform-neutral layer is planned
   alongside `HABSwiftUI`.
 - **`HABUIKit`** — UIKit components built on `HABFoundation`: buttons
-  (`HABButton`, `HABCardButton`), containers (`HABCard`, `HABDivider`),
-  display (`HABAvatar`, `HABBadge`, `HABLabel`, `HABTag`), feedback
-  (`HABBanner`, `HABEmptyState`, `HABLoadingView`, `HABToast`), inputs
-  (`HABTextField`, `HABTextView`), navigation
-  (`HABNavigationController`, `HABTabBarController`), selection
-  (`HABSegmentedControl`, `HABToggle`), plus themed base view controllers
+  (`HABButton`, `HABCardButton`, `HABFloatingActionButton`), containers
+  (`HABCard`, `HABCalloutCard`, `HABDivider`), display (`HABAvatar`,
+  `HABBadge`, `HABLabel`, `HABTag`), feedback (`HABBanner`, `HABEmptyState`,
+  `HABLoadingView`, `HABProgressBar`, `HABToast`), forms (`HABFormSection`,
+  `HABFormRow`), inputs (`HABTextField`, `HABTextView`, `HABStepper`), lists
+  (`HABListCell`, `HABSectionTitleView`, `HABSectionHeaderFooterView`,
+  swipe action styles), navigation (`HABNavigationController`,
+  `HABTabBarController`), selection (`HABChipGroup`, `HABMenuButton`,
+  `HABSegmentedControl`, `HABToggle`), plus themed base view controllers
   (`HABBaseViewController`, `HABBaseTableViewController`,
   `HABBaseCollectionViewController`) that subclasses get theming from for
-  free.
+  free. `HABBaseTableViewController` also manages an empty state, and both
+  it and `HABBaseViewController` can pin a floating action button.
 
 A `HABSwiftUI` target is planned but not implemented yet.
 
