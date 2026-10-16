@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0374D8A93009DC7E00658327 /* HABFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 0374D8A83009DC7E00658327 /* HABFoundation */; };
 		0374D8AD3009DC7E00658327 /* HABUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0374D8AC3009DC7E00658327 /* HABUIKit */; };
+		0AB1C0D0E0F0A0B0C0D00005 /* HABFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 0AB1C0D0E0F0A0B0C0D00007 /* HABFoundation */; };
+		0AB1C0D0E0F0A0B0C0D00006 /* HABUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AB1C0D0E0F0A0B0C0D00008 /* HABUIKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,7 @@
 		03D541D82FF35CC600BB2C51 /* SAHABDesignSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAHABDesignSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D541ED2FF35CC800BB2C51 /* SAHABDesignSystemTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAHABDesignSystemTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D541F72FF35CC800BB2C51 /* SAHABDesignSystemUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAHABDesignSystemUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AB1C0D0E0F0A0B0C0D00002 /* SAHABUIKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAHABUIKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -67,6 +70,11 @@
 				039BE3F6301D7DB500A95A45 /* Exceptions for "Sample" folder in "SAHABDesignSystem" target */,
 			);
 			path = Sample;
+			sourceTree = "<group>";
+		};
+		0AB1C0D0E0F0A0B0C0D00003 /* HABUIKitTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = HABUIKitTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -95,6 +103,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0AB1C0D0E0F0A0B0C0D0000A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AB1C0D0E0F0A0B0C0D00005 /* HABFoundation in Frameworks */,
+				0AB1C0D0E0F0A0B0C0D00006 /* HABUIKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -114,7 +131,16 @@
 				03D5415E2FF359B300BB2C51 /* Products */,
 				03A049CB300FF06B006C9C95 /* .swiftlint.yml */,
 				039BE3D2301D7C4200A95A45 /* Sample */,
+				0AB1C0D0E0F0A0B0C0D00004 /* Tests */,
 			);
+			sourceTree = "<group>";
+		};
+		0AB1C0D0E0F0A0B0C0D00004 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				0AB1C0D0E0F0A0B0C0D00003 /* HABUIKitTests */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		03D5415E2FF359B300BB2C51 /* Products */ = {
@@ -123,6 +149,7 @@
 				03D541D82FF35CC600BB2C51 /* SAHABDesignSystem.app */,
 				03D541ED2FF35CC800BB2C51 /* SAHABDesignSystemTests.xctest */,
 				03D541F72FF35CC800BB2C51 /* SAHABDesignSystemUITests.xctest */,
+				0AB1C0D0E0F0A0B0C0D00002 /* SAHABUIKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -196,6 +223,30 @@
 			productReference = 03D541F72FF35CC800BB2C51 /* SAHABDesignSystemUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		0AB1C0D0E0F0A0B0C0D00001 /* SAHABUIKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0AB1C0D0E0F0A0B0C0D0000E /* Build configuration list for PBXNativeTarget "SAHABUIKitTests" */;
+			buildPhases = (
+				0AB1C0D0E0F0A0B0C0D00009 /* Sources */,
+				0AB1C0D0E0F0A0B0C0D0000A /* Frameworks */,
+				0AB1C0D0E0F0A0B0C0D0000B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				0AB1C0D0E0F0A0B0C0D00003 /* HABUIKitTests */,
+			);
+			name = SAHABUIKitTests;
+			packageProductDependencies = (
+				0AB1C0D0E0F0A0B0C0D00007 /* HABFoundation */,
+				0AB1C0D0E0F0A0B0C0D00008 /* HABUIKit */,
+			);
+			productName = SAHABUIKitTests;
+			productReference = 0AB1C0D0E0F0A0B0C0D00002 /* SAHABUIKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -216,6 +267,9 @@
 					03D541F62FF35CC800BB2C51 = {
 						CreatedOnToolsVersion = 26.2;
 						TestTargetID = 03D541D72FF35CC600BB2C51;
+					};
+					0AB1C0D0E0F0A0B0C0D00001 = {
+						CreatedOnToolsVersion = 26.2;
 					};
 				};
 			};
@@ -239,6 +293,7 @@
 				03D541D72FF35CC600BB2C51 /* SAHABDesignSystem */,
 				03D541EC2FF35CC800BB2C51 /* SAHABDesignSystemTests */,
 				03D541F62FF35CC800BB2C51 /* SAHABDesignSystemUITests */,
+				0AB1C0D0E0F0A0B0C0D00001 /* SAHABUIKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -259,6 +314,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		03D541F52FF35CC800BB2C51 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0AB1C0D0E0F0A0B0C0D0000B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -305,6 +367,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		03D541F32FF35CC800BB2C51 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0AB1C0D0E0F0A0B0C0D00009 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -618,6 +687,45 @@
 			};
 			name = Release;
 		};
+		0AB1C0D0E0F0A0B0C0D0000C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9366E92J33;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haberdashery1234.SAHABUIKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0AB1C0D0E0F0A0B0C0D0000D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9366E92J33;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haberdashery1234.SAHABUIKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -657,6 +765,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		0AB1C0D0E0F0A0B0C0D0000E /* Build configuration list for PBXNativeTarget "SAHABUIKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AB1C0D0E0F0A0B0C0D0000C /* Debug */,
+				0AB1C0D0E0F0A0B0C0D0000D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
@@ -673,6 +790,16 @@
 			productName = HABFoundation;
 		};
 		0374D8AC3009DC7E00658327 /* HABUIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0374D8A73009DC7E00658327 /* XCLocalSwiftPackageReference "../HABDesignSystem" */;
+			productName = HABUIKit;
+		};
+		0AB1C0D0E0F0A0B0C0D00007 /* HABFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0374D8A73009DC7E00658327 /* XCLocalSwiftPackageReference "../HABDesignSystem" */;
+			productName = HABFoundation;
+		};
+		0AB1C0D0E0F0A0B0C0D00008 /* HABUIKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0374D8A73009DC7E00658327 /* XCLocalSwiftPackageReference "../HABDesignSystem" */;
 			productName = HABUIKit;

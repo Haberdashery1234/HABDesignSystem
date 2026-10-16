@@ -3,10 +3,14 @@
     {
       "id" : "43F30B59-1380-44D9-9217-E09C37D2916C",
       "name" : "Configuration 1",
-      "options" : {}
+      "options" : {
+
+      }
     }
   ],
-  "defaultOptions" : {},
+  "defaultOptions" : {
+
+  },
   "testTargets" : [
     {
       "target" : {
