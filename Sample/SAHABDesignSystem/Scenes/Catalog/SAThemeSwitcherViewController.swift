@@ -95,7 +95,8 @@ class SAThemeSwitcherViewController: UIViewController {
         cardViews.forEach { stackView.addArrangedSubview($0) }
     }
 
-    private func apply(_ theme: any HABTheme) {
+    /// Makes `theme` the active theme. Internal so tests can switch themes without tapping a card.
+    func apply(_ theme: any HABTheme) {
         HABThemeManager.shared.theme = theme
     }
 
