@@ -40,6 +40,16 @@ final class SAScreenHarness {
         layout()
     }
 
+    /// Lets an animated push or pop finish. UIKit runs the transition on the main run
+    /// loop, so turn it until no transition is in progress (or a second has passed).
+    func waitForTransitions() {
+        let deadline = Date().addingTimeInterval(1)
+        while navigationController.transitionCoordinator != nil, Date() < deadline {
+            RunLoop.main.run(until: Date().addingTimeInterval(0.01))
+        }
+        layout()
+    }
+
     func popToRoot() {
         navigationController.popToRootViewController(animated: false)
         layout()
