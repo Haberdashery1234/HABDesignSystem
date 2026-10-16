@@ -40,7 +40,7 @@ final class SACatalogTests: XCTestCase {
                 catalog.tableView(table, didSelectRowAt: indexPath)
                 harness.waitForTransitions()
                 let screen = try XCTUnwrap(harness.topViewController)
-                XCTAssertFalse(screen === catalog, "\(rowTitle) didn't open a screen")
+                XCTAssertNotIdentical(screen, catalog, "\(rowTitle) didn't open a screen")
                 screen.loadViewIfNeeded()
                 harness.layout()
                 XCTAssertFalse(screen.title?.isEmpty ?? true, "\(rowTitle) has no title")

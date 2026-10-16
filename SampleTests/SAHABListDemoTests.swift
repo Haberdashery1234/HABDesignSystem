@@ -88,7 +88,7 @@ final class SAHABListDemoTests: XCTestCase {
         for action in leading.actions + trailing.actions {
             var completed: Bool?
             action.handler(action, table) { completed = $0 }
-            XCTAssertEqual(completed, true, "\(action.title ?? "") didn't complete")
+            XCTAssertTrue(completed ?? false, "\(action.title ?? "") didn't report success")
         }
         harness.layout()
         XCTAssertEqual(table.numberOfRows(inSection: 0), rowsBefore - 1)
