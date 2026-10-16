@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03D541D72FF35CC600BB2C51"
-               BuildableName = "SAHABDesignSystem.app"
-               BlueprintName = "SAHABDesignSystem"
-               ReferencedContainer = "container:SAHABDesignSystem.xcodeproj">
+               BlueprintIdentifier = "HABFoundation"
+               BuildableName = "HABFoundation"
+               BlueprintName = "HABFoundation"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,10 +43,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "HABFoundation"
-               BuildableName = "HABFoundation"
-               BlueprintName = "HABFoundation"
-               ReferencedContainer = "container:">
+               BlueprintIdentifier = "03D541D72FF35CC600BB2C51"
+               BuildableName = "SAHABDesignSystem.app"
+               BlueprintName = "SAHABDesignSystem"
+               ReferencedContainer = "container:SAHABDesignSystem.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -55,18 +55,23 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:Tests/SAHABDesignSystem.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+      </TestPlans>
       <Testables>
          <TestableReference
             skipped = "NO"
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03D541672FF359B400BB2C51"
-               BuildableName = "HABUIKitTests.xctest"
+               BlueprintIdentifier = "HABUIKitTests"
+               BuildableName = "HABUIKitTests"
                BlueprintName = "HABUIKitTests"
-               ReferencedContainer = "container:SAHABDesignSystem.xcodeproj">
+               ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
          <TestableReference

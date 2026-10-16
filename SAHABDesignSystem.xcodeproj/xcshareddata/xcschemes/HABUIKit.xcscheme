@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03D5415C2FF359B300BB2C51"
-               BuildableName = "HABUIKit.framework"
+               BlueprintIdentifier = "HABUIKit"
+               BuildableName = "HABUIKit"
                BlueprintName = "HABUIKit"
-               ReferencedContainer = "container:SAHABDesignSystem.xcodeproj">
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -27,18 +27,23 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:Tests/HABUIKit.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+      </TestPlans>
       <Testables>
          <TestableReference
             skipped = "NO"
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03D541672FF359B400BB2C51"
-               BuildableName = "HABUIKitTests.xctest"
+               BlueprintIdentifier = "HABUIKitTests"
+               BuildableName = "HABUIKitTests"
                BlueprintName = "HABUIKitTests"
-               ReferencedContainer = "container:SAHABDesignSystem.xcodeproj">
+               ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -63,10 +68,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03D5415C2FF359B300BB2C51"
-            BuildableName = "HABUIKit.framework"
+            BlueprintIdentifier = "HABUIKit"
+            BuildableName = "HABUIKit"
             BlueprintName = "HABUIKit"
-            ReferencedContainer = "container:SAHABDesignSystem.xcodeproj">
+            ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
