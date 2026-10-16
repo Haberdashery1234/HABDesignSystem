@@ -43,6 +43,12 @@ final class SAHABListDemoViewController: HABBaseTableViewController {
 
     init() {
         super.init(style: .insetGrouped)
+        // Set here rather than in viewDidLoad: SANavigationController adds its palette
+        // button when the screen is shown, which can happen before the view loads.
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Clear",
+            primaryAction: UIAction { [weak self] _ in self?.clearEverything() }
+        )
     }
 
     required init?(coder: NSCoder) {
@@ -71,10 +77,6 @@ final class SAHABListDemoViewController: HABBaseTableViewController {
                 self?.restoreMedications()
             }
         )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Clear",
-            primaryAction: UIAction { [weak self] _ in self?.clearEverything() }
-        )
     }
 
     // MARK: - Empty state demo
@@ -82,13 +84,13 @@ final class SAHABListDemoViewController: HABBaseTableViewController {
     /// The empty state shows when the table has no rows, so clearing hides every section.
     private var isCleared = false
 
-    private func clearEverything() {
+    func clearEverything() {
         isCleared = true
         tableView.reloadData()
         updateEmptyStateVisibility(animated: true)
     }
 
-    private func restoreMedications() {
+    func restoreMedications() {
         isCleared = false
         medications = sampleMedications
         tableView.reloadData()
