@@ -141,14 +141,6 @@
 			);
 			sourceTree = "<group>";
 		};
-		0AB1C0D0E0F0A0B0C0D00004 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				0AB1C0D0E0F0A0B0C0D00003 /* HABUIKitTests */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
 		03D5415E2FF359B300BB2C51 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +150,14 @@
 				0AB1C0D0E0F0A0B0C0D00002 /* SAHABUIKitTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0AB1C0D0E0F0A0B0C0D00004 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				0AB1C0D0E0F0A0B0C0D00003 /* HABUIKitTests */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
