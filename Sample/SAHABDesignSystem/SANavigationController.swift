@@ -11,40 +11,14 @@ import UIKit
 import HABFoundation
 import HABUIKit
 
-final class SANavigationController: UINavigationController {
+/// The sample app's navigation controller: `HABNavigationController`'s theming, plus a
+/// palette button on every screen that opens the theme switcher.
+final class SANavigationController: HABNavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        applyNavigationBarAppearance()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(themeDidChange),
-            name: HABThemeManager.themeDidChangeNotification,
-            object: nil
-        )
-    }
-
-    // MARK: - Theme
-
-    @objc private func themeDidChange() {
-        applyNavigationBarAppearance()
-    }
-
-    private func applyNavigationBarAppearance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .habBackground
-        appearance.shadowColor = .habBorderSubtle
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.habForeground]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.habForeground]
-        navigationBar.standardAppearance = appearance
-        navigationBar.scrollEdgeAppearance = appearance
-        navigationBar.compactAppearance = appearance
-        navigationBar.tintColor = .habPrimary
     }
 }
-
-// MARK: - UINavigationControllerDelegate
 
 extension SANavigationController: UINavigationControllerDelegate {
     func navigationController(
