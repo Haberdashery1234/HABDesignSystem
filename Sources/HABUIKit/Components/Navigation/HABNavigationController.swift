@@ -44,8 +44,16 @@ open class HABNavigationController: UINavigationController {
         appearance.titleTextAttributes = titleAttrs
         appearance.largeTitleTextAttributes = largeTitleAttrs
 
+        // At the scroll edge (where large titles show), the bar is transparent over the
+        // page's own background. On iOS 26 an opaque background there is drawn over the
+        // large title and hides it; the collapsed bar keeps the opaque look.
+        let scrollEdgeAppearance = UINavigationBarAppearance()
+        scrollEdgeAppearance.configureWithTransparentBackground()
+        scrollEdgeAppearance.titleTextAttributes = titleAttrs
+        scrollEdgeAppearance.largeTitleTextAttributes = largeTitleAttrs
+
         navigationBar.standardAppearance = appearance
-        navigationBar.scrollEdgeAppearance = appearance
+        navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
         navigationBar.tintColor = .habPrimary
     }
 
